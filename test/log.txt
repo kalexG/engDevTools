@@ -1,1 +1,0 @@
-This includes descriptions of the different examples in this directory.
