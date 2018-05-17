@@ -18,7 +18,7 @@ int main( int argc, char *argv[] ) {
 */
 
 	// Inputs
-	cout << "You made it to test function for vectorOps!\n";
+	printf("You made it to test function for vectorOps!\n");
 
    vectorOps vOps;
 

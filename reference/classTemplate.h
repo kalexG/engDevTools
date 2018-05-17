@@ -1,13 +1,14 @@
-// Filename: vectorOps.h
-// Created: 04/07/2018
-// Last Modified: 04/07/2018
+// Filename: classTemplate.h
+// Created: XX/XX/XXXX
+// Last Modified: XX/XX/XXXX
 // Author: Kevin Gomez
 
 #include <iostream>
 #include <math.h>
 #include <string.h>
+using namespace std;
 
-class vectorOps {
+class classTemplate {
 
    // Access: protected //
    protected:
@@ -24,21 +25,19 @@ class vectorOps {
    // Data: public
    // Functions: public
 
-   void vAdd(double* vOut, double* v1, double* v2);
-   void vSub(double* vOut, double* v1, double* v2);
-   void vMag(double* sOut, double* v1);
-   void vUnit(double* vOut, double* v1);
-   void crossProduct(double* vOut, double* v1, double* v2);
-   void dotProduct(double* sOut, double* v1, double* v2);
-
    void printInfo()
    {
-      printf("This is the vectorOps class!\n");
+      cout << "This is the classTemplate class!\n";
    }
 
    void printVector(double* vector)
    {
       printf("[%f, %f, %f]\n", vector[0], vector[1], vector[2]);
+   }
+
+   void printMatrix(double** matrix)
+   {
+      printf("|%f %f %f|\n|%f %f %f|\n|%f %f %f|\n", matrix[0][0], matrix[0][1], matrix[0][2], matrix[1][0], matrix[1][1], matrix[1][2], matrix[2][0], matrix[2][1], matrix[2][2]);
    }
 
 };
