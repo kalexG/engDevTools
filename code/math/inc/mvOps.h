@@ -1,14 +1,13 @@
-// Filename: matrixOps.h
-// Created: 04/21/2018
-// Last Modified: 04/21/2018
+// Filename: mvOps.h
+// Created: 05/19/2018
+// Last Modified: 05/19/2018
 // Author: Kevin Gomez
 
 #include <iostream>
 #include <math.h>
 #include <string.h>
-#include "../inc/vectorOps.h"
 
-class matrixOps {
+class mvOps {
 
    // Access: protected //
    protected:
@@ -21,6 +20,7 @@ class matrixOps {
    double** m;
    double** m_tmp;
    double tmp;
+   bool isEqual;
    // Functions: private
 
    // Access: public
@@ -28,22 +28,47 @@ class matrixOps {
    // Data: public
    // Functions: public
 
+   // vectorOps Functions
+   void vAdd(double* vOut, double* v1, double* v2);
+   void vSub(double* vOut, double* v1, double* v2);
+   void vMag(double* sOut, double* v1);
+   void vUnit(double* vOut, double* v1);
+   void crossProduct(double* vOut, double* v1, double* v2);
+   void dotProduct(double* sOut, double* v1, double* v2);
+   // TODO: Vector isEqual
+   // TODO: Vector Initialization
+
+   // matrixOps Functions
    double** mInit(void);
    void mSetZeros(double** mOut);
    void mSetIdentity(double** mOut);
    void mAdd(double** mOut, double** m1, double** m2);
    void mSub(double** mOut, double** m1, double** m2);
    void mMult(double** mOut, double** m1, double** m2);
-   void mTrace(double s1, double** m1);
+   void mTrace(double* sOut, double** m1);
+   void mScaXMat(double** mOut, double s1, double** m1);
+   void mTran(double** mOut, double** m1);
+   void misEqual(bool* isEqual, double** m1, double** m2);
    // TODO: Inverse
-   // TODO: Transpose
    // TODO: Determinant
    // TODO: Adjugate
-   // TODO: IsEqual
+   // TODO: Vector*Matrix
+   // TODO: Matrix*Vector
+   
+   // TODO arrayOps Functions
 
    void printInfo()
    {
-      printf("This is the matrixOps class!\n");
+      printf("This is the mvOps class!\n");
+   }
+
+   // TODO:
+   // 1. Maybe add a string input to all these functions to allow for putting in the variable name
+   // 2. Move these into standard library
+
+   void printScalar(double scalar)
+   {
+      printf("%f\n", scalar);
    }
 
    void printVector(double* vector)

@@ -44,7 +44,6 @@ class twoBodyOrbitalMech {
 
    void printVector(double* vector)
    {
-      int i;
       printf("[%f, %f, %f]\n", vector[0], vector[1], vector[2]);
    }
 
