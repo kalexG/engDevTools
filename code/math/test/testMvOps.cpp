@@ -26,21 +26,21 @@ int main( int argc, char *argv[] ) {
    double s1, s2;
    s1=0;
    mvOps.vAdd(v3, v1, v2);
-   mvOps.printVector(v3);
+   mvOps.printVector(v3,"v1+v2=v3");
    mvOps.vSub(v3, v1, v2);
-   mvOps.printVector(v3);
+   mvOps.printVector(v3,"v1-v2=v3");
    mvOps.vMag(&s1, v1);
-   printf("Vector Magnitude is: [%f]\n", s1);
+   mvOps.printScalar(s1,"Vector Magnitude of Vector 1");
    mvOps.vUnit(v3, v1);
-   mvOps.printVector(v3);
+   mvOps.printVector(v3,"Unit Vector of Vector 1");
    mvOps.crossProduct(v3, v2, v4);
-   mvOps.printVector(v3);
+   mvOps.printVector(v3,"Cross Product of Vector 2 and Vector 4");
    mvOps.dotProduct(&s1, v2, v4);
-   printf("Dot Product is: [%f]\n", s1);
+   mvOps.printScalar(s1,"Dot Product of Vector 2 & Vector 4");
 
    //// Run matrixOps tests
 
-   printf("Running vectorOps tests\n");
+   printf("Running matrixOps tests\n");
 
    double** m1;
    double** m2;
@@ -56,18 +56,13 @@ int main( int argc, char *argv[] ) {
    mvOps.mSetZeros(m4);
    
    // Test Addition & Subtraction
-   printf("Initialize Matrix 1\n");
-   mvOps.printMatrix(m1);
-   printf("Initialize Matrix 2\n");
-   mvOps.printMatrix(m2);
-   printf("Initialize Matrix 3\n");
-   mvOps.printMatrix(m3);
-   printf("m1+m2=m3\n");
+   mvOps.printMatrix(m1,"Initialize Matrix 1");
+   mvOps.printMatrix(m2,"Initialize Matrix 2");
+   mvOps.printMatrix(m3,"Initialize Matrix 3");
    mvOps.mAdd(m3, m2, m1);
-   mvOps.printMatrix(m3);
-   printf("m1-m2=m3\n");
+   mvOps.printMatrix(m3,"m1+m2=m3");
    mvOps.mSub(m3, m2, m1);
-   mvOps.printMatrix(m3);
+   mvOps.printMatrix(m3,"m1-m2=m3");
 
    // Test Multiplication
    printf("Set up for Multiplication Test\n");
@@ -81,20 +76,14 @@ int main( int argc, char *argv[] ) {
          k++;
       }
    }
-   printf("Matrix 1\n");
-   mvOps.printMatrix(m1);
-   printf("Matrix 2\n");
-   mvOps.printMatrix(m2);
-   printf("Matrix 3\n");
+   mvOps.printMatrix(m1,"Matrix 1");
+   mvOps.printMatrix(m2,"Matrix 2");
    mvOps.mSetIdentity(m3);
-   mvOps.printMatrix(m3);
+   mvOps.printMatrix(m3,"Matrix 3");
    mvOps.mMult(m4, m1, m2);
-   printf("m4=m1*m2\n");
-   mvOps.printMatrix(m4);
-
-   printf("Tanspose of Matrix 1 is:\n");
+   mvOps.printMatrix(m4,"m4=m1*m2");
    mvOps.mTran(m3, m1);
-   mvOps.printMatrix(m3);
+   mvOps.printMatrix(m3,"Tanspose of Matrix 1");
 
    // Test Trace, Adjugate & Determinant
    mvOps.mSetIdentity(m1);
@@ -103,18 +92,19 @@ int main( int argc, char *argv[] ) {
    mvOps.mScaXMat(m2,s1,m2);
    mvOps.mTrace(&s1, m1);
    mvOps.mTrace(&s2, m2);
-   printf("Scalar values from trace are:\n");
-   mvOps.printScalar(s1);
-   mvOps.printScalar(s2);
+   mvOps.printScalar(s1,"Trace of Matrix 1");
+   mvOps.printScalar(s2,"Trace of Matrix 2");
 
    // Test isEqual
    bool testIsE;
    mvOps.misEqual(&testIsE,m1,m2);
-   printf("isEqual for m1 & m2 is: %s\n", testIsE ? "True" : "False"); 
+   mvOps.printBool(testIsE,"isEqual for m1 & m2:");
    mvOps.mSetIdentity(m2);
    mvOps.misEqual(&testIsE,m1,m2);
-   printf("isEqual for m1 & m2 is: %s\n", testIsE ? "True" : "False"); 
-
+   mvOps.printBool(testIsE,"isEqual for m1 & m2:");
+   m2[1][1]=0;
+   mvOps.misEqual(&testIsE,m1,m2);
+   mvOps.printBool(testIsE,"isEqual for m1 & m2:");
 
    return 0;
 }
