@@ -97,14 +97,62 @@ int main( int argc, char *argv[] ) {
 
    // Test isEqual
    bool testIsE;
-   mvOps.misEqual(&testIsE,m1,m2);
+   mvOps.mIsEqual(&testIsE,m1,m2);
    mvOps.printBool(testIsE,"isEqual for m1 & m2:");
    mvOps.mSetIdentity(m2);
-   mvOps.misEqual(&testIsE,m1,m2);
+   mvOps.mIsEqual(&testIsE,m1,m2);
    mvOps.printBool(testIsE,"isEqual for m1 & m2:");
    m2[1][1]=0;
-   mvOps.misEqual(&testIsE,m1,m2);
+   mvOps.mIsEqual(&testIsE,m1,m2);
    mvOps.printBool(testIsE,"isEqual for m1 & m2:");
 
+   // Run arrayOps tests
+   myArray a1;
+   myArray a2;
+   myArray a3;
+   int row=3;
+   int col=5;
+   a1 = mvOps.aInit(row,col);
+   a2 = mvOps.aInit(row,col);
+   mvOps.aSetOnes(a2);
+   a3 = mvOps.aInit(row,col);
+   mvOps.aScaXArr(a3,-1,a2);
+   mvOps.printArray(a1,"a1 Initialized");
+   mvOps.printArray(a2,"a2 Ones");
+   mvOps.printArray(a3,"a3 = -1*a2");
+   mvOps.aSetZeros(a3);
+   mvOps.printArray(a3,"a3 Zeros");
+   printf("Test arithmetic\n");
+   
+   myArray a4;
+   myArray a5;
+   myArray a6;
+   row=5;
+   a4 = mvOps.aInit(row,col);
+   a5 = mvOps.aInit(row,col);
+   a6 = mvOps.aInit(row,col);
+   mvOps.printArray(a4,"a4 Initialized");
+   printf("Check Add/Sub dimension check\n");
+   mvOps.aAdd(a5,a1,a4);
+   mvOps.aSub(a5,a1,a4);
+   mvOps.aSetOnes(a5);
+   mvOps.aScaXArr(a5,2,a5); 
+   mvOps.printArray(a5,"a5 = 2*Ones");
+   mvOps.aSetOnes(a4);
+   mvOps.aAdd(a6,a5,a4);
+   mvOps.printArray(a6,"a6 = a5 + Ones");
+   mvOps.aSub(a6,a5,a4);  
+   mvOps.printArray(a6,"a6 = a5 - Ones");
+   printf("Check identity setting error catch.\n");
+   mvOps.aSetIdentity(a1);
+   mvOps.aSetIdentity(a6);
+   mvOps.printArray(a6,"a6 = Identity");
+   
+   mvOps.aFree(a1);
+   mvOps.aFree(a2);
+   mvOps.aFree(a3);
+   mvOps.aFree(a4);
+   mvOps.aFree(a5);
+   mvOps.aFree(a6);
    return 0;
 }

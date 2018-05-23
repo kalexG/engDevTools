@@ -6,7 +6,9 @@
 #include <iostream>
 #include <math.h>
 #include <string.h>
+#include <tuple>
 using namespace std;
+typedef tuple<double**,int,int> myArray;
 
 class mvOps {
 
@@ -19,10 +21,9 @@ class mvOps {
    private:
    // Data: private
    double** m;
-   double** m_tmp;
-   double tmp;
+   double** a;
+   tuple<double**,int,int> aTup;
    bool isEqual;
-   string str_tmp;
    // Functions: private
 
    // Access: public
@@ -39,10 +40,14 @@ class mvOps {
    void dotProduct(double* sOut, double* v1, double* v2);
    // TODO: Vector isEqual
    // TODO: Vector Initialization
+   // TODO: Vector Set Ones
+   // TODO: Vector Set Zeros
+   // TODO: Scalar * Vector
 
    // matrixOps Functions
    double** mInit(void);
    void mSetZeros(double** mOut);
+   void mSetOnes(double** mOut);
    void mSetIdentity(double** mOut);
    void mAdd(double** mOut, double** m1, double** m2);
    void mSub(double** mOut, double** m1, double** m2);
@@ -50,7 +55,7 @@ class mvOps {
    void mTrace(double* sOut, double** m1);
    void mScaXMat(double** mOut, double s1, double** m1);
    void mTran(double** mOut, double** m1);
-   void misEqual(bool* isEqual, double** m1, double** m2);
+   void mIsEqual(bool* isEqual, double** m1, double** m2);
    // TODO: Inverse
    // TODO: Determinant
    // TODO: Adjugate
@@ -58,6 +63,17 @@ class mvOps {
    // TODO: Matrix*Vector
    
    // TODO arrayOps Functions
+   myArray aInit(int row, int col);
+   void aFree(myArray aFree);
+   void aSetZeros(myArray aOut);
+   void aSetOnes(myArray aOut);
+   void aSetIdentity(myArray aOut);
+   void aAdd(myArray aOut, myArray a1, myArray a2);
+   void aSub(myArray aOut, myArray a1, myArray a2);
+   void aMult(double** aOut, double** a1, double** a2); // [NOT DONE]
+   void aScaXArr(myArray aOut, double s1, myArray a1);
+   void aTran(myArray aOut, myArray a1);
+   void aIsEqual(bool* isEqual, double** a1, double** a2); // [NOT DONE]
 
    void printInfo()
    {
@@ -104,7 +120,7 @@ class mvOps {
       {
          printf(">>> %s\n",str1.c_str());
       }
-      printf("[%f, %f, %f]\n", vector[0], vector[1], vector[2]);
+      printf("| %f %f %f |\n", vector[0], vector[1], vector[2]);
    }
 
    void printMatrix(double** matrix, string str1 = "")
@@ -117,9 +133,31 @@ class mvOps {
       {
          printf(">>> %s\n",str1.c_str());
       }
-      printf("|%f %f %f|\n", matrix[0][0], matrix[0][1], matrix[0][2]);
-      printf("|%f %f %f|\n", matrix[1][0], matrix[1][1], matrix[1][2]);
-      printf("|%f %f %f|\n", matrix[2][0], matrix[2][1], matrix[2][2]);
+      printf("| %f %f %f |\n", matrix[0][0], matrix[0][1], matrix[0][2]);
+      printf("| %f %f %f |\n", matrix[1][0], matrix[1][1], matrix[1][2]);
+      printf("| %f %f %f |\n", matrix[2][0], matrix[2][1], matrix[2][2]);
+   }
+
+   void printArray(myArray arr, string str1 = "")
+   {
+      if (str1.empty())
+      {
+         printf(">>>\n");
+      }
+      else
+      {
+         printf(">>> %s\n",str1.c_str());
+      }
+
+      for (int i=0;i<get<1>(arr);i++)
+      {
+         printf("| ");
+         for(int j=0;j<get<2>(arr);j++)
+         {
+            printf("%f ",get<0>(arr)[i][j]);
+         }
+         printf("|\n");
+      }
    }
 
 };

@@ -43,6 +43,23 @@ void mvOps::mSetZeros(double** mOut)
    }
 }
 
+// Set Matrix to Ones
+// Inputs: mOut
+// Outputs: mOut
+// Operation: mOut=Ones
+
+void mvOps::mSetOnes(double** mOut)
+{
+
+   for (int i=0;i<3;i++)
+   {
+      for(int j=0;j<3;j++)
+      {
+         mOut[i][j]=1;
+      }
+   }
+}
+
 // Set Matrix to Identity
 // Inputs: mOut
 // Outputs: mOut
@@ -150,7 +167,7 @@ void mvOps::mScaXMat(double** mOut, double s1, double** m1)
 // Matrix Transpose
 // Inputs: s1, m1
 // Outputs: mOut
-// Operation: s1*m1=mOut
+// Operation: m2=m1^t
 
 void mvOps::mTran(double** mOut, double** m1)
 {
@@ -164,11 +181,11 @@ void mvOps::mTran(double** mOut, double** m1)
 }
 
 // Matrix isEqual
-// Inputs: m1, m1
+// Inputs: m1, m2
 // Outputs: str1
-// Operation: s1*m1=mOut
+// Operation: ?m1=m2?
 
-void mvOps::misEqual(bool* isEqual, double** m1, double** m2)
+void mvOps::mIsEqual(bool* isEqual, double** m1, double** m2)
 {
    *isEqual=false;
    for(int i=0;i<3;i++)

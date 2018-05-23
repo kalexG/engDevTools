@@ -5,7 +5,7 @@ LFLAGS = -Wall $(DEBUG)
 
 all: bin/testMvOps
 
-bin/testMvOps: obj/vectorOps.o obj/matrixOps.o obj/testMvOps.o
+bin/testMvOps: obj/vectorOps.o obj/matrixOps.o obj/arrayOps.o obj/testMvOps.o
 			$(CC) $(LFLAGS) -Lobj -o $@ $^
 
 obj/%.o: */%.cpp
