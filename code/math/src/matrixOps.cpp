@@ -199,8 +199,24 @@ void mvOps::mIsEqual(bool* isEqual, double** m1, double** m2)
          else
          {
             *isEqual=false;
+            printf("These arrays are NOT equal\n");
             return;
          }
       }
    }
+   printf("These arrays are ARE equal\n");
 }
+
+// Matrix Determinant (3x3) 
+// Inputs: m1
+// Outputs: sOut
+// Operation: Dterminant of 3x3 matrix
+
+void mvOps::mDet33(double* sOut, double** m1)
+{
+   *sOut=m1[0][0]*(m1[1][1]*m1[2][2]-m1[2][1]*m1[1][2]);
+   *sOut=*sOut+m1[0][1]*(m1[1][2]*m1[2][0]-m1[2][2]*m1[1][0]);
+   *sOut=*sOut+m1[0][2]*(m1[1][0]*m1[2][1]-m1[2][0]*m1[1][1]);
+}
+
+

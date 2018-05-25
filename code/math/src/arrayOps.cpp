@@ -158,18 +158,25 @@ void mvOps::aSub(myArray aOut, myArray a1, myArray a2)
 // Outputs: aOut
 // Operation: aOut=a1*a2
 
-void mvOps::aMult(double** aOut, double** a1, double** a2)
+void mvOps::aMult(myArray aOut, myArray a1, myArray a2)
 {
    // Make sure new array starts out empty
-   //aSetZeros(aOut);
 
-   for (int k=0;k<3;k++)
+   if ( get<2>(a1) != get<1>(a2) )
    {
-      for(int i=0;i<3;i++)
+   printf("Error: Number of columns of array 1 must equal number of rows of array 2\n");
+   return;
+   }
+
+   aSetZeros(aOut);
+
+   for (int k=0;k<get<1>(a1);k++)
+   {
+      for(int i=0;i<get<2>(a2);i++)
       {
-         for (int j=0;j<3;j++)
+         for (int j=0;j<get<2>(a1);j++)
          {
-            aOut[k][i]=aOut[k][i]+a1[k][j]*a2[j][i];
+            get<0>(aOut)[k][i]=get<0>(aOut)[k][i]+get<0>(a1)[k][j]*get<0>(a2)[j][i];
          }
       }
    }
@@ -207,27 +214,47 @@ void mvOps::aTran(myArray aOut, myArray a1)
    }
 }
 
-// Array isEqual [NOT DONE]
+// Array isEqual
 // Inputs: a1, a2
 // Outputs: str1
 // Operation: ?a1=a2?
 
-void mvOps::aIsEqual(bool* isEqual, double** a1, double** a2)
+void mvOps::aIsEqual(bool* isEqual, myArray a1, myArray a2)
 {
    *isEqual=false;
-   for(int i=0;i<3;i++)
+
+   if ((get<1>(a1) != get<1>(a2)) || (get<2>(a1) != get<2>(a2)))
    {
-      for (int j=0;j<3;j++)
+   printf("Error: Array dimensions are not the same\n");
+   return;
+   }
+
+   for(int i=0;i<get<1>(a1);i++)
+   {
+      for (int j=0;j<get<2>(a1);j++)
       {
-         if (a1[i][j]==a2[i][j])
+         if (get<0>(a1)[i][j]==get<0>(a2)[i][j])
          {
             *isEqual=true;
          }
          else
          {
             *isEqual=false;
+            printf("These arrays are NOT equal\n");
             return;
          }
       }
    }
+   printf("These arrays are ARE equal\n");
 }
+
+// Matrix Determinant (2x2) 
+// Inputs: m1
+// Outputs: sOut
+// Operation: Dterminant of 2x2 matrix
+
+void mvOps::mDet22(double* sOut, double** m1)
+{
+   *sOut=m1[0][0]*m1[1][1]-m1[0][1]*m1[1][0];
+}
+

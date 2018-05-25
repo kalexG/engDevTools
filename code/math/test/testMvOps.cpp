@@ -84,6 +84,8 @@ int main( int argc, char *argv[] ) {
    mvOps.printMatrix(m4,"m4=m1*m2");
    mvOps.mTran(m3, m1);
    mvOps.printMatrix(m3,"Tanspose of Matrix 1");
+   mvOps.mSetOnes(m3);
+   mvOps.printMatrix(m3,"Set to Ones");
 
    // Test Trace, Adjugate & Determinant
    mvOps.mSetIdentity(m1);
@@ -147,7 +149,19 @@ int main( int argc, char *argv[] ) {
    mvOps.aSetIdentity(a1);
    mvOps.aSetIdentity(a6);
    mvOps.printArray(a6,"a6 = Identity");
-   
+   printf("Test Transpose\n");
+   get<0>(a6)[0][1]=2; get<0>(a6)[0][2]=2; get<0>(a6)[0][3]=2; get<0>(a6)[0][4]=2;
+   get<0>(a6)[1][2]=3; get<0>(a6)[1][3]=3; get<0>(a6)[1][4]=3;
+   get<0>(a6)[2][3]=4; get<0>(a6)[2][4]=4;
+   get<0>(a6)[3][4]=5;
+   mvOps.printArray(a6,"Before Transpose (a6)");
+   mvOps.aTran(a5,a6);
+   mvOps.printArray(a5,"After Transpose (a5)");
+   printf("Test Array isEqual\n");
+   mvOps.aIsEqual(&testIsE,a5,a3);
+   mvOps.aIsEqual(&testIsE,a5,a6);
+   mvOps.aIsEqual(&testIsE,a6,a6);   
+
    mvOps.aFree(a1);
    mvOps.aFree(a2);
    mvOps.aFree(a3);

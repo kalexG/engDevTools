@@ -56,6 +56,7 @@ class mvOps {
    void mScaXMat(double** mOut, double s1, double** m1);
    void mTran(double** mOut, double** m1);
    void mIsEqual(bool* isEqual, double** m1, double** m2);
+   void mDet33(double* sOut, double** m1);
    // TODO: Inverse
    // TODO: Determinant
    // TODO: Adjugate
@@ -70,10 +71,11 @@ class mvOps {
    void aSetIdentity(myArray aOut);
    void aAdd(myArray aOut, myArray a1, myArray a2);
    void aSub(myArray aOut, myArray a1, myArray a2);
-   void aMult(double** aOut, double** a1, double** a2); // [NOT DONE]
+   void aMult(myArray aOut, myArray a1, myArray a2); // [NOT DONE]
    void aScaXArr(myArray aOut, double s1, myArray a1);
    void aTran(myArray aOut, myArray a1);
-   void aIsEqual(bool* isEqual, double** a1, double** a2); // [NOT DONE]
+   void aIsEqual(bool* isEqual, myArray a1, myArray a2);
+   void mDet22(double* sOut, double** m1);
 
    void printInfo()
    {
