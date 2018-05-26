@@ -84,6 +84,24 @@ void vmaOps::mSetIdentity(double** mOut)
    }
 }
 
+// Set Matrix to 123
+// Inputs: mOut
+// Outputs: mOut
+// Operation: mOut=123
+
+void vmaOps::mSet123(double** mOut)
+{
+   int k=1;
+   for (int i=0;i<3;i++)
+   {
+      for(int j=0;j<3;j++)
+      {
+         mOut[i][j]=k;
+         k++;
+      }
+   }
+}
+
 // Matrix Addition
 // Inputs: m1, m2
 // Outputs: mOut

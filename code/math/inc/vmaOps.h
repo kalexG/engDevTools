@@ -53,6 +53,7 @@ class vmaOps {
    double** mInit(void);
    void mSetZeros(double** mOut);
    void mSetOnes(double** mOut);
+   void mSet123(double** mOut);
    void mSetIdentity(double** mOut);
    void mAdd(double** mOut, double** m1, double** m2);
    void mSub(double** mOut, double** m1, double** m2);

@@ -112,7 +112,25 @@ int main( int argc, char *argv[] ) {
    vmaOps.mIsEqual(&testIsE,m1,m2);
    vmaOps.sOps.printBool(testIsE,"isEqual for m1 & m2:");
 
+   // Determinant testing (Matrix)
+   double** m5;
+   double det;
+   m5 = vmaOps.mInit();
+   vmaOps.mSet123(m5);
+   vmaOps.mDet33(&det, m5);
+   vmaOps.sOps.printMatrix(m5,"m5=123");
+   vmaOps.sOps.printScalar(det,"Determinant of 3x3 m5 is:");
+   m5[0][0]=6; m5[0][1]=1;  m5[0][2]=1;
+   m5[1][0]=4; m5[1][1]=-2; m5[1][2]=5;
+   m5[2][0]=2; m5[2][1]=8;  m5[2][2]=7;
+   vmaOps.sOps.printMatrix(m5,"Determinant should be -306");
+   vmaOps.mDet33(&det, m5);
+   vmaOps.sOps.printScalar(det,"Determinant of 3x3 m5 is:");
+
    // Run arrayOps tests
+
+   printf("Running arrayOps tests\n");
+
    myArray a1;
    myArray a2;
    myArray a3;
@@ -164,7 +182,14 @@ int main( int argc, char *argv[] ) {
    printf("Test Array isEqual\n");
    vmaOps.aIsEqual(&testIsE,a5,a3);
    vmaOps.aIsEqual(&testIsE,a5,a6);
-   vmaOps.aIsEqual(&testIsE,a6,a6);   
+   vmaOps.aIsEqual(&testIsE,a6,a6);
+
+   // Determinant testing
+   myArray a7;
+   a7 = vmaOps.aInit(2,2);
+   get<0>(a7)[0][0]=1; get<0>(a7)[0][1]=2; get<0>(a7)[1][0]=3; get<0>(a7)[1][1]=4;
+   vmaOps.mDet22(&det, get<0>(a7));
+   vmaOps.sOps.printScalar(det,"Determinant of 2x2 a7 is:");
 
    vmaOps.aFree(a1);
    vmaOps.aFree(a2);
