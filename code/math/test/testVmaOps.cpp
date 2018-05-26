@@ -42,6 +42,14 @@ int main( int argc, char *argv[] ) {
    vmaOps.sOps.printVector(v3,"Cross Product of Vector 2 and Vector 4");
    vmaOps.dotProduct(&s1, v2, v4);
    vmaOps.sOps.printScalar(s1,"Dot Product of Vector 2 & Vector 4");
+   // Test vector setting functions
+   printf("Test vector setting functions\n");
+   vmaOps.vSetZeros(v3);
+   vmaOps.sOps.printVector(v3,"Set v3 to Zeros");
+   vmaOps.vSetOnes(v3);
+   vmaOps.sOps.printVector(v3,"Set v3 to Ones");
+   vmaOps.vSet123(v3);
+   vmaOps.sOps.printVector(v3,"Set v3 to 123");
 
    //// Run matrixOps tests
 
@@ -190,6 +198,14 @@ int main( int argc, char *argv[] ) {
    get<0>(a7)[0][0]=1; get<0>(a7)[0][1]=2; get<0>(a7)[1][0]=3; get<0>(a7)[1][1]=4;
    vmaOps.mDet22(&det, get<0>(a7));
    vmaOps.sOps.printScalar(det,"Determinant of 2x2 a7 is:");
+
+   // Test Multiplication
+   vmaOps.aSet123(a3);
+   vmaOps.aSet123(a6);
+   vmaOps.sOps.printArray(a3,"a3");
+   vmaOps.sOps.printArray(a6,"a6");
+   vmaOps.aMult(a2,a3,a6);
+   vmaOps.sOps.printArray(a2,"a2=a3*a6");
 
    vmaOps.aFree(a1);
    vmaOps.aFree(a2);

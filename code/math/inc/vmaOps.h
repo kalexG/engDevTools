@@ -23,8 +23,6 @@ class vmaOps {
    // Data: private
    double** m;
    double** a;
-   tuple<double**,int,int> aTup;
-   bool isEqual;
    // Functions: private
 
    // Access: public
@@ -36,6 +34,9 @@ class vmaOps {
    // Functions: public
 
    // vectorOps Functions
+   void vSetZeros(double* vOut);
+   void vSetOnes(double* vOut);
+   void vSet123(double* vOut);
    void vAdd(double* vOut, double* v1, double* v2);
    void vSub(double* vOut, double* v1, double* v2);
    void vMag(double* sOut, double* v1);
@@ -43,10 +44,7 @@ class vmaOps {
    void crossProduct(double* vOut, double* v1, double* v2);
    void dotProduct(double* sOut, double* v1, double* v2);
    void vIsEqual(bool* isEqual, double* v1, double* v2);
-   // TODO: Vector isEqual
    // TODO: Vector Initialization
-   // TODO: Vector Set Ones
-   // TODO: Vector Set Zeros
    // TODO: Scalar * Vector
 
    // matrixOps Functions
@@ -64,8 +62,8 @@ class vmaOps {
    void mIsEqual(bool* isEqual, double** m1, double** m2);
    void mDet33(double* sOut, double** m1);
    // TODO: Inverse
-   // TODO: Determinant
    // TODO: Adjugate
+   // TODO: Cofactor
    // TODO: Vector*Matrix
    // TODO: Matrix*Vector
    
@@ -74,6 +72,7 @@ class vmaOps {
    void aFree(myArray aFree);
    void aSetZeros(myArray aOut);
    void aSetOnes(myArray aOut);
+   void aSet123(myArray aOut);
    void aSetIdentity(myArray aOut);
    void aAdd(myArray aOut, myArray a1, myArray a2);
    void aSub(myArray aOut, myArray a1, myArray a2);

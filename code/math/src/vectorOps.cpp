@@ -8,6 +8,42 @@
 // Need class definition
 #include "../inc/vmaOps.h"
 
+// Set Vector to Zeros
+// Inputs: vOut
+// Outputs: vOut
+// Operation: vOut=Zeros
+
+void vmaOps::vSetZeros(double* vOut)
+{
+   vOut[0]=0;
+   vOut[1]=0;
+   vOut[2]=0;
+}
+
+// Set Vector to Ones
+// Inputs: vOut
+// Outputs: vOut
+// Operation: vOut=Ones
+
+void vmaOps::vSetOnes(double* vOut)
+{
+   vOut[0]=1;
+   vOut[1]=1;
+   vOut[2]=1;
+}
+
+// Set Vector to 123
+// Inputs: vOut
+// Outputs: vOut
+// Operation: vOut=123
+
+void vmaOps::vSet123(double* vOut)
+{
+   vOut[0]=1;
+   vOut[1]=2;
+   vOut[2]=3;
+}
+
 // Vector Addition
 // Inputs: v1, v2
 // Outputs: vOut

@@ -80,6 +80,24 @@ void vmaOps::aSetOnes(myArray aOut)
    }
 }
 
+// Set Array to 123
+// Inputs: aOut
+// Outputs: aOut
+// Operation: aOut=123
+
+void vmaOps::aSet123(myArray aOut)
+{
+   int k=1;
+   for (int i=0;i<get<1>(aOut);i++)
+   {
+      for(int j=0;j<get<2>(aOut);j++)
+      {
+         get<0>(aOut)[i][j]=k;
+         k++;
+      }
+   }
+}
+
 // Set Matrix to Identity
 // Inputs: aOut
 // Outputs: aOut
