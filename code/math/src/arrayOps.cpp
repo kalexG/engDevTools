@@ -6,14 +6,14 @@
 //--------------------------
 
 // Need class definition
-#include "../inc/mvOps.h"
+#include "../inc/vmaOps.h"
 
 // Array Initialization
 // Inputs: None
 // Outputs: m
 // Operation: Allocate Memory
 
-myArray mvOps::aInit(int row, int col)
+myArray vmaOps::aInit(int row, int col)
 {
    a = new double *[row];
 
@@ -38,7 +38,7 @@ myArray mvOps::aInit(int row, int col)
 // Outputs: aFree
 // Operation: Free Memory
 
-void mvOps::aFree(myArray aFree)
+void vmaOps::aFree(myArray aFree)
 {
    for (int i=0;i<get<1>(aFree);i++)
    {
@@ -53,7 +53,7 @@ void mvOps::aFree(myArray aFree)
 // Outputs: aOut
 // Operation: aOut=Zeros
 
-void mvOps::aSetZeros(myArray aOut)
+void vmaOps::aSetZeros(myArray aOut)
 {
    for (int i=0;i<get<1>(aOut);i++)
    {
@@ -69,7 +69,7 @@ void mvOps::aSetZeros(myArray aOut)
 // Outputs: aOut
 // Operation: aOut=Ones
 
-void mvOps::aSetOnes(myArray aOut)
+void vmaOps::aSetOnes(myArray aOut)
 {
    for (int i=0;i<get<1>(aOut);i++)
    {
@@ -85,7 +85,7 @@ void mvOps::aSetOnes(myArray aOut)
 // Outputs: aOut
 // Operation: aOut=Identity
 
-void mvOps::aSetIdentity(myArray aOut)
+void vmaOps::aSetIdentity(myArray aOut)
 {
    if ( (get<1>(aOut) != get<2>(aOut)) )
    {
@@ -114,7 +114,7 @@ void mvOps::aSetIdentity(myArray aOut)
 // Outputs: aOut
 // Operation: aOut=a1+a2
 
-void mvOps::aAdd(myArray aOut, myArray a1, myArray a2)
+void vmaOps::aAdd(myArray aOut, myArray a1, myArray a2)
 {
    if ((get<1>(a1) != get<1>(a2)) || (get<2>(a1) != get<2>(a2)))
    {
@@ -136,7 +136,7 @@ void mvOps::aAdd(myArray aOut, myArray a1, myArray a2)
 // Outputs: aOut
 // Operation: aOut=a1-a2
 
-void mvOps::aSub(myArray aOut, myArray a1, myArray a2)
+void vmaOps::aSub(myArray aOut, myArray a1, myArray a2)
 {
    if ((get<1>(a1) != get<1>(a2)) || (get<2>(a1) != get<2>(a2)))
    {
@@ -158,7 +158,7 @@ void mvOps::aSub(myArray aOut, myArray a1, myArray a2)
 // Outputs: aOut
 // Operation: aOut=a1*a2
 
-void mvOps::aMult(myArray aOut, myArray a1, myArray a2)
+void vmaOps::aMult(myArray aOut, myArray a1, myArray a2)
 {
    // Make sure new array starts out empty
 
@@ -187,7 +187,7 @@ void mvOps::aMult(myArray aOut, myArray a1, myArray a2)
 // Outputs: aOut
 // Operation: s1*a1=aOut
 
-void mvOps::aScaXArr(myArray aOut, double s1, myArray a1)
+void vmaOps::aScaXArr(myArray aOut, double s1, myArray a1)
 {
    for(int i=0;i<get<1>(a1);i++)
    {
@@ -203,7 +203,7 @@ void mvOps::aScaXArr(myArray aOut, double s1, myArray a1)
 // Outputs: mOut
 // Operation: s1*m1=mOut
 
-void mvOps::aTran(myArray aOut, myArray a1)
+void vmaOps::aTran(myArray aOut, myArray a1)
 {
    for(int i=0;i<get<1>(a1);i++)
    {
@@ -219,7 +219,7 @@ void mvOps::aTran(myArray aOut, myArray a1)
 // Outputs: str1
 // Operation: ?a1=a2?
 
-void mvOps::aIsEqual(bool* isEqual, myArray a1, myArray a2)
+void vmaOps::aIsEqual(bool* isEqual, myArray a1, myArray a2)
 {
    *isEqual=false;
 
@@ -253,7 +253,7 @@ void mvOps::aIsEqual(bool* isEqual, myArray a1, myArray a2)
 // Outputs: sOut
 // Operation: Dterminant of 2x2 matrix
 
-void mvOps::mDet22(double* sOut, double** m1)
+void vmaOps::mDet22(double* sOut, double** m1)
 {
    *sOut=m1[0][0]*m1[1][1]-m1[0][1]*m1[1][0];
 }

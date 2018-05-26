@@ -1,4 +1,4 @@
-// Filename: mvOps.h
+// Filename: vmaOps.h
 // Created: 05/19/2018
 // Last Modified: 05/19/2018
 // Author: Kevin Gomez
@@ -7,10 +7,11 @@
 #include <math.h>
 #include <string.h>
 #include <tuple>
+#include "../../support/inc/supportOps.h"
 using namespace std;
 typedef tuple<double**,int,int> myArray;
 
-class mvOps {
+class vmaOps {
 
    // Access: protected //
    protected:
@@ -29,6 +30,9 @@ class mvOps {
    // Access: public
    public:
    // Data: public
+
+   // Classes: public
+   supportOps sOps;
    // Functions: public
 
    // vectorOps Functions
@@ -38,6 +42,7 @@ class mvOps {
    void vUnit(double* vOut, double* v1);
    void crossProduct(double* vOut, double* v1, double* v2);
    void dotProduct(double* sOut, double* v1, double* v2);
+   void vIsEqual(bool* isEqual, double* v1, double* v2);
    // TODO: Vector isEqual
    // TODO: Vector Initialization
    // TODO: Vector Set Ones
@@ -79,14 +84,14 @@ class mvOps {
 
    void printInfo()
    {
-      printf("This is the mvOps class!\n");
+      printf("This is the vmaOps class!\n");
    }
 
    // TODO:
    // 1. Maybe add a string input to all these functions to allow for putting in the variable name
    // 2. Move these into standard library
 
-   void printBool(bool boolean, string str1 = "")
+   /*void printBool(bool boolean, string str1 = "")
    {
       if (str1.empty())
       {
@@ -160,6 +165,6 @@ class mvOps {
          }
          printf("|\n");
       }
-   }
+   }*/
 
 };

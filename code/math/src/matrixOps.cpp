@@ -6,14 +6,14 @@
 //--------------------------
 
 // Need class definition
-#include "../inc/mvOps.h"
+#include "../inc/vmaOps.h"
 
 // Matrix Initialization
 // Inputs: None
 // Outputs: m
 // Operation: 
 
-double** mvOps::mInit(void)
+double** vmaOps::mInit(void)
 {
    m = new double *[3];
 
@@ -31,7 +31,7 @@ double** mvOps::mInit(void)
 // Outputs: mOut
 // Operation: mOut=Zeros
 
-void mvOps::mSetZeros(double** mOut)
+void vmaOps::mSetZeros(double** mOut)
 {
 
    for (int i=0;i<3;i++)
@@ -48,7 +48,7 @@ void mvOps::mSetZeros(double** mOut)
 // Outputs: mOut
 // Operation: mOut=Ones
 
-void mvOps::mSetOnes(double** mOut)
+void vmaOps::mSetOnes(double** mOut)
 {
 
    for (int i=0;i<3;i++)
@@ -65,7 +65,7 @@ void mvOps::mSetOnes(double** mOut)
 // Outputs: mOut
 // Operation: mOut=Identity
 
-void mvOps::mSetIdentity(double** mOut)
+void vmaOps::mSetIdentity(double** mOut)
 {
 
    for (int i=0;i<3;i++)
@@ -89,7 +89,7 @@ void mvOps::mSetIdentity(double** mOut)
 // Outputs: mOut
 // Operation: mOut=m1+m2
 
-void mvOps::mAdd(double** mOut, double** m1, double** m2)
+void vmaOps::mAdd(double** mOut, double** m1, double** m2)
 {
    for(int i=0;i<3;i++)
    {
@@ -105,7 +105,7 @@ void mvOps::mAdd(double** mOut, double** m1, double** m2)
 // Outputs: mOut
 // Operation: mOut=m1-m2
 
-void mvOps::mSub(double** mOut, double** m1, double** m2)
+void vmaOps::mSub(double** mOut, double** m1, double** m2)
 {
    for(int i=0;i<3;i++)
    {
@@ -121,7 +121,7 @@ void mvOps::mSub(double** mOut, double** m1, double** m2)
 // Outputs: mOut
 // Operation: mOut=m1*m2
 
-void mvOps::mMult(double** mOut, double** m1, double** m2)
+void vmaOps::mMult(double** mOut, double** m1, double** m2)
 {
    // Make sure new matrix starts out empty
    mSetZeros(mOut);
@@ -143,7 +143,7 @@ void mvOps::mMult(double** mOut, double** m1, double** m2)
 // Outputs: s1
 // Operation: Sum Diagonal of m1
 
-void mvOps::mTrace(double* sOut, double** m1)
+void vmaOps::mTrace(double* sOut, double** m1)
 {
    *sOut=m1[0][0]+m1[1][1]+m1[2][2];
 }
@@ -153,7 +153,7 @@ void mvOps::mTrace(double* sOut, double** m1)
 // Outputs: mOut
 // Operation: s1*m1=mOut
 
-void mvOps::mScaXMat(double** mOut, double s1, double** m1)
+void vmaOps::mScaXMat(double** mOut, double s1, double** m1)
 {
    for(int i=0;i<3;i++)
    {
@@ -169,7 +169,7 @@ void mvOps::mScaXMat(double** mOut, double s1, double** m1)
 // Outputs: mOut
 // Operation: m2=m1^t
 
-void mvOps::mTran(double** mOut, double** m1)
+void vmaOps::mTran(double** mOut, double** m1)
 {
    for(int i=0;i<3;i++)
    {
@@ -185,7 +185,7 @@ void mvOps::mTran(double** mOut, double** m1)
 // Outputs: str1
 // Operation: ?m1=m2?
 
-void mvOps::mIsEqual(bool* isEqual, double** m1, double** m2)
+void vmaOps::mIsEqual(bool* isEqual, double** m1, double** m2)
 {
    *isEqual=false;
    for(int i=0;i<3;i++)
@@ -199,12 +199,12 @@ void mvOps::mIsEqual(bool* isEqual, double** m1, double** m2)
          else
          {
             *isEqual=false;
-            printf("These arrays are NOT equal\n");
+            printf("These matricies are NOT equal\n");
             return;
          }
       }
    }
-   printf("These arrays are ARE equal\n");
+   printf("These matricies are ARE equal\n");
 }
 
 // Matrix Determinant (3x3) 
@@ -212,7 +212,7 @@ void mvOps::mIsEqual(bool* isEqual, double** m1, double** m2)
 // Outputs: sOut
 // Operation: Dterminant of 3x3 matrix
 
-void mvOps::mDet33(double* sOut, double** m1)
+void vmaOps::mDet33(double* sOut, double** m1)
 {
    *sOut=m1[0][0]*(m1[1][1]*m1[2][2]-m1[2][1]*m1[1][2]);
    *sOut=*sOut+m1[0][1]*(m1[1][2]*m1[2][0]-m1[2][2]*m1[1][0]);
