@@ -44,11 +44,12 @@ class vmaOps {
    void crossProduct(double* vOut, double* v1, double* v2);
    void dotProduct(double* sOut, double* v1, double* v2);
    void vIsEqual(bool* isEqual, double* v1, double* v2);
+   void ScaXVec(double* vOut, double s1, double* v1);
    // TODO: Vector Initialization
-   // TODO: Scalar * Vector
 
    // matrixOps Functions
    double** mInit(void);
+   void mFree(double** mFree);
    void mSetZeros(double** mOut);
    void mSetOnes(double** mOut);
    void mSet123(double** mOut);
@@ -57,7 +58,7 @@ class vmaOps {
    void mSub(double** mOut, double** m1, double** m2);
    void mMult(double** mOut, double** m1, double** m2);
    void mTrace(double* sOut, double** m1);
-   void mScaXMat(double** mOut, double s1, double** m1);
+   void ScaXMat(double** mOut, double s1, double** m1);
    void mTran(double** mOut, double** m1);
    void mIsEqual(bool* isEqual, double** m1, double** m2);
    void mDet33(double* sOut, double** m1);
@@ -77,7 +78,7 @@ class vmaOps {
    void aAdd(myArray aOut, myArray a1, myArray a2);
    void aSub(myArray aOut, myArray a1, myArray a2);
    void aMult(myArray aOut, myArray a1, myArray a2); // [NOT DONE]
-   void aScaXArr(myArray aOut, double s1, myArray a1);
+   void ScaXArr(myArray aOut, double s1, myArray a1);
    void aTran(myArray aOut, myArray a1);
    void aIsEqual(bool* isEqual, myArray a1, myArray a2);
    void mDet22(double* sOut, double** m1);

@@ -38,6 +38,12 @@ class supportOps {
 
    // TODO writeOps Functions
 
+   void wStdout();
+   void wStdin();
+   void wStderr();
+   void wRecord();
+   void wArray2Csv();
+
    void printInfo()
    {
       printf("This is the supportOps class!\n");

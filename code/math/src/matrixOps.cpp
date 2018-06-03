@@ -26,6 +26,21 @@ double** vmaOps::mInit(void)
    return m;
 }
 
+// Matrix Free
+// Inputs: mFree
+// Outputs: mFree
+// Operation: Free Memory
+
+void vmaOps::mFree(double** mFree)
+{
+   for (int i=0;i<3;i++)
+   {
+      delete[] mFree[i];
+   }
+   
+   delete[] mFree;
+}
+
 // Set Matrix to Zeros
 // Inputs: mOut
 // Outputs: mOut
@@ -171,7 +186,7 @@ void vmaOps::mTrace(double* sOut, double** m1)
 // Outputs: mOut
 // Operation: s1*m1=mOut
 
-void vmaOps::mScaXMat(double** mOut, double s1, double** m1)
+void vmaOps::ScaXMat(double** mOut, double s1, double** m1)
 {
    for(int i=0;i<3;i++)
    {

@@ -205,7 +205,7 @@ void vmaOps::aMult(myArray aOut, myArray a1, myArray a2)
 // Outputs: aOut
 // Operation: s1*a1=aOut
 
-void vmaOps::aScaXArr(myArray aOut, double s1, myArray a1)
+void vmaOps::ScaXArr(myArray aOut, double s1, myArray a1)
 {
    for(int i=0;i<get<1>(a1);i++)
    {

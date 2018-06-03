@@ -134,3 +134,9 @@ void vmaOps::vIsEqual(bool* isEqual, double* v1, double* v2)
    }
 }
 
+void vmaOps::ScaXVec(double* vOut, double s1, double* v1)
+{
+   vOut[0]=s1*v1[0];
+   vOut[1]=s1*v1[1];
+   vOut[2]=s1*v1[2];
+}
