@@ -67,8 +67,8 @@ int main( int argc, char *argv[] ) {
    // Initialize Arrays
    // myArrayp2 is defined in aOpt. It is a tuple <double** array, int row, int col>
 
-   myArrayp1* a4;
-   myArraySp1 sptr(new myArrayp1);
+   //myArrayp1* a4;
+   //myArraySp1 sptr(new myArrayp1);
    //myArrayp1 a5;
    //myArrayp1 a6;
    //aOpt.aInit_2(a4, row, col);

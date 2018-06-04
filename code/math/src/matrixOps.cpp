@@ -204,6 +204,8 @@ void vmaOps::ScaXMat(double** mOut, double s1, double** m1)
 
 void vmaOps::mTran(double** mOut, double** m1)
 {
+   // TODO: Find better way to protect input matrix if mOut is replacing m1 [mTran(m1,m1)]
+   double uLD[3]={m1[1][0],m1[2][0],m1[2][1]};
    for(int i=0;i<3;i++)
    {
       for (int j=0;j<3;j++)
@@ -211,6 +213,9 @@ void vmaOps::mTran(double** mOut, double** m1)
          mOut[j][i]=m1[i][j];
       }
    }
+   mOut[0][1]=uLD[0];
+   mOut[0][2]=uLD[1];
+   mOut[1][2]=uLD[2];
 }
 
 // Matrix isEqual
@@ -221,6 +226,7 @@ void vmaOps::mTran(double** mOut, double** m1)
 void vmaOps::mIsEqual(bool* isEqual, double** m1, double** m2)
 {
    *isEqual=false;
+   wiTol=false;
    for(int i=0;i<3;i++)
    {
       for (int j=0;j<3;j++)
@@ -231,11 +237,23 @@ void vmaOps::mIsEqual(bool* isEqual, double** m1, double** m2)
          }
          else
          {
-            *isEqual=false;
-            printf("These matricies are NOT equal\n");
-            return;
+            if (abs(m1[i][j]-m2[i][j])>tol)
+            {
+               *isEqual=false;
+               printf("These matricies are NOT equal\n");
+               return;
+            }
+            else
+            {
+               wiTol=true;
+               *isEqual=true;
+            }
          }
       }
+   }
+   if (wiTol==true)
+   {
+      printf("Found a difference within tolerance: err<%f\n",tol);
    }
    printf("These matricies are ARE equal\n");
 }
@@ -243,13 +261,50 @@ void vmaOps::mIsEqual(bool* isEqual, double** m1, double** m2)
 // Matrix Determinant (3x3) 
 // Inputs: m1
 // Outputs: sOut
-// Operation: Dterminant of 3x3 matrix
+// Operation: Determinant of 3x3 matrix
 
 void vmaOps::mDet33(double* sOut, double** m1)
 {
    *sOut=m1[0][0]*(m1[1][1]*m1[2][2]-m1[2][1]*m1[1][2]);
    *sOut=*sOut+m1[0][1]*(m1[1][2]*m1[2][0]-m1[2][2]*m1[1][0]);
    *sOut=*sOut+m1[0][2]*(m1[1][0]*m1[2][1]-m1[2][0]*m1[1][1]);
+}
+
+// Matrix Inverse
+// Inputs: m1
+// Outputs: m2
+// Operation: Inverse of 3x3 matrix
+
+void vmaOps::mInv(double** mOut, double** m1)
+{
+   double det=0;
+   mDet33(&det,m1);
+   double det_inv=1/det;
+   mSetZeros(mOut);
+   if (det==0)
+   {
+      printf("Input matrix is NOT invertible. Its determinant is equal to zero.\n");
+      return;
+   }
+   double col1[3]={m1[0][0],m1[0][1],m1[0][2]};
+   double col2[3]={m1[1][0],m1[1][1],m1[1][2]};
+   double col3[3]={m1[2][0],m1[2][1],m1[2][2]};
+   double cp[3];
+
+   crossProduct(cp, col2, col3);
+   ScaXVec(cp, det_inv, cp);
+   memcpy(&mOut[0][0],&cp,sizeof(cp));
+
+   crossProduct(cp, col3, col1);
+   ScaXVec(cp, det_inv, cp);
+   memcpy(&mOut[1][0],&cp,sizeof(cp));
+
+   crossProduct(cp, col1, col2);
+   ScaXVec(cp, det_inv, cp);
+   memcpy(&mOut[2][0],&cp,sizeof(cp));
+
+   mTran(mOut,mOut);
+
 }
 
 

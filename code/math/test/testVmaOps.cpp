@@ -121,6 +121,8 @@ int main( int argc, char *argv[] ) {
 
    printf("\nENDING CHECK TESTS\n\n");
 
+   // RUN OPS TESTS
+
    printf("STARTING OPS TESTS\n\n");
 
    printf("vectorOps: Add, Subtract, Magnitude, Unit Vector, Cross Product, Dot Product\n");
@@ -171,6 +173,21 @@ int main( int argc, char *argv[] ) {
    vmaOps.sOps.printMatrix(m4,"m4");
    vmaOps.mDet33(&det, m4);
    vmaOps.sOps.printScalar(det,"det(m4) should be -306. det(m4) is:");
+   vmaOps.mSet123(m4);
+   vmaOps.sOps.printMatrix(m4,"m4");
+   printf("Check Inverse (m4) [123 Matrix is NOT invertible: Shouldn't Work]\n");
+   vmaOps.mInv(m3,m4);
+   m4[0][0]=3; m4[0][1]=0;  m4[0][2]=2;
+   m4[1][0]=2; m4[1][1]=0;  m4[1][2]=-2;
+   m4[2][0]=0; m4[2][1]=1;  m4[2][2]=1;
+   vmaOps.sOps.printMatrix(m4,"m4");
+   vmaOps.mInv(m3,m4);
+   m2[0][0]=0.2;  m2[0][1]=0.2;   m2[0][2]=0;
+   m2[1][0]=-0.2; m2[1][1]=0.3;   m2[1][2]=1;
+   m2[2][0]=0.2;  m2[2][1]=-0.3;  m2[2][2]=0;
+   vmaOps.sOps.printMatrix(m2,"m2 = inv(m4) [Actual]");
+   vmaOps.sOps.printMatrix(m3,"m3 = inv(m4) [Calculated]");
+   vmaOps.mIsEqual(&testIsE,m3,m2);
 
    printf("\narrayOps: Add, Subtract, Multiplication, Transpose, Det2X2\n");
    vmaOps.sOps.printArray(a1,"a1=2*Ones");
@@ -199,6 +216,8 @@ int main( int argc, char *argv[] ) {
    vmaOps.sOps.printScalar(det,"det(a6) is:");
 
    printf("\nENDING OPS TESTS\n\n");
+
+   // RUN FREE TESTS
 
    printf("STARTING FREE TESTS\n\n");
 

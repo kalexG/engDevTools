@@ -23,6 +23,8 @@ class vmaOps {
    // Data: private
    double** m;
    double** a;
+   double tol=1.0e-10; // Tolerance Criteria
+   bool wiTol; // Within Tolerance Flag
    // Functions: private
 
    // Access: public
@@ -62,7 +64,8 @@ class vmaOps {
    void mTran(double** mOut, double** m1);
    void mIsEqual(bool* isEqual, double** m1, double** m2);
    void mDet33(double* sOut, double** m1);
-   // TODO: Inverse
+   void mInv(double** mOut, double** m1);
+
    // TODO: Adjugate
    // TODO: Cofactor
    // TODO: Vector*Matrix
@@ -77,7 +80,7 @@ class vmaOps {
    void aSetIdentity(myArray aOut);
    void aAdd(myArray aOut, myArray a1, myArray a2);
    void aSub(myArray aOut, myArray a1, myArray a2);
-   void aMult(myArray aOut, myArray a1, myArray a2); // [NOT DONE]
+   void aMult(myArray aOut, myArray a1, myArray a2);
    void ScaXArr(myArray aOut, double s1, myArray a1);
    void aTran(myArray aOut, myArray a1);
    void aIsEqual(bool* isEqual, myArray a1, myArray a2);
@@ -87,85 +90,5 @@ class vmaOps {
    {
       printf("This is the vmaOps class!\n");
    }
-
-   // TODO:
-   // 1. Maybe add a string input to all these functions to allow for putting in the variable name
-   // 2. Move these into standard library
-
-   /*void printBool(bool boolean, string str1 = "")
-   {
-      if (str1.empty())
-      {
-         printf(">>>\n");
-      }
-      else
-      {
-         printf(">>> %s\n",str1.c_str());
-      }
-      printf("%s\n", boolean ? "True" : "False");
-   }
-
-   void printScalar(double scalar, string str1 = "")
-   {
-      if (str1.empty())
-      {
-         printf(">>>\n");
-      }
-      else
-      {
-         printf(">>> %s\n",str1.c_str());
-      }
-      printf("%f\n", scalar);
-   }
-
-   void printVector(double* vector, string str1 = "")
-   {
-      if (str1.empty())
-      {
-         printf(">>>\n");
-      }
-      else
-      {
-         printf(">>> %s\n",str1.c_str());
-      }
-      printf("| %f %f %f |\n", vector[0], vector[1], vector[2]);
-   }
-
-   void printMatrix(double** matrix, string str1 = "")
-   {
-      if (str1.empty())
-      {
-         printf(">>>\n");
-      }
-      else
-      {
-         printf(">>> %s\n",str1.c_str());
-      }
-      printf("| %f %f %f |\n", matrix[0][0], matrix[0][1], matrix[0][2]);
-      printf("| %f %f %f |\n", matrix[1][0], matrix[1][1], matrix[1][2]);
-      printf("| %f %f %f |\n", matrix[2][0], matrix[2][1], matrix[2][2]);
-   }
-
-   void printArray(myArray arr, string str1 = "")
-   {
-      if (str1.empty())
-      {
-         printf(">>>\n");
-      }
-      else
-      {
-         printf(">>> %s\n",str1.c_str());
-      }
-
-      for (int i=0;i<get<1>(arr);i++)
-      {
-         printf("| ");
-         for(int j=0;j<get<2>(arr);j++)
-         {
-            printf("%f ",get<0>(arr)[i][j]);
-         }
-         printf("|\n");
-      }
-   }*/
 
 };
