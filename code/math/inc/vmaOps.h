@@ -64,10 +64,10 @@ class vmaOps {
    void mTran(double** mOut, double** m1);
    void mIsEqual(bool* isEqual, double** m1, double** m2);
    void mDet33(double* sOut, double** m1);
+   void mMinor(double** mOut, double** m1);
+   void mCofactor(double** mOut, double** m1);
+   void mAdjugate(double** mOut, double** m1);
    void mInv(double** mOut, double** m1);
-
-   // TODO: Adjugate
-   // TODO: Cofactor
    // TODO: Vector*Matrix
    // TODO: Matrix*Vector
    

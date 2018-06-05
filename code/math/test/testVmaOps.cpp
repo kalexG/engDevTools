@@ -181,6 +181,16 @@ int main( int argc, char *argv[] ) {
    m4[1][0]=2; m4[1][1]=0;  m4[1][2]=-2;
    m4[2][0]=0; m4[2][1]=1;  m4[2][2]=1;
    vmaOps.sOps.printMatrix(m4,"m4");
+   vmaOps.mMinor(m2,m4);
+   vmaOps.sOps.printMatrix(m2,"Matrix of Minors of m4");
+   vmaOps.mCofactor(m2,m4);
+   vmaOps.sOps.printMatrix(m2,"Matrix of Cofactors of m4");
+   vmaOps.mAdjugate(m2,m4);
+   vmaOps.sOps.printMatrix(m2,"Adjoint of m4");
+   vmaOps.mDet33(&det, m4);
+   det=1/det;
+   vmaOps.ScaXMat(m2,det,m2);
+   vmaOps.sOps.printMatrix(m2,"Inverse from Adjoint/det of m4");   
    vmaOps.mInv(m3,m4);
    m2[0][0]=0.2;  m2[0][1]=0.2;   m2[0][2]=0;
    m2[1][0]=-0.2; m2[1][1]=0.3;   m2[1][2]=1;

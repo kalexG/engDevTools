@@ -270,6 +270,70 @@ void vmaOps::mDet33(double* sOut, double** m1)
    *sOut=*sOut+m1[0][2]*(m1[1][0]*m1[2][1]-m1[2][0]*m1[1][1]);
 }
 
+// Matrix Minor
+// Inputs: m1
+// Outputs: mOut
+// Operation: Get Matrix of Minors
+
+void vmaOps::mMinor(double** mOut, double** m1)
+{
+   double mDet22[4];
+   double detMin;
+   
+   for(int i=0;i<3;i++)
+   {
+      for (int j=0;j<3;j++)
+      {
+         for (int k=0;k<4;)
+         {
+            for (int p=0;p<3;p++)
+            {
+               for (int q=0;q<3;q++)
+               {
+                  if (p!=i && q!=j)
+                  {
+                     mDet22[k]=m1[p][q];
+                     k++;
+                     if (k==4)
+                     {
+                        break;
+                     }
+                  }
+               }
+            }
+         }
+         detMin = mDet22[0]*mDet22[3]-mDet22[1]*mDet22[2];  
+         mOut[i][j]=detMin;
+      }
+   }
+}
+
+// Matrix Cofactor
+// Inputs: m1
+// Outputs: mOut
+// Operation: Get Matrix of Cofactors
+
+void vmaOps::mCofactor(double** mOut, double** m1)
+{
+   mMinor(mOut, m1);
+   mOut[0][1]=-mOut[0][1];
+   mOut[1][0]=-mOut[1][0];
+   mOut[1][2]=-mOut[1][2];
+   mOut[2][1]=-mOut[2][1];
+}
+
+// Matrix Adjugate
+// Inputs: m1
+// Outputs: mOut
+// Operation: Get Matrix Adjoint
+
+void vmaOps::mAdjugate(double** mOut, double** m1)
+{
+   mCofactor(mOut, m1);
+   mTran(mOut, mOut);
+}
+
+
 // Matrix Inverse
 // Inputs: m1
 // Outputs: m2
@@ -286,6 +350,7 @@ void vmaOps::mInv(double** mOut, double** m1)
       printf("Input matrix is NOT invertible. Its determinant is equal to zero.\n");
       return;
    }
+
    double col1[3]={m1[0][0],m1[0][1],m1[0][2]};
    double col2[3]={m1[1][0],m1[1][1],m1[1][2]};
    double col3[3]={m1[2][0],m1[2][1],m1[2][2]};
