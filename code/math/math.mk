@@ -4,10 +4,12 @@ PROFILE = -pg
 CFLAGS = -Wall -c $(DEBUG)
 LFLAGS = -Wall $(DEBUG) $(PROFILE)
 
+VMAOPS_OBJS = obj/vectorOps.o obj/matrixOps.o obj/arrayOps.o
+
 .PHONY: all
 all: bin/testVmaOps bin/optimMatMat
 
-bin/testVmaOps: obj/vectorOps.o ../support/obj/printOps.o obj/matrixOps.o obj/arrayOps.o obj/testVmaOps.o
+bin/testVmaOps: ../support/obj/printOps.o obj/testVmaOps.o $(VMAOPS_OBJS)
 			$(CC) $(LFLAGS) -Lobj -o $@ $^
 
 bin/optimMatMat: ../support/obj/printOps.o obj/arrayOpsOptim1.o obj/arrayOpsOptim2.o obj/optimMatMat.o

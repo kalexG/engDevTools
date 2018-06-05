@@ -7,6 +7,7 @@
 #include <math.h>
 #include <string.h>
 #include <tuple>
+#include <stdio.h>
 using namespace std;
 typedef tuple<double**,int,int> myArray;
 
@@ -20,6 +21,7 @@ class supportOps {
    // Access: private //
    private:
    // Data: private
+   FILE * fileWrite;
    // Functions: private
 
    // Access: public
@@ -42,7 +44,7 @@ class supportOps {
    void wStdin();
    void wStderr();
    void wRecord();
-   void wArray2Csv();
+   void wDppArray2Csv(tuple<double**,int,int> arr, string fileName);
 
    void printInfo()
    {
