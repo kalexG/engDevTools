@@ -8,22 +8,6 @@
 // Need class definition
 #include "../inc/supportOps.h"
 
-void supportOps::wStdout()
-{
-}
-
-void supportOps::wStdin()
-{
-}
-
-void supportOps::wStderr()
-{
-}
-
-void supportOps::wRecord()
-{
-}
-
 void supportOps::wDppArray2Csv(tuple<double**,int,int> arr, string fileName)
 {
    int row = get<1>(arr);

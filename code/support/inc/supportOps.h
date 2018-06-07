@@ -37,13 +37,10 @@ class supportOps {
    void printArray(myArray arr, string str1);
 
    // TODO readOps Functions
+   void rCompOut();
 
    // TODO writeOps Functions
 
-   void wStdout();
-   void wStdin();
-   void wStderr();
-   void wRecord();
    void wDppArray2Csv(tuple<double**,int,int> arr, string fileName);
 
    void printInfo()
