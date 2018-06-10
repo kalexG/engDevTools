@@ -17,8 +17,6 @@ int main( int argc, char *argv[] ) {
    vmaOps vmaOps;
 
    // Declaring variables
-   bool testIsE;
-   double s1, s2, det;
    double **m1, **m2, **m3;
    myArray a1, a2, a3;
 

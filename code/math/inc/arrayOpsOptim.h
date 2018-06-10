@@ -8,7 +8,7 @@
 #include <string.h>
 #include <tuple>
 #include <memory>
-#include "../../support/inc/supportOps.h"
+#include "../../support/inc/prwOps.h"
 using namespace std;
 typedef tuple<double**,int,int> myArrayp2;
 typedef tuple<double*,int,int> myArrayp1;
@@ -32,7 +32,7 @@ class arrayOpsOptim {
    // Data: public
 
    // Classes: public
-   supportOps sOps;
+   class prwOps prwOps;
    // Functions: public
 
    // TODO arrayOps Functions

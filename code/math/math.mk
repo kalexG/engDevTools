@@ -5,27 +5,37 @@ CFLAGS = -Wall -c $(DEBUG)
 LFLAGS = -Wall $(DEBUG) $(PROFILE)
 
 # All objects
-VMAOPS_OBJS = obj/vectorOps.o obj/matrixOps.o obj/arrayOps.o obj/testVmaOps.o
-OPTIMTEST_OBJS = obj/arrayOpsOptim1.o obj/arrayOpsOptim2.o obj/optimMatMat.o
-MEMTEST_OBJS = obj/vectorOps.o obj/matrixOps.o obj/arrayOps.o obj/checkMem.o
+VMAOPS_OBJS = obj/vectorOps.o obj/matrixOps.o obj/arrayOps.o
+NUMERICALMETHODS_OBJS = obj/integration.o obj/differentiation.o
+PRWOPS_OBJS = ../support/obj/printOps.o ../support/obj/readOps.o ../support/obj/writeOps.o
+
+# All tests
+VMAOPS_TEST = obj/testVmaOps.o
+OPTIM_TEST = obj/arrayOpsOptim1.o obj/arrayOpsOptim2.o obj/optimMatMat.o
+CHECKMEM_TEST = obj/checkMem.o
+NUMERICALMETHODS_TEST = obj/testNumericalMethods.o
 
 # All exectables
-MATH_BIN = bin/testVmaOps bin/optimMatMat bin/checkMem
+MATH_BIN = bin/testVmaOps bin/optimMatMat bin/checkMem bin/testNumericalMethods
 
 .PHONY: math-obj math-bin
-math-obj: $(VMAOPS_OBJS) $(OPTIMTEST_OBJS)
+math-obj: $(VMAOPS_OBJS) $(OPTIMTEST_OBJS) $(NUMERICALMETHODS_OBJS)
 math-bin: $(MATH_BIN)
 
 # vmaOps Testing
-bin/testVmaOps: ../support/obj/printOps.o $(VMAOPS_OBJS)
+bin/testVmaOps: $(PRWOPS_OBJS) $(VMAOPS_OBJS) $(VMAOPS_TEST)
+			$(CC) $(LFLAGS) -Lobj -o $@ $^
+
+# numericalMethods Testing
+bin/testNumericalMethods: $(PRWOPS_OBJS) $(VMAOPS_OBJS) $(NUMERICALMETHODS_OBJS) $(NUMERICALMETHODS_TEST)
 			$(CC) $(LFLAGS) -Lobj -o $@ $^
 
 # Optimization Testing
-bin/optimMatMat: ../support/obj/printOps.o $(OPTIMTEST_OBJS)
+bin/optimMatMat: $(PRWOPS_OBJS) $(OPTIM_TEST)
 			$(CC) $(LFLAGS) -Lobj -o $@ $^
 
 # Memory Testing
-bin/checkMem: ../support/obj/printOps.o $(MEMTEST_OBJS)
+bin/checkMem: $(PRWOPS_OBJS) $(VMAOPS_OBJS) $(CHECKMEM_TEST)
 			$(CC) $(LFLAGS) -Lobj -o $@ $^
 
 obj/%.o: */%.cpp

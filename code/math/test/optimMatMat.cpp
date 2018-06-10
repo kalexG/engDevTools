@@ -44,8 +44,8 @@ int main( int argc, char *argv[] ) {
    printf("Finished Setting a2 to 123\n");
    aOpt.aSetZeros_1(a3);
    printf("Finished Setting a3 to Zeros\n");
-   aOpt.sOps.printArray(a3,"a3");
-   //aOpt.sOps.printArray(a6,"a6");
+   aOpt.prwOps.printArray(a3,"a3");
+   //aOpt.prwOps.printArray(a6,"a6");
 
    printf("Starting a3=a1*a2 using [aOpt::aMatMat1]\n");
    aOpt.aMatMat_1(a3,a1,a2);
@@ -82,7 +82,7 @@ int main( int argc, char *argv[] ) {
    //printf("Starting a3=a1*a2 using [aOpt::aMatMat2]\n");
    //aOpt.aMatMat_2(a3,a1,a2);
    //printf("Finished a3=a1*a2\n");
-   //aOpt.sOps.printArray(a2,"a2=a3*a6");
+   //aOpt.prwOps.printArray(a2,"a2=a3*a6");
 
    // Free memory
    //aOpt.aFree_2(a4);

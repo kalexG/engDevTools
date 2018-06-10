@@ -6,9 +6,9 @@
 //--------------------------
 
 // Need class definition
-#include "../inc/supportOps.h"
+#include "../inc/prwOps.h"
 
-void supportOps::printBool(bool boolean, string str1)
+void prwOps::printBool(bool boolean, string str1)
 {
    if (str1.empty())
    {
@@ -21,7 +21,7 @@ void supportOps::printBool(bool boolean, string str1)
    printf("%s\n", boolean ? "True" : "False");
 }
 
-void supportOps::printScalar(double scalar, string str1)
+void prwOps::printScalar(double scalar, string str1)
 {
    if (str1.empty())
    {
@@ -34,7 +34,7 @@ void supportOps::printScalar(double scalar, string str1)
    printf("%f\n", scalar);
 }
 
-void supportOps::printVector(double* vector, string str1)
+void prwOps::printVector(double* vector, string str1)
 {
    if (str1.empty())
    {
@@ -47,7 +47,7 @@ void supportOps::printVector(double* vector, string str1)
    printf("| %f %f %f |\n", vector[0], vector[1], vector[2]);
 }
 
-void supportOps::printMatrix(double** matrix, string str1)
+void prwOps::printMatrix(double** matrix, string str1)
 {
    if (str1.empty())
    {
@@ -62,7 +62,7 @@ void supportOps::printMatrix(double** matrix, string str1)
    printf("| %f %f %f |\n", matrix[2][0], matrix[2][1], matrix[2][2]);
 }
 
-void supportOps::printArray(myArray arr, string str1)
+void prwOps::printArray(myArray arr, string str1)
 {
    if (str1.empty())
    {

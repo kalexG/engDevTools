@@ -7,7 +7,7 @@
 #include <math.h>
 #include <string.h>
 #include <tuple>
-#include "../../support/inc/supportOps.h"
+#include "../../support/inc/prwOps.h"
 using namespace std;
 typedef tuple<double**,int,int> myArray;
 
@@ -32,7 +32,7 @@ class vmaOps {
    // Data: public
 
    // Classes: public
-   supportOps sOps;
+   class prwOps prwOps;
    // Functions: public
 
    // vectorOps Functions

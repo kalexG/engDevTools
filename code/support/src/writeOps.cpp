@@ -6,9 +6,9 @@
 //--------------------------
 
 // Need class definition
-#include "../inc/supportOps.h"
+#include "../inc/prwOps.h"
 
-void supportOps::wDppArray2Csv(tuple<double**,int,int> arr, string fileName)
+void prwOps::wDppArray2Csv(tuple<double**,int,int> arr, string fileName)
 {
    int row = get<1>(arr);
    int col = get<2>(arr);

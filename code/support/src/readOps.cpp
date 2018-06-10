@@ -6,9 +6,9 @@
 //--------------------------
 
 // Need class definition
-#include "../inc/supportOps.h"
+#include "../inc/prwOps.h"
 
-void supportOps::rCompOut()
+void prwOps::rCompOut()
 {
 
 }

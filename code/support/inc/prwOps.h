@@ -1,4 +1,4 @@
-// Filename: supportOps.h
+// Filename: prwOps.h
 // Created: 05/19/2018
 // Last Modified: 05/19/2018
 // Author: Kevin Gomez
@@ -11,7 +11,7 @@
 using namespace std;
 typedef tuple<double**,int,int> myArray;
 
-class supportOps {
+class prwOps {
 
    // Access: protected //
    protected:
@@ -36,16 +36,16 @@ class supportOps {
    void printMatrix(double** matrix, string str1);
    void printArray(myArray arr, string str1);
 
-   // TODO readOps Functions
+   // readOps Functions
    void rCompOut();
 
-   // TODO writeOps Functions
+   // writeOps Functions
 
    void wDppArray2Csv(tuple<double**,int,int> arr, string fileName);
 
    void printInfo()
    {
-      printf("This is the supportOps class!\n");
+      printf("This is the prwOps class!\n");
    }
 
 
