@@ -46,6 +46,7 @@ void vmaOps::aFree(myArray aFree)
    }
    
    delete[] get<0>(aFree);
+   get<0>(aFree)=NULL;
 }
 
 // Set Array to Zeros

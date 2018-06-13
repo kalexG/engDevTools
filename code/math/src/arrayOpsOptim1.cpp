@@ -46,6 +46,7 @@ void arrayOpsOptim::aFree_1(myArrayp2 aFree)
    }
    
    delete[] get<0>(aFree);
+   get<0>(aFree)=NULL;
 }
 
 // Set Array to Zeros [Version1]

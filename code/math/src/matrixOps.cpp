@@ -39,6 +39,7 @@ void vmaOps::mFree(double** mFree)
    }
    
    delete[] mFree;
+   mFree=NULL;
 }
 
 // Set Matrix to Zeros
