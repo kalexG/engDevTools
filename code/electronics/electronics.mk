@@ -5,19 +5,19 @@ CFLAGS = -Wall -c $(DEBUG)
 LFLAGS = -Wall $(DEBUG) $(PROFILE)
 
 # All objects
-ELECTRONICS_OBJS = obj/circuitC.o obj/digitalLogic.o
+LOGICGATES_OBJS = obj/digitalLogic.o
 
 # All tests
-ELECTRONICS_TEST = obj/testElectronics.o
+DIGITALLOGIC_TEST = obj/testDigitalLogic.o
 
 # All executables
-ELECTRONICS_BIN = bin/testElectronics
+DIGITALLOGIC_BIN = bin/testDigitalLogic
 
 .PHONY: electronics-obj electronics-bin
-electronics-obj: $(ELECTRONICS_OBJS)
-electronics-bin: $(ELECTRONICS_BIN)
+electronics-obj: $(LOGICGATES_OBJS)
+electronics-bin: $(DIGITALLOGIC_BIN)
 		
-bin/testElectronics: $(ELECTRONICS_OBJS) $(ELECTRONICS_TEST)
+bin/testDigitalLogic: $(LOGICGATES_OBJS) $(DIGITALLOGIC_TEST)
 			$(CC) $(LFLAGS) -Lobj -o $@ $^
 			
 obj/%.o: */%.cpp
