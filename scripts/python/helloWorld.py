@@ -1,4 +1,12 @@
 #!/usr/bin/python3.6
 
-# Prints Hello World
-print("Hello World!")
+def sayHello():
+    myHelloString = "Hello World!"
+    return myHelloString
+
+def main():
+    helloString = sayHello()
+    print(helloString)
+
+if __name__ == "__main__":
+    main()

@@ -2,4 +2,12 @@
 
 import sys, struct
 
-print(struct.unpack('<d', struct.pack('<Q', int(sys.argv[1],16)))[0])
+def hexToDouble(hexString):
+    return struct.unpack('<d', struct.pack('<Q', int(hexString,16)))[0]
+
+def main(args):
+    doubleString = hexToDouble(args[1])
+    print(doubleString)
+
+if __name__ == "__main__":
+    main(sys.argv)
