@@ -6,9 +6,6 @@
 #include <iostream>
 #include <math.h>
 #include <string.h>
-#include "../inc/electronics.h"
+#include "../inc/circuitComponents.h"
 using namespace std;
 
-void electronics::circuitC()
-{
-}

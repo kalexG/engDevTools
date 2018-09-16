@@ -1,4 +1,4 @@
-// Filename: testElectronics.cpp
+// Filename: testDigitalLogic.cpp
 // Created: 06/10/2018
 // Last Modified: 06/10/2018
 // Author: Kevin Gomez
@@ -27,7 +27,6 @@ int main( int argc, char *argv[] ) {
 
    printf("STARTING OPS TESTS\n\n");
 
-\
    // digitalLogic Gates testing
    b1=0; b2=0;
    printf("In1=0 & In2=0\n");
