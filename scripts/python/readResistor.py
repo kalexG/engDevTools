@@ -9,8 +9,9 @@ def parseArguments(args):
     group = parser.add_mutually_exclusive_group()
     group.add_argument("-v", "--verbose", action="store_true", help="increase output verbosity")
     group.add_argument("-q", "--quiet", action="store_true", help="decrease output verbosity")
-    parser.add_argument('-d', '--digits', nargs= '+', action=argumentRange(2,3),  help="color of digit bands (number of digit bands = 2 or 3)")
-    parser.add_argument('-m', '--multiplier', nargs=1,  help="color of multipler band")
+    required = parser.add_argument_group("required arguments")
+    required.add_argument('-d', '--digits', nargs= '+', action=argumentRange(2,3), required=True,  help="color of digit bands (number of digit bands = 2 or 3)")
+    required.add_argument('-m', '--multiplier', nargs=1, required=True,  help="color of multipler band")
     parser.add_argument('-t', '--tolerance', nargs=1, help="color of tolerance band")
     parsedArgs = parser.parse_args(args)
     return parsedArgs
