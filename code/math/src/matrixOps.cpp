@@ -13,17 +13,17 @@
 // Outputs: m
 // Operation: 
 
-double** vmaOps::mInit(void)
+void vmaOps::mInit(double*** mInit)
 {
-   m = new double *[3];
+   *mInit = new double *[3];
 
    for (int i=0;i<3;i++)
    {
-      m[i]= new double[3];
+      (*mInit)[i]= new double[3];
    }
 
-   mSetZeros(m);
-   return m;
+   mSetZeros(*mInit);
+//   return mIn;
 }
 
 // Matrix Free
@@ -31,15 +31,15 @@ double** vmaOps::mInit(void)
 // Outputs: mFree
 // Operation: Free Memory
 
-void vmaOps::mFree(double** mFree)
+void vmaOps::mFree(double*** mFree)
 {
    for (int i=0;i<3;i++)
    {
-      delete[] mFree[i];
+      delete[] (*mFree)[i];
    }
    
-   delete[] mFree;
-   mFree=NULL;
+   delete[] *mFree;
+   *mFree=NULL;
 }
 
 // Set Matrix to Zeros

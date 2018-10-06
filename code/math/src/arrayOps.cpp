@@ -13,24 +13,29 @@
 // Outputs: m
 // Operation: Allocate Memory
 
-myArray vmaOps::aInit(int row, int col)
+void vmaOps::aInit(myArray* aInit, int row, int col)
 {
-   a = new double *[row];
+
+   get<1>(*aInit) = row;
+   get<2>(*aInit) = col;
+
+   get<0>(*aInit) = new double *[row];
 
    for (int i=0;i<row;i++)
    {
-      a[i]= new double[col];
+      (get<0>(*aInit))[i]= new double[col];
    }
 
    for (int i=0;i<row;i++)
    {
       for (int j=0;j<col;j++)
       {
-         a[i][j]=0;
+         (get<0>(*aInit))[i][j]=0;
       }
    }
 
-   return make_tuple(a,row,col);
+   aSetZeros(*aInit);
+
 }
 
 // Array Free
@@ -38,15 +43,17 @@ myArray vmaOps::aInit(int row, int col)
 // Outputs: aFree
 // Operation: Free Memory
 
-void vmaOps::aFree(myArray aFree)
+void vmaOps::aFree(myArray* aFree)
 {
-   for (int i=0;i<get<1>(aFree);i++)
+   for (int i=0;i<get<1>(*aFree);i++)
    {
-      delete[] get<0>(aFree)[i];
+      delete[] get<0>(*aFree)[i];
    }
    
-   delete[] get<0>(aFree);
-   get<0>(aFree)=NULL;
+   delete[] get<0>(*aFree);
+   get<0>(*aFree)=NULL;
+   get<1>(*aFree)=0;
+   get<2>(*aFree)=0;
 }
 
 // Set Array to Zeros

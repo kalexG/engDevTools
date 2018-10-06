@@ -28,18 +28,23 @@ int main( int argc, char *argv[] ) {
    printf("STARTING MEM TESTS\n\n");
 
    printf("Initializing matricies m[1-4]\n");
-   m1 = vmaOps.mInit();
-   m2 = vmaOps.mInit();
-   m3 = vmaOps.mInit();
-   m4 = vmaOps.mInit();
+   vmaOps.mInit(&m1);
+   vmaOps.mInit(&m2);
+   vmaOps.mInit(&m3);
+   vmaOps.mInit(&m4);
+
+   vmaOps.prwOps.printMatrix(m1,"Check New Init (m1)");
 
    printf("Initializing arrays a[1-6]\n");
-   a1 = vmaOps.aInit(3,5);
-   a2 = vmaOps.aInit(3,5);
-   a3 = vmaOps.aInit(3,5);
-   a4 = vmaOps.aInit(5,5);
-   a5 = vmaOps.aInit(5,5);
-   a6 = vmaOps.aInit(2,2);
+   //a1 = vmaOps.aInit(3,5);
+   vmaOps.aInit(&a1, 3, 5);
+   vmaOps.aInit(&a2, 3, 5);
+   vmaOps.aInit(&a3, 3, 5);
+   vmaOps.aInit(&a4, 5, 5);
+   vmaOps.aInit(&a5, 5, 5);
+   vmaOps.aInit(&a6, 2, 2);
+
+   vmaOps.prwOps.printArray(a1,"Check New Init (a1)");
 
    printf("\nENDING MEM TESTS\n\n");
 
@@ -70,11 +75,12 @@ int main( int argc, char *argv[] ) {
    vmaOps.aSetOnes(a1);
    vmaOps.prwOps.printArray(a1,"Check Ones (a1)");
    vmaOps.aSet123(a1);
+   vmaOps.aSet123(a4);
    vmaOps.prwOps.printArray(a1,"Check 123 (a1)");
    printf("Check Identity (a1) (Non-Square Matrix: Shouldn't Work)\n");
    vmaOps.aSetIdentity(a1);
    vmaOps.aSetIdentity(a4);
-   vmaOps.prwOps.printArray(a1,"Check Identity (a4) [Square Matrix: Should Work]");
+   vmaOps.prwOps.printArray(a4,"Check Identity (a4) [Square Matrix: Should Work]");
 
    printf("\nENDING SET TESTS\n\n");
 
@@ -232,18 +238,18 @@ int main( int argc, char *argv[] ) {
    printf("STARTING FREE TESTS\n\n");
 
    printf("Freeing matricies m[1-4]\n");
-   vmaOps.mFree(m1);
-   vmaOps.mFree(m2);
-   vmaOps.mFree(m3);
-   vmaOps.mFree(m4);
+   vmaOps.mFree(&m1);
+   vmaOps.mFree(&m2);
+   vmaOps.mFree(&m3);
+   vmaOps.mFree(&m4);
 
    printf("Freeing arrays a[1-6]\n");
-   vmaOps.aFree(a1);
-   vmaOps.aFree(a2);
-   vmaOps.aFree(a3);
-   vmaOps.aFree(a4);
-   vmaOps.aFree(a5);
-   vmaOps.aFree(a6);
+   vmaOps.aFree(&a1);
+   vmaOps.aFree(&a2);
+   vmaOps.aFree(&a3);
+   vmaOps.aFree(&a4);
+   vmaOps.aFree(&a5);
+   vmaOps.aFree(&a6);
 
    printf("\nENDING FREE TESTS\n\n");
 

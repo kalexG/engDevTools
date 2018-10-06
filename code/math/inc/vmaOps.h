@@ -50,8 +50,8 @@ class vmaOps {
    // TODO: Vector Initialization
 
    // matrixOps Functions
-   double** mInit(void);
-   void mFree(double** mFree);
+   void mInit(double*** mInit);
+   void mFree(double*** mFree);
    void mSetZeros(double** mOut);
    void mSetOnes(double** mOut);
    void mSet123(double** mOut);
@@ -72,8 +72,8 @@ class vmaOps {
    // TODO: Matrix*Vector
    
    // TODO arrayOps Functions
-   myArray aInit(int row, int col);
-   void aFree(myArray aFree);
+   void aInit(myArray* aInit, int row, int col);
+   void aFree(myArray* aFree);
    void aSetZeros(myArray aOut);
    void aSetOnes(myArray aOut);
    void aSet123(myArray aOut);
