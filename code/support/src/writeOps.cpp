@@ -10,6 +10,7 @@
 
 void prwOps::wDppArray2Csv(tuple<double**,int,int> arr, string fileName)
 {
+   FILE * fileWrite;
    int row = get<1>(arr);
    int col = get<2>(arr);
    fileWrite = fopen (fileName.c_str(),"w");

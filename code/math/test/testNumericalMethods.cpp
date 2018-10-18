@@ -14,7 +14,7 @@ int main( int argc, char *argv[] ) {
 	printf("You made it to test function for numericalMethods!\n\n");
 
    // Creating numericalMethods object
-   numericalMethods numMet;
+   //numericalMethods numMet;
 
    // Declaring variables
 

@@ -1,17 +1,17 @@
-// Filename: testPrwOps.cpp
+// Filename: testprwOps::cpp
 // Created: 05/25/2018
 // Last Modified: 05/25/2018
 // Author: Kevin Gomez
 
 #include "../../math/inc/vmaOps.h"
+#include "../inc/prwOps.h"
+using namespace vmaOps;
+using namespace prwOps;
 
 int main( int argc, char *argv[] ) {
 
 	// Inputs
 	printf("You made it to test function for prwOps!\n\n");
-
-   vmaOps vmaOps;
-   //prwOps.printInfo();
 
    // Declaring variables
    bool cBool;
@@ -24,25 +24,25 @@ int main( int argc, char *argv[] ) {
    
    printf("STARTING PRINT TESTS\n\n");
 
-   cMatrix = vmaOps.mInit();
-   cArray1 = vmaOps.aInit(3,5);
-   cArray2 = vmaOps.aInit(5,3);
+   vmaOps::mInit(&cMatrix);
+   vmaOps::aInit(&cArray1, 3, 5);
+   vmaOps::aInit(&cArray2, 5, 3);
 
    printf("Set Bool=true, scalar=10, Vector=Matrix=Array=123\n");
    cBool=true;
    cScalar=10;
-   vmaOps.vSet123(cVector);
-   vmaOps.mSet123(cMatrix);
-   vmaOps.aSet123(cArray1);
-   vmaOps.aSet123(cArray2);
+   vmaOps::vSet123(cVector);
+   vmaOps::mSet123(cMatrix);
+   vmaOps::aSet123(cArray1);
+   vmaOps::aSet123(cArray2);
 
    printf("Printing out variables.\n");
-   vmaOps.prwOps.printBool(cBool,"Check printBool");
-   vmaOps.prwOps.printScalar(cScalar,"Check printScalar");
-   vmaOps.prwOps.printVector(cVector,"Check printVector");
-   vmaOps.prwOps.printMatrix(cMatrix,"Check printMatrix");
-   vmaOps.prwOps.printArray(cArray1,"Check printArray: col>row");
-   vmaOps.prwOps.printArray(cArray2,"Check printArray: row>col");
+   prwOps::printBool(cBool,"Check printBool");
+   prwOps::printScalar(cScalar,"Check printScalar");
+   prwOps::printVector(cVector,"Check printVector");
+   prwOps::printMatrix(cMatrix,"Check printMatrix");
+   prwOps::printArray(cArray1,"Check printArray: col>row");
+   prwOps::printArray(cArray2,"Check printArray: row>col");
 
    printf("\nENDING PRINT TESTS\n\n");
 
@@ -59,18 +59,15 @@ int main( int argc, char *argv[] ) {
    printf("STARTING WRITE TESTS\n\n");
 
    printf("Printing Array 1 to file \"testA1Out.csv\"\n");
-   vmaOps.prwOps.wDppArray2Csv(cArray1,"testA1Out.csv");
+   prwOps::wDppArray2Csv(cArray1,"testA1Out.csv");
    printf("Printing Array 2 to file \"testA2Out.csv\"\n");
-   vmaOps.prwOps.wDppArray2Csv(cArray2,"testA2Out.csv");
+   prwOps::wDppArray2Csv(cArray2,"testA2Out.csv");
 
    printf("\nENDING WRITE TESTS\n\n");
 
-   vmaOps.mFree(cMatrix);
-   cMatrix = NULL;
-   vmaOps.aFree(cArray1);
-   get<0>(cArray1) = NULL;
-   vmaOps.aFree(cArray2);
-   get<0>(cArray2) = NULL;
+   vmaOps::mFree(&cMatrix);
+   vmaOps::aFree(&cArray1);
+   vmaOps::aFree(&cArray2);
 
    return 0;
 }

@@ -23,7 +23,6 @@ void vmaOps::mInit(double*** mInit)
    }
 
    mSetZeros(*mInit);
-//   return mIn;
 }
 
 // Matrix Free
@@ -227,7 +226,8 @@ void vmaOps::mTran(double** mOut, double** m1)
 void vmaOps::mIsEqual(bool* isEqual, double** m1, double** m2)
 {
    *isEqual=false;
-   wiTol=false;
+   bool wiTol=false;
+   double tol=1.0e-10;
    for(int i=0;i<3;i++)
    {
       for (int j=0;j<3;j++)

@@ -1,20 +1,21 @@
-// Filename: testMvmaOps.cpp
+// Filename: testvmaOps::cpp
 // Created: 05/19/2018
 // Last Modified: 05/19/2018
 // Author: Kevin Gomez
 
 #include <iostream>
 #include <math.h>
+#include <array.h>
 #include <string.h>
 #include "../inc/vmaOps.h"
+#include "../../support/inc/prwOps.h"
+using namespace vmaOps;
+using namespace prwOps;
 
 int main( int argc, char *argv[] ) {
 
 	// Inputs
 	printf("You made it to test function for vmaOps!\n\n");
-
-   // Creating vmaOps object
-   vmaOps vmaOps;
 
    // Declaring variables
    bool testIsE;
@@ -28,23 +29,27 @@ int main( int argc, char *argv[] ) {
    printf("STARTING MEM TESTS\n\n");
 
    printf("Initializing matricies m[1-4]\n");
-   vmaOps.mInit(&m1);
-   vmaOps.mInit(&m2);
-   vmaOps.mInit(&m3);
-   vmaOps.mInit(&m4);
+   vmaOps::mInit(&m1);
+   vmaOps::mInit(&m2);
+   vmaOps::mInit(&m3);
+   vmaOps::mInit(&m4);
+   printf("[0][2] = %f\n",m1[0][2]);
+   printf("[2][0] = %f\n",m1[2][0]);
+   printf("[0][3] = %f\n",m1[0][3]);
+   printf("[3][0] = %f\n",m1[3][0]);
 
-   vmaOps.prwOps.printMatrix(m1,"Check New Init (m1)");
+   prwOps::printMatrix(m1,"Check New Init (m1)");
 
    printf("Initializing arrays a[1-6]\n");
-   //a1 = vmaOps.aInit(3,5);
-   vmaOps.aInit(&a1, 3, 5);
-   vmaOps.aInit(&a2, 3, 5);
-   vmaOps.aInit(&a3, 3, 5);
-   vmaOps.aInit(&a4, 5, 5);
-   vmaOps.aInit(&a5, 5, 5);
-   vmaOps.aInit(&a6, 2, 2);
+   //a1 = vmaOps::aInit(3,5);
+   vmaOps::aInit(&a1, 3, 5);
+   vmaOps::aInit(&a2, 3, 5);
+   vmaOps::aInit(&a3, 3, 5);
+   vmaOps::aInit(&a4, 5, 5);
+   vmaOps::aInit(&a5, 5, 5);
+   vmaOps::aInit(&a6, 2, 2);
 
-   vmaOps.prwOps.printArray(a1,"Check New Init (a1)");
+   prwOps::printArray(a1,"Check New Init (a1)");
 
    printf("\nENDING MEM TESTS\n\n");
 
@@ -52,35 +57,35 @@ int main( int argc, char *argv[] ) {
    printf("STARTING SET TESTS\n\n");
 
    printf("vectorOps: Zeros->Ones->123\n");
-   vmaOps.vSetZeros(v1);
-   vmaOps.prwOps.printVector(v1,"Check Zeros (v1)");
-   vmaOps.vSetOnes(v1);
-   vmaOps.prwOps.printVector(v1,"Check Ones (v1)");
-   vmaOps.vSet123(v1);
-   vmaOps.prwOps.printVector(v1,"Check 123 (v1)");
+   vmaOps::vSetZeros(v1);
+   prwOps::printVector(v1,"Check Zeros (v1)");
+   vmaOps::vSetOnes(v1);
+   prwOps::printVector(v1,"Check Ones (v1)");
+   vmaOps::vSet123(v1);
+   prwOps::printVector(v1,"Check 123 (v1)");
 
    printf("\nmatrixOps: Zeros->Ones->123->Identity\n");
-   vmaOps.mSetZeros(m1);
-   vmaOps.prwOps.printMatrix(m1,"Check Zeros (m1)");
-   vmaOps.mSetOnes(m1);
-   vmaOps.prwOps.printMatrix(m1,"Check Ones (m1)");
-   vmaOps.mSet123(m1);
-   vmaOps.prwOps.printMatrix(m1,"Check 123 (m1)");
-   vmaOps.mSetIdentity(m1);
-   vmaOps.prwOps.printMatrix(m1,"Check Identity (m1)");
+   vmaOps::mSetZeros(m1);
+   prwOps::printMatrix(m1,"Check Zeros (m1)");
+   vmaOps::mSetOnes(m1);
+   prwOps::printMatrix(m1,"Check Ones (m1)");
+   vmaOps::mSet123(m1);
+   prwOps::printMatrix(m1,"Check 123 (m1)");
+   vmaOps::mSetIdentity(m1);
+   prwOps::printMatrix(m1,"Check Identity (m1)");
 
    printf("\narrayOps: Zeros->Ones->123->Identity\n");
-   vmaOps.aSetZeros(a1);
-   vmaOps.prwOps.printArray(a1,"Check Zeros (a1)");
-   vmaOps.aSetOnes(a1);
-   vmaOps.prwOps.printArray(a1,"Check Ones (a1)");
-   vmaOps.aSet123(a1);
-   vmaOps.aSet123(a4);
-   vmaOps.prwOps.printArray(a1,"Check 123 (a1)");
+   vmaOps::aSetZeros(a1);
+   prwOps::printArray(a1,"Check Zeros (a1)");
+   vmaOps::aSetOnes(a1);
+   prwOps::printArray(a1,"Check Ones (a1)");
+   vmaOps::aSet123(a1);
+   vmaOps::aSet123(a4);
+   prwOps::printArray(a1,"Check 123 (a1)");
    printf("Check Identity (a1) (Non-Square Matrix: Shouldn't Work)\n");
-   vmaOps.aSetIdentity(a1);
-   vmaOps.aSetIdentity(a4);
-   vmaOps.prwOps.printArray(a4,"Check Identity (a4) [Square Matrix: Should Work]");
+   vmaOps::aSetIdentity(a1);
+   vmaOps::aSetIdentity(a4);
+   prwOps::printArray(a4,"Check Identity (a4) [Square Matrix: Should Work]");
 
    printf("\nENDING SET TESTS\n\n");
 
@@ -89,41 +94,41 @@ int main( int argc, char *argv[] ) {
    printf("STARTING CHECK TESTS\n\n");
 
    printf("vectorOps: isEqual\n");
-   vmaOps.vSetOnes(v1);
-   vmaOps.ScaXVec(v1,2,v1);
-   vmaOps.vSetOnes(v2);
-   vmaOps.prwOps.printVector(v1,"v1");
-   vmaOps.prwOps.printVector(v2,"v2");
+   vmaOps::vSetOnes(v1);
+   vmaOps::ScaXVec(v1,2,v1);
+   vmaOps::vSetOnes(v2);
+   prwOps::printVector(v1,"v1");
+   prwOps::printVector(v2,"v2");
    printf("Check: isEqual -> v1 & v2\n");
-   vmaOps.vIsEqual(&testIsE,v1,v2);
+   vmaOps::vIsEqual(&testIsE,v1,v2);
    printf("Check: isEqual -> v1 & v1\n");
-   vmaOps.vIsEqual(&testIsE,v1,v1);
+   vmaOps::vIsEqual(&testIsE,v1,v1);
 
    printf("\nmatrixOps: isEqual\n");
-   vmaOps.mSetOnes(m1);
-   vmaOps.ScaXMat(m1,2,m1);
-   vmaOps.mSetOnes(m2);
-   vmaOps.prwOps.printMatrix(m1,"m1");
-   vmaOps.prwOps.printMatrix(m2,"m2");
+   vmaOps::mSetOnes(m1);
+   vmaOps::ScaXMat(m1,2,m1);
+   vmaOps::mSetOnes(m2);
+   prwOps::printMatrix(m1,"m1");
+   prwOps::printMatrix(m2,"m2");
    printf("Check: isEqual -> m1 & m2\n");
-   vmaOps.mIsEqual(&testIsE,m1,m2);
+   vmaOps::mIsEqual(&testIsE,m1,m2);
    printf("Check: isEqual -> m1 & m1\n");
-   vmaOps.mIsEqual(&testIsE,m1,m1);
+   vmaOps::mIsEqual(&testIsE,m1,m1);
 
    printf("\narrayOps: isEqual\n");
-   vmaOps.aSetOnes(a1);
-   vmaOps.ScaXArr(a1,2,a1);
-   vmaOps.aSetOnes(a2);
-   vmaOps.aSetOnes(a4);
-   vmaOps.prwOps.printArray(a1,"a1");
-   vmaOps.prwOps.printArray(a2,"a2");
-   vmaOps.prwOps.printArray(a4,"a3");
+   vmaOps::aSetOnes(a1);
+   vmaOps::ScaXArr(a1,2,a1);
+   vmaOps::aSetOnes(a2);
+   vmaOps::aSetOnes(a4);
+   prwOps::printArray(a1,"a1");
+   prwOps::printArray(a2,"a2");
+   prwOps::printArray(a4,"a3");
    printf("Check isEqual (a1 & a4) [Different Dimensions: Shouldn't Work]\n");
-   vmaOps.aIsEqual(&testIsE,a1,a4);
+   vmaOps::aIsEqual(&testIsE,a1,a4);
    printf("Check: isEqual -> a1 & a2\n");
-   vmaOps.aIsEqual(&testIsE,a1,a2);
+   vmaOps::aIsEqual(&testIsE,a1,a2);
    printf("Check: isEqual -> a1 & a1\n");
-   vmaOps.aIsEqual(&testIsE,a1,a1);
+   vmaOps::aIsEqual(&testIsE,a1,a1);
 
    printf("\nENDING CHECK TESTS\n\n");
 
@@ -132,104 +137,104 @@ int main( int argc, char *argv[] ) {
    printf("STARTING OPS TESTS\n\n");
 
    printf("vectorOps: Add, Subtract, Magnitude, Unit Vector, Cross Product, Dot Product\n");
-   vmaOps.prwOps.printVector(v1,"v1 = 2*Ones");
-   vmaOps.prwOps.printVector(v2,"v2");
-   vmaOps.vAdd(v3, v1, v2);
-   vmaOps.prwOps.printVector(v3,"v3=v1+v2");
-   vmaOps.vSub(v3, v1, v2);
-   vmaOps.prwOps.printVector(v3,"v3=v1-v2");
-   vmaOps.vMag(&s1, v1);
-   vmaOps.prwOps.printScalar(s1,"Vector Magnitude of v1");
-   vmaOps.vUnit(v3, v1);
-   vmaOps.prwOps.printVector(v3,"Unit Vector of v1");
-   vmaOps.vSet123(v4);
-   vmaOps.prwOps.printVector(v4,"v4");
-   vmaOps.crossProduct(v3, v2, v4);
-   vmaOps.prwOps.printVector(v3,"Cross Product of v2 & v4 = v3");
-   vmaOps.dotProduct(&s1, v2, v4);
-   vmaOps.prwOps.printScalar(s1,"Dot Product of v2 & v4 = s1");
+   prwOps::printVector(v1,"v1 = 2*Ones");
+   prwOps::printVector(v2,"v2");
+   vmaOps::vAdd(v3, v1, v2);
+   prwOps::printVector(v3,"v3=v1+v2");
+   vmaOps::vSub(v3, v1, v2);
+   prwOps::printVector(v3,"v3=v1-v2");
+   vmaOps::vMag(&s1, v1);
+   prwOps::printScalar(s1,"Vector Magnitude of v1");
+   vmaOps::vUnit(v3, v1);
+   prwOps::printVector(v3,"Unit Vector of v1");
+   vmaOps::vSet123(v4);
+   prwOps::printVector(v4,"v4");
+   vmaOps::crossProduct(v3, v2, v4);
+   prwOps::printVector(v3,"Cross Product of v2 & v4 = v3");
+   vmaOps::dotProduct(&s1, v2, v4);
+   prwOps::printScalar(s1,"Dot Product of v2 & v4 = s1");
 
    printf("\nmatrixOps: Add, Subtract, Multiplication, Transpose, Trace\n");
-   vmaOps.prwOps.printMatrix(m1,"m1=2*Ones");
-   vmaOps.prwOps.printMatrix(m2,"m2");
-   vmaOps.mAdd(m3, m1, m2);
-   vmaOps.prwOps.printMatrix(m3,"m3=m1+m2");
-   vmaOps.mSub(m3, m1, m2);
-   vmaOps.prwOps.printMatrix(m3,"m3=m1-m2");
-   vmaOps.mSet123(m1);
-   vmaOps.mSet123(m2);
-   vmaOps.prwOps.printMatrix(m1,"m1");
-   vmaOps.prwOps.printMatrix(m2,"m2");
-   vmaOps.mMult(m3, m1, m2);
-   vmaOps.prwOps.printMatrix(m3,"m3=m1*m2");
-   vmaOps.mTran(m1, m3);
-   vmaOps.prwOps.printMatrix(m1,"Tanspose of m3");
-   vmaOps.mSetIdentity(m1);
-   vmaOps.mSetIdentity(m2);
-   vmaOps.ScaXMat(m2,2,m2);
-   vmaOps.prwOps.printMatrix(m1,"m1");
-   vmaOps.prwOps.printMatrix(m2,"m2");
-   vmaOps.mTrace(&s1, m1);
-   vmaOps.mTrace(&s2, m2);
-   vmaOps.prwOps.printScalar(s1,"Trace of m1");
-   vmaOps.prwOps.printScalar(s2,"Trace of m2");
+   prwOps::printMatrix(m1,"m1=2*Ones");
+   prwOps::printMatrix(m2,"m2");
+   vmaOps::mAdd(m3, m1, m2);
+   prwOps::printMatrix(m3,"m3=m1+m2");
+   vmaOps::mSub(m3, m1, m2);
+   prwOps::printMatrix(m3,"m3=m1-m2");
+   vmaOps::mSet123(m1);
+   vmaOps::mSet123(m2);
+   prwOps::printMatrix(m1,"m1");
+   prwOps::printMatrix(m2,"m2");
+   vmaOps::mMult(m3, m1, m2);
+   prwOps::printMatrix(m3,"m3=m1*m2");
+   vmaOps::mTran(m1, m3);
+   prwOps::printMatrix(m1,"Tanspose of m3");
+   vmaOps::mSetIdentity(m1);
+   vmaOps::mSetIdentity(m2);
+   vmaOps::ScaXMat(m2,2,m2);
+   prwOps::printMatrix(m1,"m1");
+   prwOps::printMatrix(m2,"m2");
+   vmaOps::mTrace(&s1, m1);
+   vmaOps::mTrace(&s2, m2);
+   prwOps::printScalar(s1,"Trace of m1");
+   prwOps::printScalar(s2,"Trace of m2");
    m4[0][0]=6; m4[0][1]=1;  m4[0][2]=1;
    m4[1][0]=4; m4[1][1]=-2; m4[1][2]=5;
    m4[2][0]=2; m4[2][1]=8;  m4[2][2]=7;
-   vmaOps.prwOps.printMatrix(m4,"m4");
-   vmaOps.mDet33(&det, m4);
-   vmaOps.prwOps.printScalar(det,"det(m4) should be -306. det(m4) is:");
-   vmaOps.mSet123(m4);
-   vmaOps.prwOps.printMatrix(m4,"m4");
+   prwOps::printMatrix(m4,"m4");
+   vmaOps::mDet33(&det, m4);
+   prwOps::printScalar(det,"det(m4) should be -306. det(m4) is:");
+   vmaOps::mSet123(m4);
+   prwOps::printMatrix(m4,"m4");
    printf("Check Inverse (m4) [123 Matrix is NOT invertible: Shouldn't Work]\n");
-   vmaOps.mInv(m3,m4);
+   vmaOps::mInv(m3,m4);
    m4[0][0]=3; m4[0][1]=0;  m4[0][2]=2;
    m4[1][0]=2; m4[1][1]=0;  m4[1][2]=-2;
    m4[2][0]=0; m4[2][1]=1;  m4[2][2]=1;
-   vmaOps.prwOps.printMatrix(m4,"m4");
-   vmaOps.mMinor(m2,m4);
-   vmaOps.prwOps.printMatrix(m2,"Matrix of Minors of m4");
-   vmaOps.mCofactor(m2,m4);
-   vmaOps.prwOps.printMatrix(m2,"Matrix of Cofactors of m4");
-   vmaOps.mAdjugate(m2,m4);
-   vmaOps.prwOps.printMatrix(m2,"Adjoint of m4");
-   vmaOps.mDet33(&det, m4);
+   prwOps::printMatrix(m4,"m4");
+   vmaOps::mMinor(m2,m4);
+   prwOps::printMatrix(m2,"Matrix of Minors of m4");
+   vmaOps::mCofactor(m2,m4);
+   prwOps::printMatrix(m2,"Matrix of Cofactors of m4");
+   vmaOps::mAdjugate(m2,m4);
+   prwOps::printMatrix(m2,"Adjoint of m4");
+   vmaOps::mDet33(&det, m4);
    det=1/det;
-   vmaOps.ScaXMat(m2,det,m2);
-   vmaOps.prwOps.printMatrix(m2,"Inverse from Adjoint/det of m4");   
-   vmaOps.mInv(m3,m4);
+   vmaOps::ScaXMat(m2,det,m2);
+   prwOps::printMatrix(m2,"Inverse from Adjoint/det of m4");   
+   vmaOps::mInv(m3,m4);
    m2[0][0]=0.2;  m2[0][1]=0.2;   m2[0][2]=0;
    m2[1][0]=-0.2; m2[1][1]=0.3;   m2[1][2]=1;
    m2[2][0]=0.2;  m2[2][1]=-0.3;  m2[2][2]=0;
-   vmaOps.prwOps.printMatrix(m2,"m2 = inv(m4) [Actual]");
-   vmaOps.prwOps.printMatrix(m3,"m3 = inv(m4) [Calculated]");
-   vmaOps.mIsEqual(&testIsE,m3,m2);
+   prwOps::printMatrix(m2,"m2 = inv(m4) [Actual]");
+   prwOps::printMatrix(m3,"m3 = inv(m4) [Calculated]");
+   vmaOps::mIsEqual(&testIsE,m3,m2);
 
    printf("\narrayOps: Add, Subtract, Multiplication, Transpose, Det2X2\n");
-   vmaOps.prwOps.printArray(a1,"a1=2*Ones");
-   vmaOps.prwOps.printArray(a2,"a2");
-   vmaOps.prwOps.printArray(a4,"a4");
+   prwOps::printArray(a1,"a1=2*Ones");
+   prwOps::printArray(a2,"a2");
+   prwOps::printArray(a4,"a4");
    printf("Check Add/Subtract (a1 & a4) [Different Dimensions: Shouldn't Work]\n");
-   vmaOps.aAdd(a5,a1,a4);
-   vmaOps.aSub(a5,a1,a4);
-   vmaOps.aAdd(a3,a1,a2);
-   vmaOps.prwOps.printArray(a3,"a3=a1+a2");
-   vmaOps.aSub(a3,a1,a2);
-   vmaOps.prwOps.printArray(a3,"a3=a1-a2");
-   vmaOps.aSet123(a2);
-   vmaOps.prwOps.printArray(a2,"a2");
-   vmaOps.aSet123(a4);
-   vmaOps.prwOps.printArray(a4,"a4");
+   vmaOps::aAdd(a5,a1,a4);
+   vmaOps::aSub(a5,a1,a4);
+   vmaOps::aAdd(a3,a1,a2);
+   prwOps::printArray(a3,"a3=a1+a2");
+   vmaOps::aSub(a3,a1,a2);
+   prwOps::printArray(a3,"a3=a1-a2");
+   vmaOps::aSet123(a2);
+   prwOps::printArray(a2,"a2");
+   vmaOps::aSet123(a4);
+   prwOps::printArray(a4,"a4");
    printf("Check Multiplication (a4 & a2) [nxm * nxn: Shouldn't Work]\n");
-   vmaOps.aMult(a3,a4,a2);
-   vmaOps.aMult(a3,a2,a4);
-   vmaOps.prwOps.printArray(a3,"a3=a2*a4");
-   vmaOps.aTran(a5,a4);
-   vmaOps.prwOps.printArray(a5,"Transpose of a4");
+   vmaOps::aMult(a3,a4,a2);
+   vmaOps::aMult(a3,a2,a4);
+   prwOps::printArray(a3,"a3=a2*a4");
+   vmaOps::aTran(a5,a4);
+   prwOps::printArray(a5,"Transpose of a4");
    get<0>(a6)[0][0]=1; get<0>(a6)[0][1]=2; get<0>(a6)[1][0]=3; get<0>(a6)[1][1]=4;
-   vmaOps.prwOps.printArray(a6,"a6");
-   vmaOps.mDet22(&det, get<0>(a6));
-   vmaOps.prwOps.printScalar(det,"det(a6) is:");
+   prwOps::printArray(a6,"a6");
+   vmaOps::mDet22(&det, get<0>(a6));
+   prwOps::printScalar(det,"det(a6) is:");
 
    printf("\nENDING OPS TESTS\n\n");
 
@@ -238,18 +243,18 @@ int main( int argc, char *argv[] ) {
    printf("STARTING FREE TESTS\n\n");
 
    printf("Freeing matricies m[1-4]\n");
-   vmaOps.mFree(&m1);
-   vmaOps.mFree(&m2);
-   vmaOps.mFree(&m3);
-   vmaOps.mFree(&m4);
+   vmaOps::mFree(&m1);
+   vmaOps::mFree(&m2);
+   vmaOps::mFree(&m3);
+   vmaOps::mFree(&m4);
 
    printf("Freeing arrays a[1-6]\n");
-   vmaOps.aFree(&a1);
-   vmaOps.aFree(&a2);
-   vmaOps.aFree(&a3);
-   vmaOps.aFree(&a4);
-   vmaOps.aFree(&a5);
-   vmaOps.aFree(&a6);
+   vmaOps::aFree(&a1);
+   vmaOps::aFree(&a2);
+   vmaOps::aFree(&a3);
+   vmaOps::aFree(&a4);
+   vmaOps::aFree(&a5);
+   vmaOps::aFree(&a6);
 
    printf("\nENDING FREE TESTS\n\n");
 

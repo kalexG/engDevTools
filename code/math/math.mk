@@ -16,7 +16,7 @@ VMAOPS_TEST = obj/testVmaOps.o
 CHECKMEM_TEST = obj/checkMem.o
 NUMERICALMETHODS_TEST = obj/testNumericalMethods.o
 
-VMAOPS_UT = obj/vmaOps_ut.o
+VMAOPS_UT = obj/vectorOps_ut.o
 
 # All exectables
 MATH_BIN = bin/testVmaOps bin/vmaOps_ut bin/checkMem bin/testNumericalMethods

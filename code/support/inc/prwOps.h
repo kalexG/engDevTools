@@ -11,23 +11,8 @@
 using namespace std;
 typedef tuple<double**,int,int> myArray;
 
-class prwOps {
-
-   // Access: protected //
-   protected:
-   // Data: protected
-   // Functions: protected
-
-   // Access: private //
-   private:
-   // Data: private
-   FILE * fileWrite;
-   // Functions: private
-
-   // Access: public
-   public:
-   // Data: public
-   // Functions: public
+namespace prwOps 
+{
 
    // printOps Functions
    void printBool(bool boolean, string str1);
@@ -43,10 +28,4 @@ class prwOps {
 
    void wDppArray2Csv(tuple<double**,int,int> arr, string fileName);
 
-   void printInfo()
-   {
-      printf("This is the prwOps class!\n");
-   }
-
-
-};
+}

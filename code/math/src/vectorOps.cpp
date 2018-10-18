@@ -87,9 +87,11 @@ void vmaOps::vMag(double* sOut, double* v1)
 
 void vmaOps::vUnit(double* vOut, double* v1)
 {
+   double mag;
+   vMag(&mag, v1);
    for(int i=0;i<3;i++)
    {
-      vOut[i]=v1[i]/sqrt(v1[0]*v1[0]+v1[1]*v1[1]+v1[2]*v1[2]);
+      vOut[i]=v1[i]/mag;
    }
 }
 
@@ -125,12 +127,10 @@ void vmaOps::vIsEqual(bool* isEqual, double* v1, double* v2)
    if (v1[0]==v2[0] && v1[1]==v2[1] && v1[2]==v2[2])
    {
       *isEqual=true;
-      printf("These vectors are ARE equal\n");
    }
    else
    {
       *isEqual=false;
-      printf("These vectors are NOT equal\n");
    }
 }
 

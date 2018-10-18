@@ -1,39 +1,17 @@
 // Filename: vmaOps.h
 // Created: 05/19/2018
-// Last Modified: 05/19/2018
+// Last Modified: 10/08/2018
 // Author: Kevin Gomez
 
 #include <iostream>
 #include <math.h>
 #include <string.h>
 #include <tuple>
-#include "../../support/inc/prwOps.h"
 using namespace std;
 typedef tuple<double**,int,int> myArray;
 
-class vmaOps {
-
-   // Access: protected //
-   protected:
-   // Data: protected
-   // Functions: protected
-
-   // Access: private //
-   private:
-   // Data: private
-   double** m;
-   double** a;
-   double tol=1.0e-10; // Tolerance Criteria
-   bool wiTol; // Within Tolerance Flag
-   // Functions: private
-
-   // Access: public
-   public:
-   // Data: public
-
-   // Classes: public
-   class prwOps prwOps;
-   // Functions: public
+namespace vmaOps 
+{
 
    // vectorOps Functions
    void vSetZeros(double* vOut);
@@ -86,9 +64,4 @@ class vmaOps {
    void aIsEqual(bool* isEqual, myArray a1, myArray a2);
    void mDet22(double* sOut, double** m1);
 
-   void printInfo()
-   {
-      printf("This is the vmaOps class!\n");
-   }
-
-};
+}

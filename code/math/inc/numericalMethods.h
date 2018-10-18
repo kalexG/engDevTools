@@ -28,7 +28,6 @@ class numericalMethods {
    // Data: public
 
    // Classes: public
-   class vmaOps vmaOps;
    
    // Functions: public
 
