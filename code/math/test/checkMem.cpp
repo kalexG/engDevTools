@@ -17,10 +17,16 @@ int main( int argc, char *argv[] ) {
    //vmaOps vmaOps;
 
    // Declaring variables
-   double **m1, **m2, **m3;
-   myArray a1, a2, a3;
-
+   vec v1, v2, v3;
+   mat m1, m2, m3;
+   arr a1, a2, a3;
+   
    //// Allocate Memory
+
+   printf("Initializing vectors v[1-3]\n");
+   vmaOps::vInit(&v1);
+   vmaOps::vInit(&v2);
+   vmaOps::vInit(&v3);
 
    printf("Initializing matricies m[1-3]\n");
    vmaOps::mInit(&m1);
@@ -32,6 +38,9 @@ int main( int argc, char *argv[] ) {
    vmaOps::aInit(&a2, 4, 4);
    vmaOps::aInit(&a3, 4, 4);
 
+   printf("Address of v1 is %p\n", (void *)v1);
+   printf("Address of v2 is %p\n", (void *)v2);
+   printf("Address of v3 is %p\n", (void *)v3);  
    printf("Address of m1 is %p\n", (void *)m1);
    printf("Address of m2 is %p\n", (void *)m2);
    printf("Address of m3 is %p\n", (void *)m3);  
@@ -43,6 +52,11 @@ int main( int argc, char *argv[] ) {
 
    //// Free Memory
 
+   printf("Freeing vectors v[1-3]\n");
+   vmaOps::vFree(&v1);
+   vmaOps::vFree(&v2);
+   vmaOps::vFree(&v3);
+
    printf("Freeing matricies m[1-3]\n");
    vmaOps::mFree(&m1);
    vmaOps::mFree(&m2);
@@ -53,6 +67,9 @@ int main( int argc, char *argv[] ) {
    vmaOps::aFree(&a2);
    vmaOps::aFree(&a3);
 
+   printf("Address of v1 is %p\n", (void *)v1);
+   printf("Address of v2 is %p\n", (void *)v2);
+   printf("Address of v3 is %p\n", (void *)v3);  
    printf("Address of m1 is %p\n", (void *)m1);
    printf("Address of m2 is %p\n", (void *)m2);
    printf("Address of m3 is %p\n", (void *)m3);  

@@ -5,11 +5,9 @@
 
 #include <iostream>
 #include <math.h>
-#include <array.h>
 #include <string.h>
 #include "../inc/vmaOps.h"
 #include "../../support/inc/prwOps.h"
-using namespace vmaOps;
 using namespace prwOps;
 
 int main( int argc, char *argv[] ) {
@@ -20,28 +18,29 @@ int main( int argc, char *argv[] ) {
    // Declaring variables
    bool testIsE;
    double s1, s2, det;
-   double v1[3], v2[3], v3[3], v4[3];
-   double **m1, **m2, **m3, **m4;
-   myArray a1, a2, a3, a4, a5, a6;
+   vec v1, v2, v3, v4;
+   mat m1, m2, m3, m4;
+   arr a1, a2, a3, a4, a5, a6;
 
    //// Run MEM Tests
    
    printf("STARTING MEM TESTS\n\n");
+
+   printf("Initializing vectors v[1-4]\n");
+   vmaOps::vInit(&v1);
+   vmaOps::vInit(&v2);
+   vmaOps::vInit(&v3);
+   vmaOps::vInit(&v4);
 
    printf("Initializing matricies m[1-4]\n");
    vmaOps::mInit(&m1);
    vmaOps::mInit(&m2);
    vmaOps::mInit(&m3);
    vmaOps::mInit(&m4);
-   printf("[0][2] = %f\n",m1[0][2]);
-   printf("[2][0] = %f\n",m1[2][0]);
-   printf("[0][3] = %f\n",m1[0][3]);
-   printf("[3][0] = %f\n",m1[3][0]);
 
    prwOps::printMatrix(m1,"Check New Init (m1)");
 
    printf("Initializing arrays a[1-6]\n");
-   //a1 = vmaOps::aInit(3,5);
    vmaOps::aInit(&a1, 3, 5);
    vmaOps::aInit(&a2, 3, 5);
    vmaOps::aInit(&a3, 3, 5);
@@ -241,6 +240,12 @@ int main( int argc, char *argv[] ) {
    // RUN FREE TESTS
 
    printf("STARTING FREE TESTS\n\n");
+
+   printf("Freeing vectors v[1-4]\n");
+   vmaOps::vFree(&v1);
+   vmaOps::vFree(&v2);
+   vmaOps::vFree(&v3);
+   vmaOps::vFree(&v4);
 
    printf("Freeing matricies m[1-4]\n");
    vmaOps::mFree(&m1);

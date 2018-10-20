@@ -8,29 +8,6 @@
 // Need class definition
 #include "../inc/vmaOps.h"
 
-// Vector Initialization
-// Inputs: vInit
-// Outputs: vInit
-// Operation: Allocate Memory
-
-void vmaOps::vInit(double** vInit)
-{
-   *vInit = new double[3];
-
-   vSetZeros(*vInit);
-}
-
-// Vector Free
-// Inputs: vFree
-// Outputs: vFree
-// Operation: Free Memory
-
-void vmaOps::vFree(double** vFree)
-{
-   delete[] *vFree;
-   *vFree=NULL;
-}
-
 // Set Vector to Zeros
 // Inputs: vOut
 // Outputs: vOut

@@ -7,61 +7,92 @@
 #include <math.h>
 #include <string.h>
 #include <tuple>
+#include <typeinfo>
 using namespace std;
-typedef tuple<double**,int,int> myArray;
+typedef tuple<double**,int,int> arr;
+typedef double** mat;
+typedef double* vec;
 
-namespace vmaOps 
+class vmaOps 
 {
 
+   protected:
+
+   private:
+
+   public:
+
+   class myArr
+   {
+      protected:
+      private:
+      public:
+   };
+
+   class myMat : public myArr
+   {
+      protected:
+      private:
+      public:
+   };
+
+   class myVec : public myArr
+   {
+      protected:
+      private:
+      public:
+   };
+
    // vectorOps Functions
-   void vSetZeros(double* vOut);
-   void vSetOnes(double* vOut);
-   void vSet123(double* vOut);
-   void vAdd(double* vOut, double* v1, double* v2);
-   void vSub(double* vOut, double* v1, double* v2);
-   void vMag(double* sOut, double* v1);
-   void vUnit(double* vOut, double* v1);
-   void crossProduct(double* vOut, double* v1, double* v2);
-   void dotProduct(double* sOut, double* v1, double* v2);
-   void vIsEqual(bool* isEqual, double* v1, double* v2);
-   void ScaXVec(double* vOut, double s1, double* v1);
-   // TODO: Vector Initialization
+   static void vInit(double** vInit);
+   static void vFree(double** vFree);
+   static void vSetZeros(vec vOut);
+   static void vSetOnes(vec vOut);
+   static void vSet123(vec vOut);
+   static void vAdd(vec vOut, vec v1, vec v2);
+   static void vSub(vec vOut, vec v1, vec v2);
+   static void vMag(double* sOut, vec v1);
+   static void vUnit(vec vOut, vec v1);
+   static void crossProduct(vec vOut, vec v1, vec v2);
+   static void dotProduct(double* sOut, vec v1, vec v2);
+   static void vIsEqual(bool* isEqual, vec v1, vec v2);
+   static void ScaXVec(vec vOut, double s1, vec v1);
 
    // matrixOps Functions
-   void mInit(double*** mInit);
-   void mFree(double*** mFree);
-   void mSetZeros(double** mOut);
-   void mSetOnes(double** mOut);
-   void mSet123(double** mOut);
-   void mSetIdentity(double** mOut);
-   void mAdd(double** mOut, double** m1, double** m2);
-   void mSub(double** mOut, double** m1, double** m2);
-   void mMult(double** mOut, double** m1, double** m2);
-   void mTrace(double* sOut, double** m1);
-   void ScaXMat(double** mOut, double s1, double** m1);
-   void mTran(double** mOut, double** m1);
-   void mIsEqual(bool* isEqual, double** m1, double** m2);
-   void mDet33(double* sOut, double** m1);
-   void mMinor(double** mOut, double** m1);
-   void mCofactor(double** mOut, double** m1);
-   void mAdjugate(double** mOut, double** m1);
-   void mInv(double** mOut, double** m1);
+   static void mInit(double*** mInit);
+   static void mFree(double*** mFree);
+   static void mSetZeros(mat mOut);
+   static void mSetOnes(mat mOut);
+   static void mSet123(mat mOut);
+   static void mSetIdentity(mat mOut);
+   static void mAdd(mat mOut, mat m1, mat m2);
+   static void mSub(mat mOut, mat m1, mat m2);
+   static void mMult(mat mOut, mat m1, mat m2);
+   static void mTrace(double* sOut, mat m1);
+   static void ScaXMat(mat mOut, double s1, mat m1);
+   static void mTran(mat mOut, mat m1);
+   static void mIsEqual(bool* isEqual, mat m1, mat m2);
+   static void mDet33(double* sOut, mat m1);
+   static void mMinor(mat mOut, mat m1);
+   static void mCofactor(mat mOut, mat m1);
+   static void mAdjugate(mat mOut, mat m1);
+   static void mInv(mat mOut, mat m1);
    // TODO: Vector*Matrix
    // TODO: Matrix*Vector
    
    // TODO arrayOps Functions
-   void aInit(myArray* aInit, int row, int col);
-   void aFree(myArray* aFree);
-   void aSetZeros(myArray aOut);
-   void aSetOnes(myArray aOut);
-   void aSet123(myArray aOut);
-   void aSetIdentity(myArray aOut);
-   void aAdd(myArray aOut, myArray a1, myArray a2);
-   void aSub(myArray aOut, myArray a1, myArray a2);
-   void aMult(myArray aOut, myArray a1, myArray a2);
-   void ScaXArr(myArray aOut, double s1, myArray a1);
-   void aTran(myArray aOut, myArray a1);
-   void aIsEqual(bool* isEqual, myArray a1, myArray a2);
-   void mDet22(double* sOut, double** m1);
+   static void aInit(arr* aInit, int row, int col);
+   static void aFree(arr* aFree);
+   static void aSetZeros(arr aOut);
+   static void aSetOnes(arr aOut);
+   static void aSet123(arr aOut);
+   static void aSetIdentity(arr aOut);
+   static void aAdd(arr aOut, arr a1, arr a2);
+   static void aSub(arr aOut, arr a1, arr a2);
+   static void aMult(arr aOut, arr a1, arr a2);
+   static void ScaXArr(arr aOut, double s1, arr a1);
+   static void aTran(arr aOut, arr a1);
+   static void aIsEqual(bool* isEqual, arr a1, arr a2);
+   static void mDet22(double* sOut, double** m1);
 
-}
+};

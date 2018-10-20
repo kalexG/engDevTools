@@ -46,7 +46,7 @@ void vmaOps::mFree(double*** mFree)
 // Outputs: mOut
 // Operation: mOut=Zeros
 
-void vmaOps::mSetZeros(double** mOut)
+void vmaOps::mSetZeros(mat mOut)
 {
 
    for (int i=0;i<3;i++)
@@ -63,7 +63,7 @@ void vmaOps::mSetZeros(double** mOut)
 // Outputs: mOut
 // Operation: mOut=Ones
 
-void vmaOps::mSetOnes(double** mOut)
+void vmaOps::mSetOnes(mat mOut)
 {
 
    for (int i=0;i<3;i++)
@@ -80,7 +80,7 @@ void vmaOps::mSetOnes(double** mOut)
 // Outputs: mOut
 // Operation: mOut=Identity
 
-void vmaOps::mSetIdentity(double** mOut)
+void vmaOps::mSetIdentity(mat mOut)
 {
 
    for (int i=0;i<3;i++)
@@ -104,7 +104,7 @@ void vmaOps::mSetIdentity(double** mOut)
 // Outputs: mOut
 // Operation: mOut=123
 
-void vmaOps::mSet123(double** mOut)
+void vmaOps::mSet123(mat mOut)
 {
    int k=1;
    for (int i=0;i<3;i++)
@@ -122,7 +122,7 @@ void vmaOps::mSet123(double** mOut)
 // Outputs: mOut
 // Operation: mOut=m1+m2
 
-void vmaOps::mAdd(double** mOut, double** m1, double** m2)
+void vmaOps::mAdd(mat mOut, mat m1, mat m2)
 {
    for(int i=0;i<3;i++)
    {
@@ -138,7 +138,7 @@ void vmaOps::mAdd(double** mOut, double** m1, double** m2)
 // Outputs: mOut
 // Operation: mOut=m1-m2
 
-void vmaOps::mSub(double** mOut, double** m1, double** m2)
+void vmaOps::mSub(mat mOut, mat m1, mat m2)
 {
    for(int i=0;i<3;i++)
    {
@@ -154,7 +154,7 @@ void vmaOps::mSub(double** mOut, double** m1, double** m2)
 // Outputs: mOut
 // Operation: mOut=m1*m2
 
-void vmaOps::mMult(double** mOut, double** m1, double** m2)
+void vmaOps::mMult(mat mOut, mat m1, mat m2)
 {
    // Make sure new matrix starts out empty
    mSetZeros(mOut);
@@ -176,7 +176,7 @@ void vmaOps::mMult(double** mOut, double** m1, double** m2)
 // Outputs: s1
 // Operation: Sum Diagonal of m1
 
-void vmaOps::mTrace(double* sOut, double** m1)
+void vmaOps::mTrace(double* sOut, mat m1)
 {
    *sOut=m1[0][0]+m1[1][1]+m1[2][2];
 }
@@ -186,7 +186,7 @@ void vmaOps::mTrace(double* sOut, double** m1)
 // Outputs: mOut
 // Operation: s1*m1=mOut
 
-void vmaOps::ScaXMat(double** mOut, double s1, double** m1)
+void vmaOps::ScaXMat(mat mOut, double s1, mat m1)
 {
    for(int i=0;i<3;i++)
    {
@@ -202,7 +202,7 @@ void vmaOps::ScaXMat(double** mOut, double s1, double** m1)
 // Outputs: mOut
 // Operation: m2=m1^t
 
-void vmaOps::mTran(double** mOut, double** m1)
+void vmaOps::mTran(mat mOut, mat m1)
 {
    // TODO: Find better way to protect input matrix if mOut is replacing m1 [mTran(m1,m1)]
    double uLD[3]={m1[1][0],m1[2][0],m1[2][1]};
@@ -223,7 +223,7 @@ void vmaOps::mTran(double** mOut, double** m1)
 // Outputs: str1
 // Operation: ?m1=m2?
 
-void vmaOps::mIsEqual(bool* isEqual, double** m1, double** m2)
+void vmaOps::mIsEqual(bool* isEqual, mat m1, mat m2)
 {
    *isEqual=false;
    bool wiTol=false;
@@ -264,7 +264,7 @@ void vmaOps::mIsEqual(bool* isEqual, double** m1, double** m2)
 // Outputs: sOut
 // Operation: Determinant of 3x3 matrix
 
-void vmaOps::mDet33(double* sOut, double** m1)
+void vmaOps::mDet33(double* sOut, mat m1)
 {
    *sOut=m1[0][0]*(m1[1][1]*m1[2][2]-m1[2][1]*m1[1][2]);
    *sOut=*sOut+m1[0][1]*(m1[1][2]*m1[2][0]-m1[2][2]*m1[1][0]);
@@ -276,7 +276,7 @@ void vmaOps::mDet33(double* sOut, double** m1)
 // Outputs: mOut
 // Operation: Get Matrix of Minors
 
-void vmaOps::mMinor(double** mOut, double** m1)
+void vmaOps::mMinor(mat mOut, mat m1)
 {
    double mDet22[4];
    double detMin;
@@ -314,7 +314,7 @@ void vmaOps::mMinor(double** mOut, double** m1)
 // Outputs: mOut
 // Operation: Get Matrix of Cofactors
 
-void vmaOps::mCofactor(double** mOut, double** m1)
+void vmaOps::mCofactor(mat mOut, mat m1)
 {
    mMinor(mOut, m1);
    mOut[0][1]=-mOut[0][1];
@@ -328,7 +328,7 @@ void vmaOps::mCofactor(double** mOut, double** m1)
 // Outputs: mOut
 // Operation: Get Matrix Adjoint
 
-void vmaOps::mAdjugate(double** mOut, double** m1)
+void vmaOps::mAdjugate(mat mOut, mat m1)
 {
    mCofactor(mOut, m1);
    mTran(mOut, mOut);
@@ -340,7 +340,7 @@ void vmaOps::mAdjugate(double** mOut, double** m1)
 // Outputs: m2
 // Operation: Inverse of 3x3 matrix
 
-void vmaOps::mInv(double** mOut, double** m1)
+void vmaOps::mInv(mat mOut, mat m1)
 {
    double det=0;
    mDet33(&det,m1);

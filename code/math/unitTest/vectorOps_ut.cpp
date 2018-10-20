@@ -2,9 +2,34 @@
 #include "../inc/vmaOps.h"
 #include <gtest.h>
 #include <gmock/gmock.h>
-using namespace vmaOps;
 
-// TESTING:: vSetZeros(double* vOut)
+// TESTING:: vInit(vec vInit)
+TEST(VectorOpsTests, checkInitializeVectorAddress) {
+   vec v1;
+   vmaOps::vInit(&v1);
+   EXPECT_THAT(v1, ::testing::NotNull());
+   vmaOps::vFree(&v1);
+}
+
+TEST(VectorOpsTests, checkInitializeVectorZeros) {
+   vec v1;
+   vmaOps::vInit(&v1);
+   EXPECT_EQ(v1[0],0.0);
+   EXPECT_EQ(v1[1],0.0);
+   EXPECT_EQ(v1[2],0.0);
+   vmaOps::vFree(&v1);
+}
+
+// TESTING:: vFree(vec vFree)
+TEST(VectorOpsTests, checkFreeVectorAddress) {
+   vec v1;
+   vmaOps::vInit(&v1);
+   vmaOps::vFree(&v1);
+   EXPECT_THAT(v1, ::testing::IsNull());
+}
+
+
+// TESTING:: vSetZeros(vec vOut)
 TEST(VectorOpsTests, setVectorToZerosFromEmpty) {
    double v1[3];
    vmaOps::vSetZeros(v1);
@@ -17,7 +42,7 @@ TEST(VectorOpsTests, setVectorToZerosFromFull) {
    ASSERT_THAT(v1, ::testing::ElementsAre(0.0, 0.0, 0.0));
 }
 
-// TESTING:: vSetOnes(double* vOut)
+// TESTING:: vSetOnes(vec vOut)
 TEST(VectorOpsTests, setVectorToOnesFromEmpty) {
    double v1[3];
    vmaOps::vSetOnes(v1);
@@ -30,7 +55,7 @@ TEST(VectorOpsTests, setVectorToOnesFromFull) {
    ASSERT_THAT(v1, ::testing::ElementsAre(1.0, 1.0, 1.0));
 }
 
-// TESTING:: vSet123(double* vOut)
+// TESTING:: vSet123(vec vOut)
 TEST(VectorOpsTests, setVectorTo123FromEmpty) {
    double v1[3];
    vmaOps::vSet123(v1);
@@ -43,7 +68,7 @@ TEST(VectorOpsTests, setVectorTo123FromFull) {
    ASSERT_THAT(v1, ::testing::ElementsAre(1.0, 2.0, 3.0));
 }
 
-// TESTING:: vAdd(double* vOut, double* v1, double* v2)
+// TESTING:: vAdd(vec vOut, vec v1, vec v2)
 TEST(VectorOpsTests, addVectorsReplaceInput) {
    double v1[3], v2[3];
    vmaOps::vSet123(v1);
@@ -61,7 +86,7 @@ TEST(VectorOpsTests, addVectorsNewOutput) {
    ASSERT_THAT(v3, ::testing::ElementsAre(2.0, 3.0, 4.0));
 }
 
-// TESTING:: vSub(double* vOut, double* v1, double* v2)
+// TESTING:: vSub(vec vOut, vec v1, vec v2)
 TEST(VectorOpsTests, subVectorsReplaceInput) {
    double v1[3], v2[3];
    vmaOps::vSet123(v1);
@@ -79,7 +104,7 @@ TEST(VectorOpsTests, subVectorsNewOutput) {
    ASSERT_THAT(v3, ::testing::ElementsAre(0.0, 0.0, 0.0));
 }
 
-// TESTING:: vMag(double* sOut, double* v1)
+// TESTING:: vMag(double* sOut, vec v1)
 TEST(VectorOpsTests, vectorMagnitude) {
    double v1[3];
    double s1;
@@ -91,7 +116,7 @@ TEST(VectorOpsTests, vectorMagnitude) {
    ASSERT_EQ(s1, sqrt(3));
 }
 
-// TESTING:: vUnit(double* vOut, double* v1)
+// TESTING:: vUnit(vec vOut, vec v1)
 TEST(VectorOpsTests, vectorMagnitudeReplaceInput) {
    double v1[3];
    vmaOps::vSet123(v1);
@@ -107,7 +132,7 @@ TEST(VectorOpsTests, vectorMagnitudeNewOutput) {
    ASSERT_THAT(v2, ::testing::ElementsAre(1.0/sqrt(14), 2.0/sqrt(14), 3.0/sqrt(14)));
 }
 
-// TESTING:: crossProduct(double* vOut, double* v1, double* v2)
+// TESTING:: crossProduct(vec vOut, vec v1, vec v2)
 TEST(VectorOpsTests, vectorCrossProduct) {
    double v1[3], v2[3], v3[3];
    vmaOps::vSet123(v1);
@@ -117,7 +142,7 @@ TEST(VectorOpsTests, vectorCrossProduct) {
    ASSERT_THAT(v3, ::testing::ElementsAre(-1.0, 2.0, -1.0));
 }
 
-// TESTING:: dotProduct(double* sOut, double* v1, double* v2)
+// TESTING:: dotProduct(double* sOut, vec v1, vec v2)
 TEST(VectorOpsTests, vectorDotProduct) {
    double v1[3], v2[3];
    double s1;
@@ -127,7 +152,7 @@ TEST(VectorOpsTests, vectorDotProduct) {
    ASSERT_EQ(6, s1);
 }
 
-// TESTING:: vIsEqual(bool* isEqual, double* v1, double* v2)
+// TESTING:: vIsEqual(bool* isEqual, vec v1, vec v2)
 TEST(VectorOpsTests, vectorIsEqualExpectTrue) {
    double v1[3], v2[3];
    bool isEqual;
@@ -146,7 +171,7 @@ TEST(VectorOpsTests, vectorIsEqualExpectFalse) {
    EXPECT_FALSE(isEqual);
 }
 
-// TESTING:: ScaXVec(double* vOut, double s1, double* v1)
+// TESTING:: ScaXVec(vec vOut, double s1, vec v1)
 TEST(VectorOpsTests, scalarTimesVectorReplaceInput) {
    double v1[3];
    double s1 = 2.5;

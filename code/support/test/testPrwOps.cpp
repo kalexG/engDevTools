@@ -5,7 +5,6 @@
 
 #include "../../math/inc/vmaOps.h"
 #include "../inc/prwOps.h"
-using namespace vmaOps;
 using namespace prwOps;
 
 int main( int argc, char *argv[] ) {

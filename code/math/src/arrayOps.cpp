@@ -13,7 +13,7 @@
 // Outputs: m
 // Operation: Allocate Memory
 
-void vmaOps::aInit(myArray* aInit, int row, int col)
+void vmaOps::aInit(arr* aInit, int row, int col)
 {
 
    get<1>(*aInit) = row;
@@ -43,7 +43,7 @@ void vmaOps::aInit(myArray* aInit, int row, int col)
 // Outputs: aFree
 // Operation: Free Memory
 
-void vmaOps::aFree(myArray* aFree)
+void vmaOps::aFree(arr* aFree)
 {
    for (int i=0;i<get<1>(*aFree);i++)
    {
@@ -61,7 +61,7 @@ void vmaOps::aFree(myArray* aFree)
 // Outputs: aOut
 // Operation: aOut=Zeros
 
-void vmaOps::aSetZeros(myArray aOut)
+void vmaOps::aSetZeros(arr aOut)
 {
    for (int i=0;i<get<1>(aOut);i++)
    {
@@ -77,7 +77,7 @@ void vmaOps::aSetZeros(myArray aOut)
 // Outputs: aOut
 // Operation: aOut=Ones
 
-void vmaOps::aSetOnes(myArray aOut)
+void vmaOps::aSetOnes(arr aOut)
 {
    for (int i=0;i<get<1>(aOut);i++)
    {
@@ -93,7 +93,7 @@ void vmaOps::aSetOnes(myArray aOut)
 // Outputs: aOut
 // Operation: aOut=123
 
-void vmaOps::aSet123(myArray aOut)
+void vmaOps::aSet123(arr aOut)
 {
    int k=1;
    for (int i=0;i<get<1>(aOut);i++)
@@ -111,7 +111,7 @@ void vmaOps::aSet123(myArray aOut)
 // Outputs: aOut
 // Operation: aOut=Identity
 
-void vmaOps::aSetIdentity(myArray aOut)
+void vmaOps::aSetIdentity(arr aOut)
 {
    if ( (get<1>(aOut) != get<2>(aOut)) )
    {
@@ -140,7 +140,7 @@ void vmaOps::aSetIdentity(myArray aOut)
 // Outputs: aOut
 // Operation: aOut=a1+a2
 
-void vmaOps::aAdd(myArray aOut, myArray a1, myArray a2)
+void vmaOps::aAdd(arr aOut, arr a1, arr a2)
 {
    if ((get<1>(a1) != get<1>(a2)) || (get<2>(a1) != get<2>(a2)))
    {
@@ -162,7 +162,7 @@ void vmaOps::aAdd(myArray aOut, myArray a1, myArray a2)
 // Outputs: aOut
 // Operation: aOut=a1-a2
 
-void vmaOps::aSub(myArray aOut, myArray a1, myArray a2)
+void vmaOps::aSub(arr aOut, arr a1, arr a2)
 {
    if ((get<1>(a1) != get<1>(a2)) || (get<2>(a1) != get<2>(a2)))
    {
@@ -184,7 +184,7 @@ void vmaOps::aSub(myArray aOut, myArray a1, myArray a2)
 // Outputs: aOut
 // Operation: aOut=a1*a2
 
-void vmaOps::aMult(myArray aOut, myArray a1, myArray a2)
+void vmaOps::aMult(arr aOut, arr a1, arr a2)
 {
    // Make sure new array starts out empty
 
@@ -213,7 +213,7 @@ void vmaOps::aMult(myArray aOut, myArray a1, myArray a2)
 // Outputs: aOut
 // Operation: s1*a1=aOut
 
-void vmaOps::ScaXArr(myArray aOut, double s1, myArray a1)
+void vmaOps::ScaXArr(arr aOut, double s1, arr a1)
 {
    for(int i=0;i<get<1>(a1);i++)
    {
@@ -229,7 +229,7 @@ void vmaOps::ScaXArr(myArray aOut, double s1, myArray a1)
 // Outputs: mOut
 // Operation: s1*m1=mOut
 
-void vmaOps::aTran(myArray aOut, myArray a1)
+void vmaOps::aTran(arr aOut, arr a1)
 {
    for(int i=0;i<get<1>(a1);i++)
    {
@@ -245,7 +245,7 @@ void vmaOps::aTran(myArray aOut, myArray a1)
 // Outputs: str1
 // Operation: ?a1=a2?
 
-void vmaOps::aIsEqual(bool* isEqual, myArray a1, myArray a2)
+void vmaOps::aIsEqual(bool* isEqual, arr a1, arr a2)
 {
    *isEqual=false;
 
