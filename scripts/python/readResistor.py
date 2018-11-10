@@ -49,29 +49,35 @@ def decodeResistance(dig, mul, tol):
         "gold"   : [ "none", 0.1,       "5%"    ],
         "silver" : [ "none", 0.01,      "10%"   ]
     }
-    listBands = dig + mul + tol
+    if tol is None:
+        listBands = dig + mul
+    else:
+        listBands = dig + mul + tol
     digitsStr = ""
     if all(elem in list(colorDict.keys()) for elem in listBands):
         for band in dig:
             if colorDict[band][0] != "none":
                 digitsStr = digitsStr + str(colorDict[band][0])
             else:
-                print("EXCEPTION: digits invalid")
-                return
+                raise ValueError('Invalid digit color entered: {}'.format(band))
         resistance = int(digitsStr)
         if colorDict[mul[0]][1] != "none":
             resistance *= colorDict[mul[0]][1]
         else:
-            print("EXCEPTION: multiplier invalid")
-            return
-        if colorDict[tol[0]][2] != "none":
-            tolerance = colorDict[tol[0]][2]
+            raise ValueError('Invalid multipler color entered: {}'.format(mul))
+        if tol is None:
+            tolerance = None
         else:
-            print("EXCEPTION: tolerance invalid")
-            return
+            if colorDict[tol[0]][2] != "none":
+                tolerance = colorDict[tol[0]][2]
+            else:
+                raise ValueError('Invalid tolerance color entered: {}'.format(tol))
     else:
-        print("EXCEPTION: colors invalid")
-        return
+        badBand = []
+        for band in listBands:
+            if band not in colorDict.keys():
+                badBand.append(band)
+        raise ValueError('Invalid color entered: {}'.format(badBand))
     return [resistance, tolerance]
 
 def main():

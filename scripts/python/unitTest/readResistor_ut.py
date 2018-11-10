@@ -4,9 +4,15 @@ import unittest
 import sys
 sys.path.insert(0, '/home/kalexg/Documents/engDevTools/scripts/python')
 import readResistor
+import argparse
 
 class TestArgumentParseMethods(unittest.TestCase):
-        
+
+    def testExceptionLowerBoundDigitBand(self):
+        with self.assertRaises(argparse.ArgumentTypeError) as context:
+            readResistor.parseArguments(['-d', 'red', '-m', 'red'])
+        self.assertTrue('argument "digits" requires between 2 and 3 arguments' in str(context.exception))
+
     def testStoreTwoDigitBands(self):
         parser = readResistor.parseArguments(['-d', 'red', 'blue', '-m', 'red'])
         self.assertEqual(parser.digits, ['red', 'blue'])
@@ -19,11 +25,21 @@ class TestArgumentParseMethods(unittest.TestCase):
         parser = readResistor.parseArguments(['--digits', 'blue', 'green', 'yellow', '--multiplier', 'blue'])
         self.assertEqual(['blue', 'green', 'yellow'], parser.digits)
 
+    def testExceptionUpperBoundDigitBand(self):
+        with self.assertRaises(argparse.ArgumentTypeError) as context:
+            readResistor.parseArguments(['-d', 'red', 'red', 'red', 'red', '-m', 'red'])
+        self.assertTrue('argument "digits" requires between 2 and 3 arguments' in str(context.exception))
+
     def testStoreMultiplerBand(self):
         parser = readResistor.parseArguments(['-d', 'red', 'red', '-m', 'red'])
         self.assertEqual(parser.multiplier, ['red'])
         parser = readResistor.parseArguments(['--digits', 'red', 'red', '--multiplier', 'blue'])
         self.assertEqual(parser.multiplier, ['blue'])
+
+    def testNoMultiplerBand(self):
+        with self.assertRaises(SystemExit) as context:
+            readResistor.parseArguments(['-d', 'red', 'red'])
+        expectedError = 'usage: readResistor_ut.py [-h] [-v | -q] -d DIGITS [DIGITS ...] -m MULTIPLIER\n                          [-t TOLERANCE]\nreadResistor_ut.py: error: the following arguments are required: -m/--multiplier'
 
     def testStoreCombination(self):
         parser = readResistor.parseArguments(['-d', '1', '2', '3', '-m', '4', '-t', '5', '-q' ])
