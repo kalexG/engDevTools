@@ -1,7 +1,5 @@
 #!/usr/bin/python3.6
 import unittest
-import sys
-sys.path.insert(0, '/home/kalexg/Documents/engDevTools/scripts/python')
 import double2hex
 
 class TestConvsersionMethods(unittest.TestCase):

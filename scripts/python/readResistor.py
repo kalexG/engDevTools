@@ -5,6 +5,20 @@ import argparse
 import warnings
 
 def parseArguments(args):
+    """
+    Parses command line arguments and stores into argparse object.
+
+    Parameters
+    ----------
+    args : list
+        List of command line arguments
+
+    Returns
+    -------
+    parsedArgs : object
+        Argparse object containing parsed command line arguments
+
+    """
     parser = argparse.ArgumentParser(description = "Decode resistor bands")
     group = parser.add_mutually_exclusive_group()
     group.add_argument("-v", "--verbose", action="store_true", help="increase output verbosity")
@@ -17,6 +31,22 @@ def parseArguments(args):
     return parsedArgs
 
 def argumentRange(minA, maxA):
+    """
+    Raises exception if a command line input exceeds specified boundaries for provided arguments.
+
+    Parameters
+    ----------
+    minA : int
+        Minumum number of arguments for command line input
+    maxA : int
+        Maximum number of arguments for command line input
+
+    Returns
+    -------
+    argumentRangeError : argparse.Action
+
+
+    """
     class argumentRangeError(argparse.Action):
         def __call__(self, parser, args, values, option_string=None):
             if not minA<=len(values)<=maxA:
