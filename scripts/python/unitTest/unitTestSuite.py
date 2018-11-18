@@ -4,20 +4,20 @@
 import unittest
 
 # Import test modules
-import helloWorld_ut
-import double2hex_ut
-import hex2double_ut
-import readResistor_ut
+import helloWorld_test
+import double2hex_test
+import hex2double_test
+import readResistor_test
 
 # Initialize test suite
 loader = unittest.TestLoader()
 suite  = unittest.TestSuite()
 
 # Add desired tests to test suite
-suite.addTests(loader.loadTestsFromModule(helloWorld_ut))
-suite.addTests(loader.loadTestsFromModule(double2hex_ut))
-suite.addTests(loader.loadTestsFromModule(hex2double_ut))
-suite.addTests(loader.loadTestsFromModule(readResistor_ut))
+suite.addTests(loader.loadTestsFromModule(helloWorld_test))
+suite.addTests(loader.loadTestsFromModule(double2hex_test))
+suite.addTests(loader.loadTestsFromModule(hex2double_test))
+suite.addTests(loader.loadTestsFromModule(readResistor_test))
 
 # Run all unit tests
 runner = unittest.TextTestRunner(verbosity=3)

@@ -6,11 +6,6 @@ import argparse
 
 class TestArgumentParseMethods(unittest.TestCase):
 
-    def testExceptionLowerBoundDigitBand(self):
-        with self.assertRaises(argparse.ArgumentTypeError) as context:
-            readResistor.parseArguments(['-d', 'red', '-m', 'red'])
-        self.assertTrue('argument "digits" requires between 2 and 3 arguments' in str(context.exception))
-
     def testStoreTwoDigitBands(self):
         parser = readResistor.parseArguments(['-d', 'red', 'blue', '-m', 'red'])
         self.assertEqual(parser.digits, ['red', 'blue'])
@@ -18,11 +13,6 @@ class TestArgumentParseMethods(unittest.TestCase):
     def testStoreThreeDigitBands(self):
         parser = readResistor.parseArguments(['-d', 'red', 'blue', 'green', '-m', 'red'])
         self.assertEqual(['red', 'blue', 'green'], parser.digits)
-
-    def testExceptionUpperBoundDigitBand(self):
-        with self.assertRaises(argparse.ArgumentTypeError) as context:
-            readResistor.parseArguments(['-d', 'red', 'red', 'red', 'red', '-m', 'red'])
-        self.assertTrue('argument "digits" requires between 2 and 3 arguments' in str(context.exception))
 
     def testStoreMultiplerBand(self):
         parser = readResistor.parseArguments(['-d', 'red', 'red', '-m', 'red'])
@@ -51,6 +41,16 @@ class TestArgumentParseMethods(unittest.TestCase):
     def testQuiet(self):
         parser = readResistor.parseArguments(['-d', 'red', 'red', '-m', 'red', '-q'])
         self.assertTrue(parser.quiet)
+
+    def testExceptionLowerBoundDigitBand(self):
+        with self.assertRaises(argparse.ArgumentTypeError) as context:
+            readResistor.parseArguments(['-d', 'red', '-m', 'red'])
+        self.assertTrue('argument "digits" requires between 2 and 3 arguments' in str(context.exception))
+
+    def testExceptionUpperBoundDigitBand(self):
+        with self.assertRaises(argparse.ArgumentTypeError) as context:
+            readResistor.parseArguments(['-d', 'red', 'red', 'red', 'red', '-m', 'red'])
+        self.assertTrue('argument "digits" requires between 2 and 3 arguments' in str(context.exception))
 
     def testMutuallyExclusiveVerbosity(self):
         with self.assertRaises(SystemExit) as context:

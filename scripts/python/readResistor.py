@@ -113,9 +113,14 @@ def decodeResistance(dig, mul, tol):
 def main():
     print("readResistor!")
     args = sys.argv[1:]
+    # Parse arguments
     parser = parseArguments(args)
+    # Issue warnings
     warningMultiplerTolerance(parser.multiplier,parser.tolerance)
+    # Execute main function
     decodedResistance = decodeResistance(parser.digits, parser.multiplier, parser.tolerance)
+    #  Handle results
     print(decodedResistance)
+
 if __name__ == "__main__":
    main()
