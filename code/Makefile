@@ -20,3 +20,4 @@ all:
 .PHONY: clean
 clean: 
 			rm -f */obj/*.o */bin/*
+			rm -rf */obj */bin

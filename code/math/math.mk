@@ -6,6 +6,11 @@ LFLAGS = -Wall $(DEBUG) $(PROFILE)
 GTEST_INC = -I/usr/include/gtest/
 GTEST_LINK = -pthread -lgtest
 
+# Build directories
+OBJ_DIR = obj/
+BIN_DIR = bin/
+BUILD_DIRS = $(OBJ_DIR) $(BIN_DIR)
+
 # All objects
 VMAOPS_OBJS = obj/vectorOps.o obj/matrixOps.o obj/arrayOps.o
 NUMERICALMETHODS_OBJS = obj/integration.o obj/differentiation.o
@@ -22,8 +27,8 @@ VMAOPS_UT = obj/vectorOps_ut.o
 MATH_BIN = bin/testVmaOps bin/vmaOps_ut bin/checkMem bin/testNumericalMethods
 
 .PHONY: math-obj math-bin
-math-obj: $(VMAOPS_OBJS) $(OPTIMTEST_OBJS) $(NUMERICALMETHODS_OBJS)
-math-bin: $(MATH_BIN)
+math-obj: $(BUILD_DIRS) $(VMAOPS_OBJS) $(OPTIMTEST_OBJS) $(NUMERICALMETHODS_OBJS)
+math-bin: $(BUILD_DIRS) $(MATH_BIN)
 
 # vmaOps Testing (Will be replaced by unit test)
 bin/testVmaOps: $(PRWOPS_OBJS) $(VMAOPS_OBJS) $(VMAOPS_TEST)
@@ -49,6 +54,11 @@ obj/%.o: test/%.cpp
 obj/%.o: unitTest/%.cpp
 			$(CC) $(CFLAGS) -Iinc $(GTEST_INC) -o $@ $^
 
+$(BUILD_DIRS): 
+	mkdir -p $(OBJ_DIR)
+	mkdir -p $(BIN_DIR)
+
 .PHONY: clean
 clean: 
 			rm -f obj/*.o bin/*
+			rm -rf obj/ bin/
