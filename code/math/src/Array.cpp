@@ -19,7 +19,6 @@ Array::Array(const Array& arr)
 Array::~Array( void )
 {
     freeArray();
-    printf("Self Destruct!!!!\n");
 }
 
 // Array = Operator
