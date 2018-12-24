@@ -5,69 +5,32 @@
 
 #include <iostream>
 #include <math.h>
-#include <string.h>
-#include <tuple>
-#include <typeinfo>
 using namespace std;
 
 class Array
 {
     // Functions
     public:
-        Array(int rows, int cols);
-        
-        /*Array(const Array& arr)
-        : Array(arr.myRows, arr.myCols)
-        {}
-
-        Array& operator=(Array arr)
-        {
-            swap(array, arr.array);
-            return *this;
-        }
-        
-        Array(Array&& arr) noexcept
-        : array(exchange(arr.array, nullptr))
-        {}
-        Array& operator=(Array&& arr) noexcept
-        {
-            swap(array, arr.array);
-            return *this;
-        }*/
+        Array(unsigned int rows, unsigned int cols);
+        Array(const Array& arr);
         virtual ~Array( void );
         void setZeros(void);
         void setOnes(void);
         void setIncrement(double = 0.0, double = 1.0);
         int getRows(void);
         int getCols(void);
+        int getElems(void);
         double &operator() (unsigned int row, unsigned int col);
         double &operator[] (unsigned int index);
-        Array operator+(const Array& a);
-        // TODO: Add Operator
-        // TODO: Subtract Operator
-        // TODO: Multiply Operator
+        Array& operator=(Array& arr);
     private:
         void initArray( void );
         void freeArray( void );
-        static bool validateDim(const int dim)
-        {
-            try
-            {
-                return (dim > 0) ? true : throw false;
-            }
-            catch (bool errorFlag)
-            {
-                printf("ERROR: Invalid array dimensions! Check array object parameters.\n");
-                exit(0);
-            }
-        }
     protected:
 
     // Data
     public:
     private:
-        bool validRows;
-        bool validCols;
     protected:
         unsigned int myRows;
         unsigned int myCols;
