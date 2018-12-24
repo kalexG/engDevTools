@@ -12,19 +12,20 @@ BIN_DIR = bin/
 BUILD_DIRS = $(OBJ_DIR) $(BIN_DIR)
 
 # All objects
-VMAOPS_OBJS = obj/vectorOps.o obj/matrixOps.o obj/arrayOps.o
+VMAOPS_OBJS = obj/vectorOps.o obj/matrixOps.o obj/arrayOps.o obj/Array.o
 NUMERICALMETHODS_OBJS = obj/integration.o obj/differentiation.o
 PRWOPS_OBJS = ../support/obj/printOps.o ../support/obj/readOps.o ../support/obj/writeOps.o
 
 # All tests
 VMAOPS_TEST = obj/testVmaOps.o
+ARRAY_TEST = obj/testArray.o
 CHECKMEM_TEST = obj/checkMem.o
 NUMERICALMETHODS_TEST = obj/testNumericalMethods.o
 
 VMAOPS_UT = obj/vectorOps_ut.o
 
 # All exectables
-MATH_BIN = bin/testVmaOps bin/vmaOps_ut bin/checkMem bin/testNumericalMethods
+MATH_BIN = bin/testVmaOps bin/vmaOps_ut bin/checkMem bin/testNumericalMethods bin/testArray
 
 .PHONY: math-obj math-bin
 math-obj: $(BUILD_DIRS) $(VMAOPS_OBJS) $(OPTIMTEST_OBJS) $(NUMERICALMETHODS_OBJS)
@@ -32,6 +33,9 @@ math-bin: $(BUILD_DIRS) $(MATH_BIN)
 
 # vmaOps Testing (Will be replaced by unit test)
 bin/testVmaOps: $(PRWOPS_OBJS) $(VMAOPS_OBJS) $(VMAOPS_TEST)
+			$(CC) $^ $(LFLAGS) -Lobj -o $@
+
+bin/testArray: $(PRWOPS_OBJS) $(VMAOPS_OBJS) $(ARRAY_TEST)
 			$(CC) $^ $(LFLAGS) -Lobj -o $@
 
 bin/vmaOps_ut:  $(PRWOPS_OBJS) $(VMAOPS_OBJS) $(VMAOPS_UT)
