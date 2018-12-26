@@ -17,7 +17,7 @@ Array::Array(const Array& arr)
 
 // Move Contructor
 Array::Array (Array&& arr) noexcept
-: array(std::exchange(arr.array, nullptr))
+    : array(std::exchange(arr.array, nullptr))
 {}
 
 // Swaps Array class data members
@@ -29,18 +29,24 @@ void swap(Array& arr1, Array& arr2)
     std::swap(arr1.array, arr2.array);
 }
 
-// Copy/Move Assignment
-Array& Array::operator =(Array arr) noexcept
+// Copy Assignment
+Array& Array::operator= (const Array& arr)
 {
     if ( (arr.myRows == myRows) && (arr.myCols == myCols) )
-    {
-        swap(*this, arr);
-        return *this;
+    {    
+        return *this = Array(arr);
     }
     else
     {
         throw std::length_error("ERROR: Array operation size mismatch.\n");   
     }
+}
+
+// Move Assignment
+Array& Array::operator= (Array&& arr) noexcept
+{
+    swap(*this, arr);
+    return *this;
 }
 
 // Destructor
@@ -78,6 +84,10 @@ Array Array::operator+ (const Array &arr) const
             temp.array[i] = array[i] + arr.array[i];
         }
     }
+    else
+    {
+        throw std::length_error("ERROR: Array operation [+] size mismatch.\n");   
+    }
     return temp;
 }
 
@@ -91,6 +101,10 @@ Array Array::operator- (const Array &arr) const
         {
             temp.array[i] = array[i] - arr.array[i];
         }
+    }
+    else
+    {
+        throw std::length_error("ERROR: Array operation [-] size mismatch.\n");   
     }
     return temp;
 }

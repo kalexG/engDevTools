@@ -11,10 +11,19 @@ class Array
 {
     // Functions
     public:
+        // Constructor
         Array(unsigned int rows, unsigned int cols);
+        // Copy Constructor
         Array(const Array& arr);
+        // Move Constructor
         Array(Array&& arr) noexcept;
+        // Copy Assignment
+        Array& operator=(const Array& arr);
+        // Move Assignment
+        Array& operator=(Array&& arr) noexcept;
+        // Destructor
         virtual ~Array(void);
+
         void setZeros(void);
         void setOnes(void);
         void setIncrement(double = 0.0, double = 1.0);
@@ -26,7 +35,6 @@ class Array
         Array operator+ (const Array &arr) const;
         Array operator- (const Array &arr) const;
         Array operator- (void) const;
-        Array& operator= (Array arr) noexcept;
         Array operator* (const double scalar)const;
         friend Array operator* (const double scalar, const Array &arr);
         friend void swap(Array& arr1, Array& arr2);
