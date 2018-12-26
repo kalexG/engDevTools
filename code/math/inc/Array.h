@@ -5,7 +5,7 @@
 
 #include <iostream>
 #include <math.h>
-using namespace std;
+#include <utility>
 
 class Array
 {
@@ -13,16 +13,23 @@ class Array
     public:
         Array(unsigned int rows, unsigned int cols);
         Array(const Array& arr);
-        virtual ~Array( void );
+        Array(Array&& arr) noexcept;
+        virtual ~Array(void);
         void setZeros(void);
         void setOnes(void);
         void setIncrement(double = 0.0, double = 1.0);
-        int getRows(void);
-        int getCols(void);
-        int getElems(void);
+        unsigned int getRows(void);
+        unsigned int getCols(void);
+        unsigned int getElems(void);
         double &operator() (unsigned int row, unsigned int col);
         double &operator[] (unsigned int index);
-        Array& operator=(Array& arr);
+        Array operator+ (const Array &arr) const;
+        Array operator- (const Array &arr) const;
+        Array operator- (void) const;
+        Array& operator= (Array arr) noexcept;
+        Array operator* (const double scalar)const;
+        friend Array operator* (const double scalar, const Array &arr);
+        friend void swap(Array& arr1, Array& arr2);
     private:
         void initArray( void );
         void freeArray( void );
