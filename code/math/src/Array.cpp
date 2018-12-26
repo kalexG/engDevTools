@@ -39,24 +39,24 @@ Array& Array::operator =(Array arr) noexcept
     }
     else
     {
-        printf("ERROR: You can't set two arrays equal when the dimesnions are not the same.\n");
-        return *this;// Fix when you decide how you want to exit cleanly
+        throw std::length_error("ERROR: Array operation size mismatch.\n");   
     }
 }
 
 // Destructor
-Array::~Array( void )
+Array::~Array(void)
 {
     freeArray();
+    printf("Destructor call!\n");
 }
 
 // Overload "*" Operator (lhs: Array*Scalar)
-Array Array::operator* (const double scalar)const
+Array Array::operator* (const double scalar) const
 {
     Array temp(myRows, myCols);
     for (unsigned int i = 0; i < myElements; i++)
     {
-        temp.array[i] = array[i]*scalar;
+        temp.array[i] = array[i] * scalar;
     }
     return temp;
 }
@@ -110,15 +110,13 @@ double &Array::operator() (unsigned int row, unsigned int col)
 {
     if ( row >= myRows )
     {
-        printf("ERROR: Tried to access ROW out of bounds.\n");
-        row = myRows -1; // Fix when you decide how you want to exit cleanly
+        throw std::out_of_range("ERROR: Tried to access ROW out of bounds.\n");
     }
     if ( col >= myCols )
     {
-        printf("ERROR: Tried to access COL out of bounds.\n");
-        col = myCols - 1; // Fix when you decide how you want to exit cleanly
+        throw std::out_of_range("ERROR: Tried to access COL out of bounds.\n");
     }
-    return array[ myCols*row +col ];
+    return array[myCols * row + col];
 }
 
 // Overload "[]" Operator (Accessing: [element])
@@ -126,8 +124,7 @@ double &Array::operator[] (unsigned int index)
 {
     if ( index >= myElements )
     {
-        printf("ERROR: Tried to access INDEX out of bounds.\n");
-        index = myElements - 1; // Fix when you decide how you want to exit cleanly
+        throw std::out_of_range("ERROR: Tried to access INDEX out of bounds.\n");
     }
 
     return array[index];
@@ -194,12 +191,11 @@ unsigned int Array::getElems(void)
 }
 
 // Overload "()" Operator (Accessing: (row))
-double &Vector::operator ()(unsigned int row)
+double &Vector::operator() (unsigned int row)
 {
     if ( row >= myRows )
     {
-        printf("ERROR: Tried to access ROW out of bounds.\n");
-        row = myRows - 1; // Fix when you decide how you want to exit cleanly
+        throw std::out_of_range("ERROR: Tried to access ROW out of bounds.\n");
     }
     return array[ row ];
 }

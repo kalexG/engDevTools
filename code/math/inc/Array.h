@@ -31,8 +31,8 @@ class Array
         friend Array operator* (const double scalar, const Array &arr);
         friend void swap(Array& arr1, Array& arr2);
     private:
-        void initArray( void );
-        void freeArray( void );
+        void initArray(void);
+        void freeArray(void);
     protected:
 
     // Data

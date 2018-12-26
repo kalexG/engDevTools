@@ -48,8 +48,18 @@ int main( int argc, char *argv[] ) {
 	printf("| %f %f %f |\n", arr3(2,0), arr3(2,1), arr3(2,2));
     //printf("\n");
 	//printf("| %f %f %f |\n", vec1(0), vec1(1), vec1(2));
-    
-    //printf("Try accessing cols OOB: %f\n", mat1(0,3)); // Works
+    try
+    {
+        printf("Try accessing cols OOB: %f\n", mat1(0,3)); // Works
+    }
+    catch(const runtime_error& error1)
+    {
+        printf("Ya got caught 1!\n");
+    }
+    catch (const std::out_of_range& error2)
+    {
+        printf("Ya got caught 2!\n");
+    }
 	//printf("Try accessing rows OOB: %f\n", vec1(3,0)); // Breaks
 
 	return 0;
