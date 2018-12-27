@@ -46,8 +46,6 @@ int main( int argc, char *argv[] ) {
 	printf("| %f %f %f |\n", arr3(0,0), arr3(0,1), arr3(0,2));
 	printf("| %f %f %f |\n", arr3(1,0), arr3(1,1), arr3(1,2));
 	printf("| %f %f %f |\n", arr3(2,0), arr3(2,1), arr3(2,2));
-    //printf("\n");
-	//printf("| %f %f %f |\n", vec1(0), vec1(1), vec1(2));
     try
     {
         printf("Try accessing cols OOB: %f\n", mat1(0,3)); // Works

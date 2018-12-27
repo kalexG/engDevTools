@@ -5,7 +5,7 @@
 Array::Array(unsigned int rows, unsigned int cols)
     : myRows(rows)
     , myCols(cols)
-      , myElements(rows*cols)
+    , myElements(rows*cols)
 {
     initArray();
 }
@@ -59,64 +59,64 @@ Array::~Array(void)
 // Overload "*" Operator (lhs: Array*Scalar)
 Array Array::operator* (const double scalar) const
 {
-    Array temp(myRows, myCols);
+    Array tmp(myRows, myCols);
     for (unsigned int i = 0; i < myElements; i++)
     {
-        temp.array[i] = array[i] * scalar;
+        tmp.array[i] = array[i] * scalar;
     }
-    return temp;
+    return tmp;
 }
 
 // Overload "*" Operator (rhs: Scalar*Array)
-Array operator* (const double scalar, const Array &arr)
+Array operator* (const double scalar, const Array& arr)
 {
     return arr * scalar;
 }
 
 // Overload "+" Operator (Array Addition)
-Array Array::operator+ (const Array &arr) const
+Array Array::operator+ (const Array& arr) const
 {
-    Array temp(myRows, myCols);
+    Array tmp(myRows, myCols);
     if ( (arr.myRows == myRows) && (arr.myCols == myCols) )
     {
         for (unsigned int i = 0; i < myElements; i++)
         {
-            temp.array[i] = array[i] + arr.array[i];
+            tmp.array[i] = array[i] + arr.array[i];
         }
     }
     else
     {
         throw std::length_error("ERROR: Array operation [+] size mismatch.\n");   
     }
-    return temp;
+    return tmp;
 }
 
 // Overload "-" Operator (Array Subtraction)
-Array Array::operator- (const Array &arr) const
+Array Array::operator- (const Array& arr) const
 {
-    Array temp(myRows, myCols);
+    Array tmp(myRows, myCols);
     if ( (arr.myRows == myRows) && (arr.myCols == myCols) )
     {
         for (unsigned int i = 0; i < myElements; i++)
         {
-            temp.array[i] = array[i] - arr.array[i];
+            tmp.array[i] = array[i] - arr.array[i];
         }
     }
     else
     {
         throw std::length_error("ERROR: Array operation [-] size mismatch.\n");   
     }
-    return temp;
+    return tmp;
 }
 // Overload "-" Operator (-1*Array)
 Array Array::operator- (void) const
 {
-    Array temp(myRows, myCols);
+    Array tmp(myRows, myCols);
     for (unsigned int i = 0; i < myElements; i++)
     {
-        temp.array[i] = -array[i];
+        tmp.array[i] = -array[i];
     }
-    return temp;
+    return tmp;
 }
 
 // Overload "()" Operator (Accessing: (row, col))
@@ -212,4 +212,33 @@ double &Vector::operator() (unsigned int row)
         throw std::out_of_range("ERROR: Tried to access ROW out of bounds.\n");
     }
     return array[ row ];
+}
+
+Vector Vector::getUnitVector(void)
+{
+    Vector tmp;
+    double mag = getMagnitude();
+    tmp[0] = tmp[0]/mag;
+    tmp[1] = tmp[1]/mag;
+    tmp[2] = tmp[2]/mag;
+    return tmp;
+}
+
+double Vector::getMagnitude(void)
+{
+    return sqrt(array[0]*array[0] + array[1]*array[1] + array[2]*array[2]);
+}
+
+Vector crossProduct(Vector& vec1, Vector& vec2)
+{
+    Vector tmp;
+    tmp[0] = vec1[1]*vec2[2] - vec1[2]*vec2[1];
+    tmp[1] = vec1[2]*vec2[0] - vec1[0]*vec2[2];
+    tmp[2] = vec1[0]*vec2[1] - vec1[1]*vec2[0];
+    return tmp;
+}
+
+double dotProduct(Vector& vec1, Vector& vec2)
+{
+    return vec1[0]*vec2[0] + vec1[1]*vec2[1] + vec1[2]*vec2[2];  
 }
