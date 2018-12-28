@@ -1,11 +1,23 @@
-
 #include "../inc/Array.h"
+
+extern "C" 
+{
+extern void LAPACKE_dge_trans( int, lapack_int, lapack_int,
+                        const double*, lapack_int,
+                        double*, lapack_int );
+
+extern void dgemm_(char*, char*, const int*,
+               const int*, const int*, double*, double*,
+               const int*, double*, const int*, double*,
+               double*, const int*);
+}
 
 // Constructor
 Array::Array(unsigned int rows, unsigned int cols)
     : myRows(rows)
     , myCols(cols)
     , myElements(rows*cols)
+    , isSquare(checkSquare(rows, cols))
 {
     initArray();
 }
@@ -17,7 +29,7 @@ Array::Array(const Array& arr)
 
 // Move Contructor
 Array::Array (Array&& arr) noexcept
-    : array(std::exchange(arr.array, nullptr))
+: myArray(std::exchange(arr.myArray, nullptr))
 {}
 
 // Swaps Array class data members
@@ -26,7 +38,8 @@ void swap(Array& arr1, Array& arr2)
     std::swap(arr1.myRows, arr2.myRows);
     std::swap(arr1.myCols, arr2.myCols);
     std::swap(arr1.myElements, arr2.myElements);
-    std::swap(arr1.array, arr2.array);
+    std::swap(arr1.myArray, arr2.myArray);
+    std::swap(arr1.myArraySize, arr2.myArraySize);
 }
 
 // Copy Assignment
@@ -53,7 +66,6 @@ Array& Array::operator= (Array&& arr) noexcept
 Array::~Array(void)
 {
     freeArray();
-    printf("Destructor call!\n");
 }
 
 // Overload "*" Operator (lhs: Array*Scalar)
@@ -62,7 +74,7 @@ Array Array::operator* (const double scalar) const
     Array tmp(myRows, myCols);
     for (unsigned int i = 0; i < myElements; i++)
     {
-        tmp.array[i] = array[i] * scalar;
+        tmp.myArray[i] = myArray[i] * scalar;
     }
     return tmp;
 }
@@ -81,14 +93,14 @@ Array Array::operator+ (const Array& arr) const
     {
         for (unsigned int i = 0; i < myElements; i++)
         {
-            tmp.array[i] = array[i] + arr.array[i];
+            tmp.myArray[i] = myArray[i] + arr.myArray[i];
         }
+        return tmp;
     }
     else
     {
         throw std::length_error("ERROR: Array operation [+] size mismatch.\n");   
     }
-    return tmp;
 }
 
 // Overload "-" Operator (Array Subtraction)
@@ -99,14 +111,14 @@ Array Array::operator- (const Array& arr) const
     {
         for (unsigned int i = 0; i < myElements; i++)
         {
-            tmp.array[i] = array[i] - arr.array[i];
+            tmp.myArray[i] = myArray[i] - arr.myArray[i];
         }
+        return tmp;
     }
     else
     {
         throw std::length_error("ERROR: Array operation [-] size mismatch.\n");   
     }
-    return tmp;
 }
 // Overload "-" Operator (-1*Array)
 Array Array::operator- (void) const
@@ -114,7 +126,7 @@ Array Array::operator- (void) const
     Array tmp(myRows, myCols);
     for (unsigned int i = 0; i < myElements; i++)
     {
-        tmp.array[i] = -array[i];
+        tmp.myArray[i] = -myArray[i];
     }
     return tmp;
 }
@@ -126,11 +138,14 @@ double &Array::operator() (unsigned int row, unsigned int col)
     {
         throw std::out_of_range("ERROR: Tried to access ROW out of bounds.\n");
     }
-    if ( col >= myCols )
+    else if ( col >= myCols )
     {
         throw std::out_of_range("ERROR: Tried to access COL out of bounds.\n");
     }
-    return array[myCols * row + col];
+    else
+    {
+        return myArray[myCols * row + col];
+    }
 }
 
 // Overload "[]" Operator (Accessing: [element])
@@ -140,68 +155,140 @@ double &Array::operator[] (unsigned int index)
     {
         throw std::out_of_range("ERROR: Tried to access INDEX out of bounds.\n");
     }
-
-    return array[index];
+    else
+    {
+        return myArray[index];
+    }
 }
 
 // Initialize Array
 void Array::initArray(void)
 {
-    array = new double [myElements]();
+    myArray = new double [myElements]();
+    myArraySize = sizeof(myArray);
 }
 
 // Free Array
 void Array::freeArray(void)
 {
-    delete[] array;
-    array = NULL;
+    delete[] myArray;
+    myArray = NULL;
 }
 
 // Set Array [Zeros]
 void Array::setZeros(void)
 {
-    for (unsigned int i = 0; i < myElements; i++)
-    {
-        array[i] = 0.0;
-    }
+    std::fill(&myArray[0], &myArray[myElements], 0.0);
 }
 
 // Set Array [Ones]
 void Array::setOnes(void)
 {
-    for (unsigned int i = 0; i < myElements; i++)
-    {
-        array[i] = 1.0;
-    }
+    std::fill(&myArray[0], &myArray[myElements], 1.0);
+}
+
+// Set Array [Double]
+void Array::setTo(const double val)
+{
+    std::fill(&myArray[0], &myArray[myElements], val);
 }
 
 // Set Array [Increment]
-void Array::setIncrement(double start, double increment)
+void Array::setIncrement(const double start, const double increment)
 {
-    array[0] = start;
+    myArray[0] = start;
 
     for (unsigned int i = 1; i < myElements; i++)
     {
-        array[i] = array[i-1] + increment;
+        myArray[i] = myArray[i-1] + increment;
     }
 }
 
-// Get Rows
-unsigned int Array::getRows(void)
+// Set Identity
+void Array::setIdentity(void)
+{
+    if (isSquare)
+    {
+        setZeros();
+        for (unsigned int i = 0; i < myElements; i += (myCols + 1))
+        {
+            myArray[i] = 1.0;
+        }
+    }
+    else
+    {
+        throw std::length_error("ERROR: Matrix needs to be SQUARE to have an identity\n");
+    }
+}
+
+// Set Transpose
+void Array::setTranspose(void)
+{
+    Array tmp(myCols, myRows);
+    // Utilize LAPACKE out-of-place transpose
+    LAPACKE_dge_trans( LAPACK_ROW_MAJOR, myRows, myCols, myArray, myCols, tmp.myArray, myRows );
+    swap(*this, tmp);
+}
+
+// Get myRows
+unsigned int Array::getMyRows(void)
 {
     return myRows;
 }
 
-// Get Columns
-unsigned int Array::getCols(void)
+// Get myCols
+unsigned int Array::getMyCols(void)
 {
     return myCols;
 }
 
-// Get Elements
-unsigned int Array::getElems(void)
+// Get myElements
+unsigned int Array::getMyElements(void)
 {
     return myElements;
+}
+
+// Get myArray
+double* Array::getMyArray(void)
+{
+    return myArray;
+}
+
+// Get isSquare
+bool Array::getIsSquare(void)
+{
+    return isSquare;
+}
+
+// Get Trace
+double Array::getTrace(void)
+{
+    if (isSquare)
+    {
+        double tmp = 0.0;
+        for (unsigned int i = 0; i < myElements; i += (myCols + 1))
+        {
+            tmp += myArray[i];
+        }
+        return tmp;
+    }
+    else
+    {
+        throw std::length_error("ERROR: Matrix needs to be SQUARE to have a trace\n");
+    }
+}
+
+// Check if Array is Square
+bool Array::checkSquare(unsigned int rows, unsigned int cols)
+{
+    if (rows == cols)
+    {
+        return true;
+    }
+    else 
+    {
+        return false;
+    }
 }
 
 // Overload "()" Operator (Accessing: (row))
@@ -211,9 +298,13 @@ double &Vector::operator() (unsigned int row)
     {
         throw std::out_of_range("ERROR: Tried to access ROW out of bounds.\n");
     }
-    return array[ row ];
+    else
+    {
+        return myArray[ row ];
+    }
 }
 
+// Get Unit Vector
 Vector Vector::getUnitVector(void)
 {
     Vector tmp;
@@ -224,11 +315,13 @@ Vector Vector::getUnitVector(void)
     return tmp;
 }
 
+// Get Magnitude
 double Vector::getMagnitude(void)
 {
-    return sqrt(array[0]*array[0] + array[1]*array[1] + array[2]*array[2]);
+    return sqrt(myArray[0]*myArray[0] + myArray[1]*myArray[1] + myArray[2]*myArray[2]);
 }
 
+// Take Cross Product of Two Vectors
 Vector crossProduct(Vector& vec1, Vector& vec2)
 {
     Vector tmp;
@@ -238,6 +331,7 @@ Vector crossProduct(Vector& vec1, Vector& vec2)
     return tmp;
 }
 
+// Take Dot Product of Two Vectors
 double dotProduct(Vector& vec1, Vector& vec2)
 {
     return vec1[0]*vec2[0] + vec1[1]*vec2[1] + vec1[2]*vec2[2];  

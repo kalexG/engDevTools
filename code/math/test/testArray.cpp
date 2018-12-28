@@ -18,12 +18,12 @@ int main( int argc, char *argv[] ) {
 	Array arr1(3, 3);
 	Array arr2(3, 3);
 	Array arr3(3, 3);
-    Array arr4(4, 5);
-    Array arr5(arr4);
+    Array arr4(4, 2);
+    Array arr5(2, 4);
     Matrix mat1;
     Vector vec1;
-    printf("Size of arr4 = %dx%d\n", arr4.getRows(), arr4.getCols());
-    printf("Size of arr5 = %dx%d\n", arr5.getRows(), arr5.getCols());
+    //printf("Size of arr4 = %dx%d\n", arr4.getMyRows(), arr4.getMyCols());
+    //printf("Size of arr5 = %dx%d\n", arr5.getMyRows(), arr5.getMyCols());
 
     arr1.setOnes();
     arr2.setIncrement(1.0, 1.0);
@@ -43,9 +43,52 @@ int main( int argc, char *argv[] ) {
     arr3 = -arr3;
     arr3 = 3.0 * arr3;
     printf("\n");
+    arr3.setIncrement();
+    printf("Try transpose: square matrix nxn\n");
+	printf("Before\n");
+    printf("| %f %f %f |\n", arr3(0,0), arr3(0,1), arr3(0,2));
+	printf("| %f %f %f |\n", arr3(1,0), arr3(1,1), arr3(1,2));
+	printf("| %f %f %f |\n", arr3(2,0), arr3(2,1), arr3(2,2));
+   
+    arr3.setTranspose();
+    printf("\n");
+    printf("After\n");
 	printf("| %f %f %f |\n", arr3(0,0), arr3(0,1), arr3(0,2));
 	printf("| %f %f %f |\n", arr3(1,0), arr3(1,1), arr3(1,2));
 	printf("| %f %f %f |\n", arr3(2,0), arr3(2,1), arr3(2,2));
+    printf("End transpose\n");
+    
+    printf("\n");
+    arr4.setIncrement();
+    printf("Try transpose: matrix mxn, m>n\n");
+	printf("Before: rows = %d, cols = %d\n", arr4.getMyRows(), arr4.getMyCols());
+    printf("| %f %f |\n", arr4(0,0), arr4(0,1));
+	printf("| %f %f |\n", arr4(1,0), arr4(1,1));
+	printf("| %f %f |\n", arr4(2,0), arr4(2,1));
+	printf("| %f %f |\n", arr4(3,0), arr4(3,1));
+   
+    arr4.setTranspose();
+    printf("\n");
+	printf("After: rows = %d, cols = %d\n", arr4.getMyRows(), arr4.getMyCols());
+    printf("| %f %f %f %f|\n", arr4(0,0), arr4(0,1), arr4(0,2), arr4(0,3));
+	printf("| %f %f %f %f|\n", arr4(1,0), arr4(1,1), arr4(1,2), arr4(1,3));
+    printf("End transpose\n");
+    
+    printf("\n");
+    arr5.setIncrement();
+    printf("Try transpose: matrix mxn, m>n\n");
+	printf("Before: rows = %d, cols = %d\n", arr4.getMyRows(), arr4.getMyCols());
+    printf("| %f %f %f %f|\n", arr5(0,0), arr5(0,1), arr5(0,2), arr5(0,3));
+	printf("| %f %f %f %f|\n", arr5(1,0), arr5(1,1), arr5(1,2), arr5(1,3));
+   
+    arr5.setTranspose();
+    printf("\n");
+	printf("After: rows = %d, cols = %d\n", arr5.getMyRows(), arr5.getMyCols());
+    printf("| %f %f |\n", arr5(0,0), arr5(0,1));
+	printf("| %f %f |\n", arr5(1,0), arr5(1,1));
+	printf("| %f %f |\n", arr5(2,0), arr5(2,1));
+	printf("| %f %f |\n", arr5(3,0), arr5(3,1));
+    printf("End transpose\n");
     try
     {
         printf("Try accessing cols OOB: %f\n", mat1(0,3)); // Works

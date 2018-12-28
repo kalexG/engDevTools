@@ -2,9 +2,10 @@ CC = g++
 DEBUG = -g
 PROFILE = -pg
 CFLAGS = -Wall -c $(DEBUG)
-LFLAGS = -Wall $(DEBUG) $(PROFILE)
+LFLAGS = -Wall $(DEBUG) $(PROFILE) $(LAPACK)
 GTEST_INC = -I/usr/include/gtest/
 GTEST_LINK = -pthread -lgtest
+LAPACK = -llapack -llapacke
 
 # Build directories
 OBJ_DIR = obj/
@@ -35,7 +36,7 @@ obj/%.o: test/%.cpp
 			$(CC) $(CFLAGS) -Iinc -o $@ $^
 
 obj/%.o: unitTest/%.cpp
-			$(CC) $(CFLAGS) -Iinc $(GTEST_INC) -o $@ $^
+			$(CC) $(CFLAGS) -Iinc -o $@ $^
 
 $(BUILD_DIRS): 
 	mkdir -p $(OBJ_DIR)

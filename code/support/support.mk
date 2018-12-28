@@ -14,10 +14,11 @@ MATH_DIR = ../math/
 VMAOPS_OBJS = $(MATH_DIR)obj/vectorOps.o $(MATH_DIR)obj/matrixOps.o $(MATH_DIR)obj/arrayOps.o
 
 # All objects
-PRWOPS_OBJS = obj/printOps.o obj/writeOps.o obj/readOps.o obj/testPrwOps.o
+PRWOPS_OBJS = obj/printOps.o obj/writeOps.o obj/readOps.o #obj/testPrwOps.o
 
 # All executables
-SUPPORT_BIN = bin/testPrwOps
+# Not compiled for now. Removing vmaOps broke this
+SUPPORT_BIN = #bin/testPrwOps
 
 .PHONY: support-obj support-bin
 support-obj: $(BUILD_DIRS) $(PRWOPS_OBJS)

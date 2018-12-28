@@ -6,6 +6,9 @@
 #include <iostream>
 #include <math.h>
 #include <utility>
+#include <algorithm>
+#include <stdio.h>
+#include <lapacke.h>
 
 class Array
 {
@@ -27,14 +30,26 @@ class Array
         void setZeros(void);
         // Setter Function: setOnes
         void setOnes(void);
+        // Setter Function: setTo
+        void setTo(const double);
         // Setter Function: setIncrement
-        void setIncrement(double = 0.0, double = 1.0);
-        // Getter Function: getRows
-        unsigned int getRows(void);
-        // Getter Function getCols
-        unsigned int getCols(void);
-        // Getter Function getElems
-        unsigned int getElems(void);
+        void setIncrement(const double = 0.0, const double = 1.0);
+        // Setter Function: setIdentity
+        void setIdentity(void);
+        // Setter Function: setTranspose
+        void setTranspose(void);
+        // Getter Function: getMyRows
+        unsigned int getMyRows(void);
+        // Getter Function: getMyCols
+        unsigned int getMyCols(void);
+        // Getter Function: getMyElements
+        unsigned int getMyElements(void);
+        // Getter Function: getMyArray
+        double* getMyArray(void);
+        // Getter Function: getIsSquare
+        bool getIsSquare(void);
+        // Getter Function: getTrace
+        double getTrace(void);
         // Access Operator: ()
         double &operator() (unsigned int row, unsigned int col);
         // Access Operator: []
@@ -56,6 +71,8 @@ class Array
         void initArray(void);
         // Function: freeArray
         void freeArray(void);
+        // Function: checkSquare
+        bool checkSquare(unsigned int rows, unsigned int cols);
     protected:
 
     // Member Data
@@ -68,8 +85,12 @@ class Array
         unsigned int myCols;
         // Data: myElements
         unsigned int myElements;
-        // Data: array
-        double* array;
+        // Data: myArray
+        double* myArray;
+        // Data: myArraySize
+        std::size_t myArraySize;
+        // Data: isSquare
+        bool isSquare;
 };
 
 class Matrix : public Array
