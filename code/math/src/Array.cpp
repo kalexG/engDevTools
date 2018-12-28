@@ -1,17 +1,5 @@
 #include "../inc/Array.h"
 
-extern "C" 
-{
-extern void LAPACKE_dge_trans( int, lapack_int, lapack_int,
-                        const double*, lapack_int,
-                        double*, lapack_int );
-
-extern void dgemm_(char*, char*, const int*,
-               const int*, const int*, double*, double*,
-               const int*, double*, const int*, double*,
-               double*, const int*);
-}
-
 // Constructor
 Array::Array(unsigned int rows, unsigned int cols)
     : myRows(rows)
@@ -304,14 +292,14 @@ double &Vector::operator() (unsigned int row)
     }
 }
 
-// Get Unit Vector
-Vector Vector::getUnitVector(void)
+// Calculate Unit Vector
+Vector unitVector(Vector& vec)
 {
     Vector tmp;
-    double mag = getMagnitude();
-    tmp[0] = tmp[0]/mag;
-    tmp[1] = tmp[1]/mag;
-    tmp[2] = tmp[2]/mag;
+    double mag = vec.getMagnitude();
+    tmp[0] = vec[0]/mag;
+    tmp[1] = vec[1]/mag;
+    tmp[2] = vec[2]/mag;
     return tmp;
 }
 

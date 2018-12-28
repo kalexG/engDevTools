@@ -21,9 +21,6 @@ int main( int argc, char *argv[] ) {
     Array arr4(4, 2);
     Array arr5(2, 4);
     Matrix mat1;
-    Vector vec1;
-    //printf("Size of arr4 = %dx%d\n", arr4.getMyRows(), arr4.getMyCols());
-    //printf("Size of arr5 = %dx%d\n", arr5.getMyRows(), arr5.getMyCols());
 
     arr1.setOnes();
     arr2.setIncrement(1.0, 1.0);

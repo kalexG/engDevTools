@@ -2,9 +2,8 @@ CC = g++
 DEBUG = -g
 PROFILE = -pg
 CFLAGS = -Wall -c $(DEBUG)
-LFLAGS = -Wall $(DEBUG) $(PROFILE) $(LAPACK)
-GTEST_INC = -I/usr/include/gtest/
-GTEST_LINK = -pthread -lgtest
+LFLAGS = -Wall $(DEBUG) $(PROFILE)
+GTEST = -pthread -lgtest
 LAPACK = -llapack -llapacke
 
 # Build directories
@@ -15,19 +14,29 @@ BUILD_DIRS = $(OBJ_DIR) $(BIN_DIR)
 # All objects
 MATH_OBJS = obj/Array.o obj/Integrator.o obj/Differentiator.o
 
-# All tests
-MATH_TEST_OBJS = obj/testArray.o obj/testIntegrator.o obj/testDifferentiator.o
+# All development tests
+MATH_DEVTEST_OBJS = obj/testArray.o obj/testIntegrator.o obj/testDifferentiator.o
 
-# All exectables
-MATH_TEST_BIN = bin/testArray bin/testIntegrator bin/testDifferentiator
+# All unit tests
+MATH_UNITTEST_OBJS = obj/Array_ut.o
+
+# All development test exectables
+MATH_DEVTEST_BIN = bin/testArray bin/testIntegrator bin/testDifferentiator
+
+# All development test exectables
+MATH_UNITTEST_BIN = bin/Array_ut
 
 .PHONY: math-obj math-bin
-math-obj: $(BUILD_DIRS) $(MATH_OBJS) $(MATH_TEST_OBJS)
-math-bin: $(BUILD_DIRS) $(MATH_TEST_BIN)
+math-obj: $(BUILD_DIRS) $(MATH_OBJS) $(MATH_DEVTEST_OBJS) $(MATH_UNITTEST_OBJS)
+math-bin: $(BUILD_DIRS) $(MATH_DEVTEST_BIN) $(MATH_UNITTEST_BIN)
 
 # Development Testing
 bin/test%: obj/test%.o obj/%.o
-			$(CC) $^ $(LFLAGS) -Lobj -o $@ -Iinc
+			$(CC) $^ $(LFLAGS) -Lobj -o $@ -Iinc $(LAPACK)
+
+# Unit Testing
+bin/%_ut: obj/%_ut.o obj/%.o
+			$(CC) $^ $(LFLAGS) -Lobj -o $@ -Iinc $(LAPACK) $(GTEST)
 
 obj/%.o: src/%.cpp
 			$(CC) $(CFLAGS) -Iinc -o $@ $^

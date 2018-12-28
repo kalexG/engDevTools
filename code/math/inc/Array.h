@@ -3,15 +3,33 @@
 // Last Modified: 12/22/2018
 // Author: Kevin Gomez
 
+#ifndef ARRAY_H
+#define ARRAY_H
+
 #include <iostream>
 #include <math.h>
 #include <utility>
 #include <algorithm>
 #include <stdio.h>
-#include <lapacke.h>
+
+extern "C" 
+{
+    #include <lapacke/lapacke.h>
+    void LAPACKE_dge_trans( int, lapack_int, lapack_int,
+                            const double*, lapack_int,
+                            double*, lapack_int );
+
+    void dgemm_(char*, char*, const int*,
+                   const int*, const int*, double*, double*,
+                   const int*, double*, const int*, double*,
+                   double*, const int*);
+}
 
 class Array
 {
+    // Class for unit testing
+    friend class ArrayUnitTest;
+
     // Member Functions
     public:
         // Constructor
@@ -95,6 +113,9 @@ class Array
 
 class Matrix : public Array
 {
+    // Class for unit testing
+    friend class MatrixUnitTest;
+    
     // Member Functions
     public:
         // Constructor
@@ -110,16 +131,19 @@ class Matrix : public Array
 
 class Vector : public Array
 {
+    // Class for unit testing
+    friend class VectorUnitTest;
+    
     // Member Functions
     public:
         // Constructor
         Vector() : Array(3, 1) {}
         // Access Operator: ()
         double &operator() (unsigned int row);
-        // Getter Function getUnitVector
-        Vector getUnitVector(void);
         // Getter Function getMagnitude
         double getMagnitude(void);
+        // Function unitVector
+        friend Vector unitVector(Vector& vec);
         // Function: crossProduct
         friend Vector crossProduct(Vector& vec1, Vector& vec2);
         // Function: dotProduct
@@ -132,3 +156,5 @@ class Vector : public Array
     private:
     protected:
 };
+
+#endif
