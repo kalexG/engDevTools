@@ -85,12 +85,12 @@ TEST_F(VectorUnitTest, checkDotProduct)
     ASSERT_EQ(dotProduct(vec1, vec2), 6.0);
 }
 
-// Test: Vector::unitVector() - Make sure calculation is correct
-TEST_F(VectorUnitTest, checkUnitVector)
+// Test: Vector::getUnitVector() - Make sure calculation is correct
+TEST_F(VectorUnitTest, checkGetUnitVector)
 {
     Vector vec1;
     vec1.setIncrement(1.0, 1.0);
-    myTestVector = unitVector(vec1);
+    myTestVector = vec1.getUnitVector();
     ASSERT_THAT(myTestVector(0), DoubleNear(1.0/sqrt(14), 1e-05));
     ASSERT_THAT(myTestVector(1), DoubleNear(2.0/sqrt(14), 1e-05));
     ASSERT_THAT(myTestVector(2), DoubleNear(3.0/sqrt(14), 1e-05));

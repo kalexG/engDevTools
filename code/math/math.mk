@@ -1,10 +1,10 @@
 CC = g++
 DEBUG = -g
 PROFILE = -pg
-CFLAGS = -Wall -c $(DEBUG)
-LFLAGS = -Wall $(DEBUG) $(PROFILE)
+CFLAGS = -Wall -Wsign-compare -c $(DEBUG)
+LFLAGS = -Wall -Wsign-compare $(DEBUG) $(PROFILE)
 GTEST = -pthread -lgtest
-LAPACK = -llapack -llapacke
+LAPACK = -llapack -llapacke -lblas
 
 # Build directories
 OBJ_DIR = obj/

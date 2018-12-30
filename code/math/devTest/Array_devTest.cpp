@@ -99,17 +99,38 @@ int main( int argc, char *argv[] ) {
 	printf("| %f %f |\n", get2DVec.at(2).at(0), get2DVec.at(2).at(1));
 	printf("| %f %f |\n", get2DVec.at(3).at(0), get2DVec.at(3).at(1));
 
+    Array arr6(4,3);
+    Array arr7(3,2);
+    Array arr8(4,2);
+    arr6.setIncrement(1.0, 1.0);
+    arr7.setOnes();
+    arr8.setZeros();
+    arr8 = arr6 * arr7;
+    printf("Matrix Multiply (*)!\n");
+    printf("| %f %f |\n", arr8(0,0), arr8(0,1));
+	printf("| %f %f |\n", arr8(1,0), arr8(1,1));
+	printf("| %f %f |\n", arr8(2,0), arr8(2,1));
+	printf("| %f %f |\n", arr8(3,0), arr8(3,1));
+    
     try
     {
-        printf("Try accessing cols OOB: %f\n", mat1(0,3)); // Works
+        printf("Try accessing cols OOB: %f\n", mat1(0,3));
     }
-    catch(const runtime_error& error1)
+    catch(const length_error& error1)
     {
-        printf("Ya got caught 1!\n");
+        printf("Caught runtime_error exception!\n");
     }
     catch (const std::out_of_range& error2)
     {
-        printf("Ya got caught 2!\n");
+        printf("Caught out_of_range exception!\n");
+    }
+    try
+    {   
+        Array arr(0, 0);
+    }
+    catch (const std::invalid_argument& error3)
+    {
+        printf("Caught invalid_argument exception!\n");
     }
 	//printf("Try accessing rows OOB: %f\n", vec1(3,0)); // Breaks
 

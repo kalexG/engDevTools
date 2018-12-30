@@ -1,8 +1,9 @@
 #include "../inc/Array.h"
 
 // Constructor
-Array::Array(unsigned int rows, unsigned int cols)
-    : myRows(rows)
+Array::Array(int rows, int cols)
+    : validDims(checkValidDims(rows, cols))
+    , myRows(rows)
     , myCols(cols)
     , myElements(rows*cols)
     , isSquare(checkSquare(rows, cols))
@@ -60,7 +61,7 @@ Array::~Array(void)
 Array Array::operator* (const double scalar) const
 {
     Array tmp(myRows, myCols);
-    for (unsigned int i = 0; i < myElements; i++)
+    for (int i = 0; i < myElements; i++)
     {
         tmp.myArray[i] = myArray[i] * scalar;
     }
@@ -73,13 +74,33 @@ Array operator* (const double scalar, const Array& arr)
     return arr * scalar;
 }
 
+// Overload "*" Operator (Array*Array)
+Array Array::operator* (const Array& arr) const
+{
+    int m = myRows;
+    int n = arr.myCols;
+    int k = myCols;
+    Array tmp(m, n);
+    if ( k == arr.myRows )
+    {
+        // Utilize cblas matrix-matrix multiply
+        cblas_dgemm(CblasRowMajor, CblasNoTrans, CblasNoTrans, 
+                    m, n, k, 1.0, myArray, k, arr.myArray, n, 0.0, tmp.myArray, n); 
+        return tmp;
+    }
+    else
+    {
+        throw std::length_error("ERROR: Array operation [*] size mismatch.\n");
+    }
+}
+
 // Overload "+" Operator (Array Addition)
 Array Array::operator+ (const Array& arr) const
 {
     Array tmp(myRows, myCols);
     if ( (arr.myRows == myRows) && (arr.myCols == myCols) )
     {
-        for (unsigned int i = 0; i < myElements; i++)
+        for (int i = 0; i < myElements; i++)
         {
             tmp.myArray[i] = myArray[i] + arr.myArray[i];
         }
@@ -97,7 +118,7 @@ Array Array::operator- (const Array& arr) const
     Array tmp(myRows, myCols);
     if ( (arr.myRows == myRows) && (arr.myCols == myCols) )
     {
-        for (unsigned int i = 0; i < myElements; i++)
+        for (int i = 0; i < myElements; i++)
         {
             tmp.myArray[i] = myArray[i] - arr.myArray[i];
         }
@@ -112,7 +133,7 @@ Array Array::operator- (const Array& arr) const
 Array Array::operator- (void) const
 {
     Array tmp(myRows, myCols);
-    for (unsigned int i = 0; i < myElements; i++)
+    for (int i = 0; i < myElements; i++)
     {
         tmp.myArray[i] = -myArray[i];
     }
@@ -120,7 +141,7 @@ Array Array::operator- (void) const
 }
 
 // Overload "()" Operator (Accessing: (row, col))
-double &Array::operator() (unsigned int row, unsigned int col)
+double &Array::operator() (int row, int col)
 {
     if ( row >= myRows )
     {
@@ -137,7 +158,7 @@ double &Array::operator() (unsigned int row, unsigned int col)
 }
 
 // Overload "[]" Operator (Accessing: [element])
-double &Array::operator[] (unsigned int index)
+double &Array::operator[] (int index)
 {
     if ( index >= myElements )
     {
@@ -186,7 +207,7 @@ void Array::setIncrement(const double start, const double increment)
 {
     myArray[0] = start;
 
-    for (unsigned int i = 1; i < myElements; i++)
+    for (int i = 1; i < myElements; i++)
     {
         myArray[i] = myArray[i-1] + increment;
     }
@@ -198,7 +219,7 @@ void Array::setIdentity(void)
     if (isSquare)
     {
         setZeros();
-        for (unsigned int i = 0; i < myElements; i += (myCols + 1))
+        for (int i = 0; i < myElements; i += (myCols + 1))
         {
             myArray[i] = 1.0;
         }
@@ -218,20 +239,29 @@ void Array::setTranspose(void)
     swap(*this, tmp);
 }
 
+// Get Transpose
+double* Array::getTranspose(void)
+{
+    Array tmp(myCols, myRows);
+    // Utilize LAPACKE out-of-place transpose
+    LAPACKE_dge_trans( LAPACK_ROW_MAJOR, myRows, myCols, myArray, myCols, tmp.myArray, myRows );
+    return tmp.myArray;
+}
+
 // Get myRows
-unsigned int Array::getMyRows(void)
+int Array::getMyRows(void)
 {
     return myRows;
 }
 
 // Get myCols
-unsigned int Array::getMyCols(void)
+int Array::getMyCols(void)
 {
     return myCols;
 }
 
 // Get myElements
-unsigned int Array::getMyElements(void)
+int Array::getMyElements(void)
 {
     return myElements;
 }
@@ -254,7 +284,7 @@ double Array::getTrace(void)
     if (isSquare)
     {
         double tmp = 0.0;
-        for (unsigned int i = 0; i < myElements; i += (myCols + 1))
+        for (int i = 0; i < myElements; i += (myCols + 1))
         {
             tmp += myArray[i];
         }
@@ -278,8 +308,8 @@ std::vector<double> Array::getStdVector1D(void)
 std::vector<std::vector<double>> Array::getStdVector2D(void)
 {
     std::vector<std::vector<double>> tmp(myRows);
-    unsigned int j = 0;
-    for (unsigned int i = 0; i < myRows; i++)
+    int j = 0;
+    for (int i = 0; i < myRows; i++)
     {
         tmp[i].resize(myCols);
         std::copy(&myArray[j], &myArray[j+myCols], tmp[i].begin());
@@ -289,7 +319,7 @@ std::vector<std::vector<double>> Array::getStdVector2D(void)
 }
 
 // Check if Array is Square
-bool Array::checkSquare(unsigned int rows, unsigned int cols)
+bool Array::checkSquare(int rows, int cols)
 {
     if (rows == cols)
     {
@@ -301,8 +331,21 @@ bool Array::checkSquare(unsigned int rows, unsigned int cols)
     }
 }
 
+// Check if Dimensions are Valid
+bool Array::checkValidDims(int rows, int cols)
+{
+    if ((rows <= 0) || (cols <= 0))
+    {
+        throw std::invalid_argument("ERROR: Array Dimesions must be > 0.\n");
+    }
+    else 
+    {
+        return false;
+    }
+}
+
 // Overload "()" Operator (Accessing: (row))
-double &Vector::operator() (unsigned int row)
+double &Vector::operator() (int row)
 {
     if ( row >= myRows )
     {
@@ -314,21 +357,21 @@ double &Vector::operator() (unsigned int row)
     }
 }
 
-// Calculate Unit Vector
-Vector unitVector(Vector& vec)
-{
-    Vector tmp;
-    double mag = vec.getMagnitude();
-    tmp[0] = vec[0]/mag;
-    tmp[1] = vec[1]/mag;
-    tmp[2] = vec[2]/mag;
-    return tmp;
-}
-
 // Get Magnitude
 double Vector::getMagnitude(void)
 {
     return sqrt(myArray[0]*myArray[0] + myArray[1]*myArray[1] + myArray[2]*myArray[2]);
+}
+
+// Get Unit Vector
+Vector Vector::getUnitVector(void)
+{
+    Vector tmp;
+    double mag = getMagnitude();
+    tmp[0] = myArray[0]/mag;
+    tmp[1] = myArray[1]/mag;
+    tmp[2] = myArray[2]/mag;
+    return tmp;
 }
 
 // Take Cross Product of Two Vectors

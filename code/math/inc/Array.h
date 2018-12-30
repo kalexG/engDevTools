@@ -16,14 +16,14 @@
 extern "C" 
 {
     #include <lapacke/lapacke.h>
+    #include <cblas/cblas.h>
     void LAPACKE_dge_trans( int, lapack_int, lapack_int,
                             const double*, lapack_int,
                             double*, lapack_int );
 
-    void dgemm_(char*, char*, const int*,
-                   const int*, const int*, double*, double*,
-                   const int*, double*, const int*, double*,
-                   double*, const int*);
+    void cblas_dgemm(CBLAS_LAYOUT, CBLAS_TRANSPOSE, CBLAS_TRANSPOSE, 
+                    int, int, int, double, const double*, int, 
+                    const double*, int, double, double*, int);
 }
 
 class Array
@@ -34,7 +34,7 @@ class Array
     // Member Functions
     public:
         // Constructor
-        Array(unsigned int rows, unsigned int cols);
+        Array(int rows, int cols);
         // Copy Constructor
         Array(const Array& arr);
         // Move Constructor
@@ -57,14 +57,18 @@ class Array
         void setIdentity(void);
         // Setter Function: setTranspose
         void setTranspose(void);
+        // Setter Function: getTranspose
+        double* getTranspose(void);
         // Getter Function: getMyRows
-        unsigned int getMyRows(void);
+        int getMyRows(void);
         // Getter Function: getMyCols
-        unsigned int getMyCols(void);
+        int getMyCols(void);
         // Getter Function: getMyElements
-        unsigned int getMyElements(void);
+        int getMyElements(void);
         // Getter Function: getMyArray
         double* getMyArray(void);
+        // Getter Function: getMyArraySize
+        std::size_t getMyArraySize(void);
         // Getter Function: getIsSquare
         bool getIsSquare(void);
         // Getter Function: getTrace
@@ -74,9 +78,9 @@ class Array
         // Getter Function: getStdVector2D
         std::vector<std::vector<double>> getStdVector2D(void);
         // Access Operator: ()
-        double &operator() (unsigned int row, unsigned int col);
+        double &operator() (int row, int col);
         // Access Operator: []
-        double &operator[] (unsigned int index);
+        double &operator[] (int index);
         // Arithmetic Operator: +
         Array operator+ (const Array& arr) const;
         // Arithmetic Operator: -
@@ -84,7 +88,9 @@ class Array
         // Artithmetic Operator: -
         Array operator- (void) const;
         // Arithmetic Operator: *
-        Array operator* (const double scalar)const;
+        Array operator* (const double scalar) const;
+        // Arithmetic Operator: *
+        Array operator* (const Array& arr) const;
         // Arithmetic Operator: *
         friend Array operator* (const double scalar, const Array &arr);
         // Function: swap
@@ -94,20 +100,24 @@ class Array
         void initArray(void);
         // Function: freeArray
         void freeArray(void);
+        // Function: checkValidDims
+        bool checkValidDims(int rows, int cols);
         // Function: checkSquare
-        bool checkSquare(unsigned int rows, unsigned int cols);
+        bool checkSquare(int rows, int cols);
     protected:
 
     // Member Data
     public:
     private:
+        // Data: validDims
+        bool validDims;
     protected:
         // Data: myRows
-        unsigned int myRows;
+        int myRows;
         // Data: myCols
-        unsigned int myCols;
+        int myCols;
         // Data: myElements
-        unsigned int myElements;
+        int myElements;
         // Data: myArray
         double* myArray;
         // Data: myArraySize
@@ -144,11 +154,11 @@ class Vector : public Array
         // Constructor
         Vector() : Array(3, 1) {}
         // Access Operator: ()
-        double &operator() (unsigned int row);
+        double &operator() (int row);
         // Getter Function getMagnitude
         double getMagnitude(void);
-        // Function unitVector
-        friend Vector unitVector(Vector& vec);
+        // Getter Function getUnitVector
+        Vector getUnitVector(void);
         // Function: crossProduct
         friend Vector crossProduct(Vector& vec1, Vector& vec2);
         // Function: dotProduct
