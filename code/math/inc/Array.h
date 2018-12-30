@@ -11,6 +11,7 @@
 #include <utility>
 #include <algorithm>
 #include <stdio.h>
+#include <vector>
 
 extern "C" 
 {
@@ -68,6 +69,10 @@ class Array
         bool getIsSquare(void);
         // Getter Function: getTrace
         double getTrace(void);
+        // Getter Function: getStdVector1D
+        std::vector<double> getStdVector1D(void);
+        // Getter Function: getStdVector2D
+        std::vector<std::vector<double>> getStdVector2D(void);
         // Access Operator: ()
         double &operator() (unsigned int row, unsigned int col);
         // Access Operator: []

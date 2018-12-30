@@ -266,6 +266,28 @@ double Array::getTrace(void)
     }
 }
 
+// Get myArray as std::vector in row first format
+std::vector<double> Array::getStdVector1D(void)
+{
+    std::vector<double> tmp (myElements);
+    tmp.assign(myArray, myArray + myElements);
+    return tmp;
+}
+
+// Get myArray as 2-Dimensional std::vector
+std::vector<std::vector<double>> Array::getStdVector2D(void)
+{
+    std::vector<std::vector<double>> tmp(myRows);
+    unsigned int j = 0;
+    for (unsigned int i = 0; i < myRows; i++)
+    {
+        tmp[i].resize(myCols);
+        std::copy(&myArray[j], &myArray[j+myCols], tmp[i].begin());
+        j += myCols;
+    }
+    return tmp;
+}
+
 // Check if Array is Square
 bool Array::checkSquare(unsigned int rows, unsigned int cols)
 {

@@ -86,6 +86,19 @@ int main( int argc, char *argv[] ) {
 	printf("| %f %f |\n", arr5(2,0), arr5(2,1));
 	printf("| %f %f |\n", arr5(3,0), arr5(3,1));
     printf("End transpose\n");
+    
+    std::vector<double> get1DVec = arr5.getStdVector1D();
+    printf("| %f %f |\n", get1DVec.at(0), get1DVec.at(1));
+	printf("| %f %f |\n", get1DVec.at(2), get1DVec.at(3));
+	printf("| %f %f |\n", get1DVec.at(4), get1DVec.at(5));
+	printf("| %f %f |\n", get1DVec.at(6), get1DVec.at(7));
+    printf("\n");
+    std::vector<std::vector<double>> get2DVec = arr5.getStdVector2D();
+    printf("| %f %f |\n", get2DVec.at(0).at(0), get2DVec.at(0).at(1));
+	printf("| %f %f |\n", get2DVec.at(1).at(0), get2DVec.at(1).at(1));
+	printf("| %f %f |\n", get2DVec.at(2).at(0), get2DVec.at(2).at(1));
+	printf("| %f %f |\n", get2DVec.at(3).at(0), get2DVec.at(3).at(1));
+
     try
     {
         printf("Try accessing cols OOB: %f\n", mat1(0,3)); // Works

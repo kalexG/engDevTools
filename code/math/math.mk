@@ -15,33 +15,33 @@ BUILD_DIRS = $(OBJ_DIR) $(BIN_DIR)
 MATH_OBJS = obj/Array.o obj/Integrator.o obj/Differentiator.o
 
 # All development tests
-MATH_DEVTEST_OBJS = obj/testArray.o obj/testIntegrator.o obj/testDifferentiator.o
+MATH_DEVTEST_OBJS = obj/Array_devTest.o obj/Integrator_devTest.o obj/Differentiator_devTest.o
 
 # All unit tests
-MATH_UNITTEST_OBJS = obj/Array_ut.o
+MATH_UNITTEST_OBJS = obj/Array_unitTest.o
 
 # All development test exectables
-MATH_DEVTEST_BIN = bin/testArray bin/testIntegrator bin/testDifferentiator
+MATH_DEVTEST_BIN = bin/Array_devTest bin/Integrator_devTest bin/Differentiator_devTest
 
-# All development test exectables
-MATH_UNITTEST_BIN = bin/Array_ut
+# All unit test exectables
+MATH_UNITTEST_BIN = bin/Array_unitTest
 
 .PHONY: math-obj math-bin
 math-obj: $(BUILD_DIRS) $(MATH_OBJS) $(MATH_DEVTEST_OBJS) $(MATH_UNITTEST_OBJS)
 math-bin: $(BUILD_DIRS) $(MATH_DEVTEST_BIN) $(MATH_UNITTEST_BIN)
 
 # Development Testing
-bin/test%: obj/test%.o obj/%.o
+bin/%_devTest: obj/%_devTest.o obj/%.o
 			$(CC) $^ $(LFLAGS) -Lobj -o $@ -Iinc $(LAPACK)
 
 # Unit Testing
-bin/%_ut: obj/%_ut.o obj/%.o
+bin/%_unitTest: obj/%_unitTest.o obj/%.o
 			$(CC) $^ $(LFLAGS) -Lobj -o $@ -Iinc $(LAPACK) $(GTEST)
 
 obj/%.o: src/%.cpp
 			$(CC) $(CFLAGS) -Iinc -o $@ $^
 
-obj/%.o: test/%.cpp
+obj/%.o: devTest/%.cpp
 			$(CC) $(CFLAGS) -Iinc -o $@ $^
 
 obj/%.o: unitTest/%.cpp
