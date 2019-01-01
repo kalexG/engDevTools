@@ -53,7 +53,7 @@ class Array
         void setTo(const double);
         // Setter Function: setIncrement [UT: Y]
         void setIncrement(const double = 0.0, const double = 1.0);
-        // Setter Function: setIdentity [UT: TODO]
+        // Setter Function: setIdentity [UT: Y]
         void setIdentity(void);
         // Setter Function: setTranspose [UT: Y]
         void setTranspose(void);
@@ -65,9 +65,9 @@ class Array
         int getMyCols(void);
         // Getter Function: getMyElements [UT: Y]
         int getMyElements(void);
-        // Getter Function: getMyArray [UT: TODO]
+        // Getter Function: getMyArray [UT: Y]
         double* getMyArray(void);
-        // Getter Function: getMyArraySize [UT: TODO]
+        // Getter Function: getMyArraySize [UT: Y]
         std::size_t getMyArraySize(void);
         // Getter Function: getIsSquare [UT: Y]
         bool getIsSquare(void);
@@ -77,9 +77,9 @@ class Array
         std::vector<double> getStdVector1D(void);
         // Getter Function: getStdVector2D [UT: TODO]
         std::vector<std::vector<double>> getStdVector2D(void);
-        // Access Operator: () [UT: TODO]
+        // Access Operator: () [UT: Y]
         double &operator() (int row, int col);
-        // Access Operator: [] [UT: TODO]
+        // Access Operator: [] [UT: Y]
         double &operator[] (int index);
         // Arithmetic Operator: + [UT: TODO]
         Array operator+ (const Array& arr) const;
@@ -87,11 +87,11 @@ class Array
         Array operator- (const Array& arr) const;
         // Artithmetic Operator: - [UT: TODO]
         Array operator- (void) const;
-        // Arithmetic Operator: * [UT: TODO]
+        // Arithmetic Operator: * [UT: Y]
         Array operator* (const double scalar) const;
         // Arithmetic Operator: * [UT: TODO]
         Array operator* (const Array& arr) const;
-        // Arithmetic Operator: * [UT: TODO]
+        // Arithmetic Operator: * [UT: Y]
         friend Array operator* (const double scalar, const Array &arr);
         // Function: swap [UT: TODO]
         friend void swap(Array& arr1, Array& arr2);

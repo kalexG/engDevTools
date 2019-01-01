@@ -9,7 +9,7 @@ Array::Array(int rows, int cols)
     , isSquare(checkSquare(rows, cols))
 {
     myArray = new double [myElements]();
-    myArraySize = sizeof(myArray);
+    myArraySize = myElements * sizeof(myArray);
     printf("ctor!\n");
 }
 
@@ -169,11 +169,11 @@ Array Array::operator- (void) const
 // Overload "()" Operator (Accessing: (row, col))
 double &Array::operator() (int row, int col)
 {
-    if ( row >= myRows )
+    if ( row >= myRows || row < 0 )
     {
         throw std::out_of_range("ERROR: Tried to access ROW out of bounds.\n");
     }
-    else if ( col >= myCols )
+    else if ( col >= myCols || col < 0 )
     {
         throw std::out_of_range("ERROR: Tried to access COL out of bounds.\n");
     }
@@ -186,7 +186,7 @@ double &Array::operator() (int row, int col)
 // Overload "[]" Operator (Accessing: [element])
 double &Array::operator[] (int index)
 {
-    if ( index >= myElements )
+    if ( index >= myElements || index < 0)
     {
         throw std::out_of_range("ERROR: Tried to access INDEX out of bounds.\n");
     }
@@ -282,6 +282,12 @@ int Array::getMyElements(void)
 double* Array::getMyArray(void)
 {
     return myArray;
+}
+
+// Get myArraySize
+std::size_t Array::getMyArraySize(void)
+{
+    return myArraySize;
 }
 
 // Get isSquare
