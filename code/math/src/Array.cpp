@@ -8,18 +8,25 @@ Array::Array(int rows, int cols)
     , myElements(rows*cols)
     , isSquare(checkSquare(rows, cols))
 {
-    initArray();
+    myArray = new double [myElements]();
+    myArraySize = sizeof(myArray);
+    printf("ctor!\n");
 }
 
 // Copy Constructor
 Array::Array(const Array& arr)
     : Array(arr.myRows, arr.myCols)
-{}
+{
+    std::copy(arr.myArray, arr.myArray + arr.myElements, myArray );
+    printf("copy ctor!\n");
+}
 
 // Move Contructor
 Array::Array (Array&& arr) noexcept
 : myArray(std::exchange(arr.myArray, nullptr))
-{}
+{
+    printf("move ctor!\n");
+}
 
 // Swaps Array class data members
 void swap(Array& arr1, Array& arr2)
@@ -29,6 +36,23 @@ void swap(Array& arr1, Array& arr2)
     std::swap(arr1.myElements, arr2.myElements);
     std::swap(arr1.myArray, arr2.myArray);
     std::swap(arr1.myArraySize, arr2.myArraySize);
+}
+
+// Compare Array class data members
+bool compare(Array& arr1, Array& arr2, double tol)
+{
+    if ( (arr1.myRows != arr2.myRows) || (arr1.myCols != arr2.myCols) )
+    {
+        return false;
+    }
+    for (int i = 0; i < arr1.myElements; i++)
+    {
+        if (std::abs(arr1[i] - arr2[i]) > tol)
+        {
+            return false;
+        }
+    }
+    return true;
 }
 
 // Copy Assignment
@@ -54,7 +78,9 @@ Array& Array::operator= (Array&& arr) noexcept
 // Destructor
 Array::~Array(void)
 {
-    freeArray();
+    delete[] myArray;
+    myArray = NULL;
+    printf("dtor!\n");
 }
 
 // Overload "*" Operator (lhs: Array*Scalar)
@@ -170,20 +196,6 @@ double &Array::operator[] (int index)
     }
 }
 
-// Initialize Array
-void Array::initArray(void)
-{
-    myArray = new double [myElements]();
-    myArraySize = sizeof(myArray);
-}
-
-// Free Array
-void Array::freeArray(void)
-{
-    delete[] myArray;
-    myArray = NULL;
-}
-
 // Set Array [Zeros]
 void Array::setZeros(void)
 {
@@ -240,12 +252,12 @@ void Array::setTranspose(void)
 }
 
 // Get Transpose
-double* Array::getTranspose(void)
+Array Array::getTranspose(void)
 {
     Array tmp(myCols, myRows);
     // Utilize LAPACKE out-of-place transpose
     LAPACKE_dge_trans( LAPACK_ROW_MAJOR, myRows, myCols, myArray, myCols, tmp.myArray, myRows );
-    return tmp.myArray;
+    return tmp;
 }
 
 // Get myRows
@@ -342,50 +354,4 @@ bool Array::checkValidDims(int rows, int cols)
     {
         return false;
     }
-}
-
-// Overload "()" Operator (Accessing: (row))
-double &Vector::operator() (int row)
-{
-    if ( row >= myRows )
-    {
-        throw std::out_of_range("ERROR: Tried to access ROW out of bounds.\n");
-    }
-    else
-    {
-        return myArray[ row ];
-    }
-}
-
-// Get Magnitude
-double Vector::getMagnitude(void)
-{
-    return sqrt(myArray[0]*myArray[0] + myArray[1]*myArray[1] + myArray[2]*myArray[2]);
-}
-
-// Get Unit Vector
-Vector Vector::getUnitVector(void)
-{
-    Vector tmp;
-    double mag = getMagnitude();
-    tmp[0] = myArray[0]/mag;
-    tmp[1] = myArray[1]/mag;
-    tmp[2] = myArray[2]/mag;
-    return tmp;
-}
-
-// Take Cross Product of Two Vectors
-Vector crossProduct(Vector& vec1, Vector& vec2)
-{
-    Vector tmp;
-    tmp[0] = vec1[1]*vec2[2] - vec1[2]*vec2[1];
-    tmp[1] = vec1[2]*vec2[0] - vec1[0]*vec2[2];
-    tmp[2] = vec1[0]*vec2[1] - vec1[1]*vec2[0];
-    return tmp;
-}
-
-// Take Dot Product of Two Vectors
-double dotProduct(Vector& vec1, Vector& vec2)
-{
-    return vec1[0]*vec2[0] + vec1[1]*vec2[1] + vec1[2]*vec2[2];  
 }

@@ -20,7 +20,6 @@ int main( int argc, char *argv[] ) {
 	Array arr3(3, 3);
     Array arr4(4, 2);
     Array arr5(2, 4);
-    Matrix mat1;
 
     arr1.setOnes();
     arr2.setIncrement(1.0, 1.0);
@@ -114,7 +113,7 @@ int main( int argc, char *argv[] ) {
     
     try
     {
-        printf("Try accessing cols OOB: %f\n", mat1(0,3));
+        printf("Try accessing cols OOB: %f\n", arr1(0,3));
     }
     catch(const length_error& error1)
     {

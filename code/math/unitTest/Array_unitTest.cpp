@@ -1,103 +1,226 @@
-// Array_ut.cpp
-#include <gtest/gtest.h>
-#include <gmock/gmock.h>
-#include "../inc/Array.h"
+#include "../inc/mathUnitTest.h"
 
-using ::testing::DoubleNear;
-using ::testing::ElementsAre;
-
-class VectorUnitTest : public ::testing::Test
+// Test Array() - Make sure object got constructed correctly with valid dimensions
+TEST_F(ArrayUnitTest, checkConstructor_validDimensions)
 {
-    public:
-        Vector myTestVector;
-    private:
-    protected:
-};
-
-class MatrixUnitTest : public ::testing::Test
-{
-    public:
-        Matrix myTestMatrix;
-    private:
-    protected:
-};
-
-// Test: Matrix() - Make sure object got constructed correctly
-TEST_F(MatrixUnitTest, checkConstructor)
-{
-    // Only Vector unique data in constructor
-    EXPECT_EQ(myTestMatrix.getMyRows(), 3);
-    EXPECT_EQ(myTestMatrix.getMyCols(), 3);
-    EXPECT_EQ(myTestMatrix.getMyElements(), 9);
+    Array myTestArray(3, 3);
+    EXPECT_EQ(myTestArray.getMyRows(), 3);
+    EXPECT_EQ(myTestArray.getMyCols(), 3);
+    EXPECT_EQ(myTestArray.getMyElements(), 9);
 }
 
-// Test: Vector() - Make sure object got constructed correctly
-TEST_F(VectorUnitTest, checkConstructor)
+// Test Array() - Catch constructor throw for invalid dimensions
+TEST_F(ArrayUnitTest, checkConstructor_invalidDimensions)
 {
-    // Only Vector unique data in constructor
-    EXPECT_EQ(myTestVector.getMyRows(), 3);
-    EXPECT_EQ(myTestVector.getMyCols(), 1);
-    EXPECT_EQ(myTestVector.getMyElements(), 3);
+    EXPECT_THROW(Array myTestArray(3, -1), std::invalid_argument);
 }
 
-// Test: Vector::operator() - Check in-bounds access
-TEST_F(VectorUnitTest, checkOperatorAccessParenthesis_inBounds)
+// Test Array() - Make sure object identifies square array during construction
+TEST_F(ArrayUnitTest, checkConstructor_squareArray)
 {
-    myTestVector.setIncrement(1.0, 1.0);
-    EXPECT_EQ(myTestVector(0), 1);
-    EXPECT_EQ(myTestVector(1), 2);
-    EXPECT_EQ(myTestVector(2), 3);
+    Array myTestArray(4, 4);
+    EXPECT_TRUE(myTestArray.getIsSquare());    
 }
 
-// Test: Vector::operator() - Check out-of-bounds access
-TEST_F(VectorUnitTest, checkOperatorAccessParenthesis_outOfBounds)
+// Test Array() - Make sure object identifies non-square array during construction
+TEST_F(ArrayUnitTest, checkConstructor_nonSquareArray)
 {
-    EXPECT_THROW(myTestVector(3), std::out_of_range);
+    Array myTestArray(4, 3);
+    EXPECT_FALSE(myTestArray.getIsSquare());    
 }
 
-// Test: Vector::getMagnitude() - Make sure calculation is correct
-TEST_F(VectorUnitTest, checkGetMagnitude)
+// Test Array::setZeros() - Make sure setter works
+TEST_F(ArrayUnitTest, checkSetZeros)
 {
-    myTestVector.setIncrement(1.0, 1.0);
-    ASSERT_THAT(myTestVector.getMagnitude(), DoubleNear(sqrt(14), 1e-05));
+    Array myTestArray(3, 3);
+    myTestArray.setZeros();
+    for (int i = 0; i < myTestArray.getMyElements(); i++)
+    {
+        EXPECT_EQ(myTestArray[i], 0.0);
+    }
 }
 
-// Test: Vector::crossProduct() - Make sure calculation is correct
-TEST_F(VectorUnitTest, checkCrossProduct)
+// Test Array::setOnes() - Make sure setter works
+TEST_F(ArrayUnitTest, checkSetOnes)
 {
-    Vector vec1;
-    Vector vec2;
-    vec1.setIncrement(1.0, 1.0);
-    vec2.setOnes();
-    myTestVector = crossProduct(vec1, vec2);
-    EXPECT_EQ(myTestVector(0), -1.0);
-    EXPECT_EQ(myTestVector(1), 2.0);
-    EXPECT_EQ(myTestVector(2), -1.0);
+    Array myTestArray(3, 3);
+    myTestArray.setOnes();
+    for (int i = 0; i < myTestArray.getMyElements(); i++)
+    {
+        EXPECT_EQ(myTestArray[i], 1.0);
+    }
 }
 
-// Test: Vector::dotProduct() - Make sure calculation is correct
-TEST_F(VectorUnitTest, checkDotProduct)
+// Test Array::setTo() - Make sure setter works
+TEST_F(ArrayUnitTest, checkSetTo)
 {
-    Vector vec1;
-    Vector vec2;
-    vec1.setIncrement(1.0, 1.0);
-    vec2.setOnes();
-    ASSERT_EQ(dotProduct(vec1, vec2), 6.0);
+    Array myTestArray(3, 3);
+    myTestArray.setTo(5.0);
+    for (int i = 0; i < myTestArray.getMyElements(); i++)
+    {
+        EXPECT_EQ(myTestArray[i], 5.0);
+    }
 }
 
-// Test: Vector::getUnitVector() - Make sure calculation is correct
-TEST_F(VectorUnitTest, checkGetUnitVector)
+// Test Array::setIncrement() - Make sure setter works (Default)
+TEST_F(ArrayUnitTest, checkSetIncrement_default)
 {
-    Vector vec1;
-    vec1.setIncrement(1.0, 1.0);
-    myTestVector = vec1.getUnitVector();
-    ASSERT_THAT(myTestVector(0), DoubleNear(1.0/sqrt(14), 1e-05));
-    ASSERT_THAT(myTestVector(1), DoubleNear(2.0/sqrt(14), 1e-05));
-    ASSERT_THAT(myTestVector(2), DoubleNear(3.0/sqrt(14), 1e-05));
+    Array myTestArray(3, 3);
+    myTestArray.setIncrement();
+    double tmp = 0.0;
+    for (int i = 0; i < myTestArray.getMyElements(); i++)
+    {
+        EXPECT_EQ(myTestArray[i], tmp);
+        tmp += 1.0;
+    }
 }
 
-int main(int argc, char **argv) {
+// Test Array::setIncrement() - Make sure setter works
+TEST_F(ArrayUnitTest, checkSetIncrement)
+{
+    Array myTestArray(3, 3);
+    myTestArray.setIncrement(2.0, 2.0);
+    double tmp = 2.0;
+    for (int i = 0; i < myTestArray.getMyElements(); i++)
+    {
+        EXPECT_EQ(myTestArray[i], tmp);
+        tmp += 2.0;
+    }
+}
 
-   testing::InitGoogleTest(&argc, argv);
-   return RUN_ALL_TESTS();
+// Test Array::setIdentity() - Make sure setter works (Catch non-square array)
+TEST_F(ArrayUnitTest, checkSetIdentity_nonSquareArray)
+{
+    Array myTestArray(3, 4);
+    myTestArray.setOnes();
+    EXPECT_THROW(myTestArray.setIdentity(), std::length_error);
+}
+
+// Test Array::setIdentity() - Make sure setter works
+TEST_F(ArrayUnitTest, checkSetIdentity_squareArray)
+{
+    Array myTestArray(4, 4);
+    myTestArray.setOnes();
+    myTestArray.setIdentity();
+    for (int i = 0; i < myTestArray.getMyRows(); i++)
+    {
+        for (int j = 0; j < myTestArray.getMyCols(); j++)
+        {
+            if (i == j)
+            {
+                EXPECT_EQ(myTestArray(i,j), 1.0);
+            }
+            else
+            {
+                EXPECT_EQ(myTestArray(i,j), 0.0);
+            }
+        }
+    }
+}
+
+// Test Array::getTranspose() - Make sure getter works
+TEST_F(ArrayUnitTest, checkGetTranspose)
+{
+    Array myTestArray1(4, 3);
+    myTestArray1.setIncrement(1.0, 1.0);
+    Array myTestArray2(myTestArray1.getTranspose());
+    for (int i = 0; i < myTestArray2.getMyRows(); i++)
+    {
+        for (int j = 0; j < myTestArray2.getMyCols(); j++)
+        {
+            EXPECT_EQ(myTestArray2(i,j), myTestArray1(j,i));
+        }
+    }
+    EXPECT_EQ(myTestArray2.getMyRows(), myTestArray1.getMyCols());
+    EXPECT_EQ(myTestArray2.getMyCols(), myTestArray1.getMyRows());
+    EXPECT_EQ(myTestArray2.getMyElements(), myTestArray1.getMyElements());
+    
+}
+
+// Test Array::setTranspose() - Make sure setter works (M=N)
+TEST_F(ArrayUnitTest, checkSetTranspose_M_Eq_N)
+{
+    Array myTestArray1(3, 3);
+    myTestArray1.setIncrement(1.0, 1.0);
+    Array myTestArray2(myTestArray1);
+    myTestArray1.setTranspose();
+    for (int i = 0; i < myTestArray2.getMyRows(); i++)
+    {
+        for (int j = 0; j < myTestArray2.getMyCols(); j++)
+        {
+            EXPECT_EQ(myTestArray2(i,j), myTestArray1(j,i));
+        }
+    }
+    EXPECT_EQ(myTestArray2.getMyRows(), myTestArray1.getMyCols());
+    EXPECT_EQ(myTestArray2.getMyCols(), myTestArray1.getMyRows());
+    EXPECT_EQ(myTestArray2.getMyElements(), myTestArray1.getMyElements()); 
+}
+
+// Test Array::setTranspose() - Make sure setter works (M>N)
+TEST_F(ArrayUnitTest, checkSetTranspose_M_Gt_N)
+{
+    Array myTestArray1(4, 2);
+    myTestArray1.setIncrement(1.0, 1.0);
+    Array myTestArray2(myTestArray1);
+    myTestArray1.setTranspose();
+    for (int i = 0; i < myTestArray2.getMyRows(); i++)
+    {
+        for (int j = 0; j < myTestArray2.getMyCols(); j++)
+        {
+            EXPECT_EQ(myTestArray2(i,j), myTestArray1(j,i));
+        }
+    }
+    EXPECT_EQ(myTestArray2.getMyRows(), myTestArray1.getMyCols());
+    EXPECT_EQ(myTestArray2.getMyCols(), myTestArray1.getMyRows());
+    EXPECT_EQ(myTestArray2.getMyElements(), myTestArray1.getMyElements());
+}
+
+// Test Array::setTranspose() - Make sure setter works (M<N)
+TEST_F(ArrayUnitTest, checkSetTranspose_M_Lt_N)
+{
+    Array myTestArray1(2, 4);
+    myTestArray1.setIncrement(1.0, 1.0);
+    Array myTestArray2(myTestArray1);
+    myTestArray1.setTranspose();
+    for (int i = 0; i < myTestArray2.getMyRows(); i++)
+    {
+        for (int j = 0; j < myTestArray2.getMyCols(); j++)
+        {
+            EXPECT_EQ(myTestArray2(i,j), myTestArray1(j,i));
+        }
+    }
+    EXPECT_EQ(myTestArray2.getMyRows(), myTestArray1.getMyCols());
+    EXPECT_EQ(myTestArray2.getMyCols(), myTestArray1.getMyRows());
+    EXPECT_EQ(myTestArray2.getMyElements(), myTestArray1.getMyElements()); 
+}
+
+// Test Array::operator= - Make sure copy assignment works
+TEST_F(ArrayUnitTest, checkCopyAssignment)
+{
+    Array myTestArray1(3, 3);
+    myTestArray1.setIncrement(2.0, 4.0);
+    Array myTestArray2(3, 3);
+    myTestArray2 = myTestArray1;
+    ASSERT_EQ(myTestArray2.getMyRows(), myTestArray1.getMyCols());
+    ASSERT_EQ(myTestArray2.getMyCols(), myTestArray1.getMyRows());
+    ASSERT_EQ(myTestArray2.getMyElements(), myTestArray1.getMyElements()); 
+    for (int i = 0; i < myTestArray1.getMyElements(); i++ )
+    {
+        EXPECT_EQ(myTestArray1[i], myTestArray2[i]);
+    } 
+}
+
+// Test Array(&Array) - Make sure copy construtor works
+TEST_F(ArrayUnitTest, checkCopyConstructor)
+{
+    Array myTestArray1(3, 3);
+    myTestArray1.setIncrement(2.0, 4.0);
+    Array myTestArray2(myTestArray1);
+    ASSERT_EQ(myTestArray2.getMyRows(), myTestArray1.getMyCols());
+    ASSERT_EQ(myTestArray2.getMyCols(), myTestArray1.getMyRows());
+    ASSERT_EQ(myTestArray2.getMyElements(), myTestArray1.getMyElements()); 
+    for (int i = 0; i < myTestArray1.getMyElements(); i++ )
+    {
+        EXPECT_EQ(myTestArray1[i], myTestArray2[i]);
+    } 
 }

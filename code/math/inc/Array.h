@@ -33,76 +33,74 @@ class Array
 
     // Member Functions
     public:
-        // Constructor
+        // Constructor [UT: Y]
         Array(int rows, int cols);
-        // Copy Constructor
+        // Copy Constructor [UT: Y]
         Array(const Array& arr);
-        // Move Constructor
+        // Move Constructor [UT: TODO]
         Array(Array&& arr) noexcept;
-        // Assignment Operator: Copy
+        // Assignment Operator: Copy [UT: Y]
         Array& operator=(const Array& arr);
-        // Assignment Operator: Move
+        // Assignment Operator: Move [UT: TODO]
         Array& operator=(Array&& arr) noexcept;
-        // Destructor
+        // Destructor [UT: Y]
         virtual ~Array(void);
-        // Setter Function: setZeros
+        // Setter Function: setZeros [UT: Y]
         void setZeros(void);
-        // Setter Function: setOnes
+        // Setter Function: setOnes [UT: Y]
         void setOnes(void);
-        // Setter Function: setTo
+        // Setter Function: setTo [UT: Y]
         void setTo(const double);
-        // Setter Function: setIncrement
+        // Setter Function: setIncrement [UT: Y]
         void setIncrement(const double = 0.0, const double = 1.0);
-        // Setter Function: setIdentity
+        // Setter Function: setIdentity [UT: TODO]
         void setIdentity(void);
-        // Setter Function: setTranspose
+        // Setter Function: setTranspose [UT: Y]
         void setTranspose(void);
-        // Setter Function: getTranspose
-        double* getTranspose(void);
-        // Getter Function: getMyRows
+        // Setter Function: getTranspose [UT: Y]
+        Array getTranspose(void);
+        // Getter Function: getMyRows [UT: Y]
         int getMyRows(void);
-        // Getter Function: getMyCols
+        // Getter Function: getMyCols [UT: Y]
         int getMyCols(void);
-        // Getter Function: getMyElements
+        // Getter Function: getMyElements [UT: Y]
         int getMyElements(void);
-        // Getter Function: getMyArray
+        // Getter Function: getMyArray [UT: TODO]
         double* getMyArray(void);
-        // Getter Function: getMyArraySize
+        // Getter Function: getMyArraySize [UT: TODO]
         std::size_t getMyArraySize(void);
-        // Getter Function: getIsSquare
+        // Getter Function: getIsSquare [UT: Y]
         bool getIsSquare(void);
-        // Getter Function: getTrace
+        // Getter Function: getTrace [UT: TODO]
         double getTrace(void);
-        // Getter Function: getStdVector1D
+        // Getter Function: getStdVector1D [UT: TODO]
         std::vector<double> getStdVector1D(void);
-        // Getter Function: getStdVector2D
+        // Getter Function: getStdVector2D [UT: TODO]
         std::vector<std::vector<double>> getStdVector2D(void);
-        // Access Operator: ()
+        // Access Operator: () [UT: TODO]
         double &operator() (int row, int col);
-        // Access Operator: []
+        // Access Operator: [] [UT: TODO]
         double &operator[] (int index);
-        // Arithmetic Operator: +
+        // Arithmetic Operator: + [UT: TODO]
         Array operator+ (const Array& arr) const;
-        // Arithmetic Operator: -
+        // Arithmetic Operator: - [UT: TODO]
         Array operator- (const Array& arr) const;
-        // Artithmetic Operator: -
+        // Artithmetic Operator: - [UT: TODO]
         Array operator- (void) const;
-        // Arithmetic Operator: *
+        // Arithmetic Operator: * [UT: TODO]
         Array operator* (const double scalar) const;
-        // Arithmetic Operator: *
+        // Arithmetic Operator: * [UT: TODO]
         Array operator* (const Array& arr) const;
-        // Arithmetic Operator: *
+        // Arithmetic Operator: * [UT: TODO]
         friend Array operator* (const double scalar, const Array &arr);
-        // Function: swap
+        // Function: swap [UT: TODO]
         friend void swap(Array& arr1, Array& arr2);
+        // Function: compare [UT: TODO]
+        friend bool compare(Array& arr1, Array& arr2, const double tol = 1e-06);
     private:
-        // Function: initArray
-        void initArray(void);
-        // Function: freeArray
-        void freeArray(void);
-        // Function: checkValidDims
+        // Function: checkValidDims [UT: Y]
         bool checkValidDims(int rows, int cols);
-        // Function: checkSquare
+        // Function: checkSquare [UT: Y]
         bool checkSquare(int rows, int cols);
     protected:
 
@@ -124,52 +122,6 @@ class Array
         std::size_t myArraySize;
         // Data: isSquare
         bool isSquare;
-};
-
-class Matrix : public Array
-{
-    // Class for unit testing
-    friend class MatrixUnitTest;
-    
-    // Member Functions
-    public:
-        // Constructor
-        Matrix() : Array(3, 3) {}
-    private:
-    protected:
-
-    // Member Data
-    public:
-    private:
-    protected:
-};
-
-class Vector : public Array
-{
-    // Class for unit testing
-    friend class VectorUnitTest;
-    
-    // Member Functions
-    public:
-        // Constructor
-        Vector() : Array(3, 1) {}
-        // Access Operator: ()
-        double &operator() (int row);
-        // Getter Function getMagnitude
-        double getMagnitude(void);
-        // Getter Function getUnitVector
-        Vector getUnitVector(void);
-        // Function: crossProduct
-        friend Vector crossProduct(Vector& vec1, Vector& vec2);
-        // Function: dotProduct
-        friend double dotProduct(Vector& vec1, Vector& vec2);
-    private:
-    protected:
-    
-    // Member Data
-    public:
-    private:
-    protected:
 };
 
 #endif

@@ -19,5 +19,5 @@ all:
 
 .PHONY: clean
 clean: 
-			rm -f */obj/*.o */bin/*
-			rm -rf */obj */bin
+			rm -f */obj/*.o */bin/* */lib/*
+			rm -rf */obj */bin */lib

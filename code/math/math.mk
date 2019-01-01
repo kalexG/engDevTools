@@ -3,40 +3,45 @@ DEBUG = -g
 PROFILE = -pg
 CFLAGS = -Wall -Wsign-compare -c $(DEBUG)
 LFLAGS = -Wall -Wsign-compare $(DEBUG) $(PROFILE)
-GTEST = -pthread -lgtest
+GTEST = -pthread -lgtest -lgmock
 LAPACK = -llapack -llapacke -lblas
 
 # Build directories
 OBJ_DIR = obj/
 BIN_DIR = bin/
+LIB_DIR = lib/
 BUILD_DIRS = $(OBJ_DIR) $(BIN_DIR)
 
 # All objects
-MATH_OBJS = obj/Array.o obj/Integrator.o obj/Differentiator.o
+MATH_OBJS = obj/Array.o obj/Matrix.o obj/Vector.o obj/Integrator.o obj/Differentiator.o
 
 # All development tests
 MATH_DEVTEST_OBJS = obj/Array_devTest.o obj/Integrator_devTest.o obj/Differentiator_devTest.o
 
 # All unit tests
-MATH_UNITTEST_OBJS = obj/Array_unitTest.o
+MATH_UNITTEST_OBJS = obj/mathUnitTest.o obj/Array_unitTest.o obj/Matrix_unitTest.o obj/Vector_unitTest.o
 
 # All development test exectables
 MATH_DEVTEST_BIN = bin/Array_devTest bin/Integrator_devTest bin/Differentiator_devTest
 
 # All unit test exectables
-MATH_UNITTEST_BIN = bin/Array_unitTest
+MATH_UNITTEST_BIN = bin/mathUnitTest bin/Array_unitTest bin/Matrix_unitTest bin/Vector_unitTest
 
 .PHONY: math-obj math-bin
 math-obj: $(BUILD_DIRS) $(MATH_OBJS) $(MATH_DEVTEST_OBJS) $(MATH_UNITTEST_OBJS)
 math-bin: $(BUILD_DIRS) $(MATH_DEVTEST_BIN) $(MATH_UNITTEST_BIN)
 
 # Development Testing
-bin/%_devTest: obj/%_devTest.o obj/%.o
-			$(CC) $^ $(LFLAGS) -Lobj -o $@ -Iinc $(LAPACK)
+bin/%_devTest: obj/%_devTest.o lib/libedtMath.a
+			$(CC) $^ $(LFLAGS) -Lobj -o $@ -Iinc $(LAPACK) -Llib/libedtMath.a
 
-# Unit Testing
-bin/%_unitTest: obj/%_unitTest.o obj/%.o
-			$(CC) $^ $(LFLAGS) -Lobj -o $@ -Iinc $(LAPACK) $(GTEST)
+# Unit Testing (Math Classes)
+bin/%_unitTest: obj/%_unitTest.o obj/mathUnitTest.o lib/libedtMath.a
+			$(CC) $^ $(LFLAGS) -Lobj -o $@ -Iinc $(LAPACK) $(GTEST) -Llib/libedtMath.a
+
+# Unit Testing (Math Component)
+bin/mathUnitTest: $(MATH_UNITTEST_OBJS) lib/libedtMath.a
+			$(CC) $^ $(LFLAGS) -Lobj -o $@ -Iinc $(LAPACK) $(GTEST) -Llib/libedtMath.a
 
 obj/%.o: src/%.cpp
 			$(CC) $(CFLAGS) -Iinc -o $@ $^
@@ -47,11 +52,15 @@ obj/%.o: devTest/%.cpp
 obj/%.o: unitTest/%.cpp
 			$(CC) $(CFLAGS) -Iinc -o $@ $^
 
+lib/libedtMath.a: $(MATH_OBJS)
+			ar rcs lib/libedtMath.a $(MATH_OBJS)
+
 $(BUILD_DIRS): 
 	mkdir -p $(OBJ_DIR)
 	mkdir -p $(BIN_DIR)
+	mkdir -p $(LIB_DIR)
 
 .PHONY: clean
 clean: 
-			rm -f obj/*.o bin/*
-			rm -rf obj/ bin/
+			rm -f obj/*.o bin/* lib/*
+			rm -rf obj/ bin/ lib/
