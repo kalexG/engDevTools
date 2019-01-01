@@ -295,18 +295,20 @@ TEST_F(ArrayUnitTest, checkOperatorMultiply_ScalarArray)
         EXPECT_EQ(myTestArray[i], 4.0);
     }
 }
+
 // Test Array::getMyArray() - Make sure getter works
 TEST_F(ArrayUnitTest, checkGetMyArray)
 {
     Array myTestArray(3, 3);
     myTestArray.setIncrement(1.0, 1.0);
-    double* tmp = new double [myTestArray.getMyElements()];
+    double* tmp;
     tmp = myTestArray.getMyArray();
     for (int i = 0; i < myTestArray.getMyElements(); i++)
     {
         EXPECT_EQ(tmp[i], myTestArray[i]);
     }
     delete[] tmp;
+    tmp = NULL;
 }
 
 // Test Array::getMyArraySize() - Make sure getter works
@@ -314,4 +316,29 @@ TEST_F(ArrayUnitTest, checkGetMyArraySize)
 {
     Array myTestArray(3, 3);
     EXPECT_EQ(myTestArray.getMyArraySize(), 72);
+}
+
+// Test Array::operator+ (Array + Array) - Catch invalid demnsions)
+TEST_F(ArrayUnitTest, checkOperatorAdd_invalidDimensions)
+{
+    Array myTestArray1(3, 3);
+    Array myTestArray2(3, 4);
+    Array myTestArray3(3, 3);
+    EXPECT_THROW(myTestArray3 = myTestArray1 + myTestArray2, std::length_error);
+}
+
+// Test Array::operator+ (Array + Array) - Make calculation is correct
+TEST_F(ArrayUnitTest, checkOperatorAdd_validDimensions)
+{
+    Array myTestArray1(3, 3);
+    myTestArray1.setOnes();
+    Array myTestArray2(3, 3);
+    myTestArray2.setTo(2.0);
+    Array myTestArray3(3, 3);
+    myTestArray3.setZeros();
+    myTestArray3 = myTestArray1 + myTestArray2;
+    for (int i = 0; i < myTestArray1.getMyElements(); i++)
+    {
+        EXPECT_EQ(myTestArray3[i], 3.0);
+    }
 }

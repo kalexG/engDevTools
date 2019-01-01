@@ -39,10 +39,8 @@ class Array
         Array(const Array& arr);
         // Move Constructor [UT: TODO]
         Array(Array&& arr) noexcept;
-        // Assignment Operator: Copy [UT: Y]
-        Array& operator=(const Array& arr);
-        // Assignment Operator: Move [UT: TODO]
-        Array& operator=(Array&& arr) noexcept;
+        // Assignment Operator: [UT: TODO]
+        Array& operator= (Array arr) noexcept;
         // Destructor [UT: Y]
         virtual ~Array(void);
         // Setter Function: setZeros [UT: Y]

@@ -6,12 +6,10 @@ Array::Array(int rows, int cols)
     , myRows(rows)
     , myCols(cols)
     , myElements(rows*cols)
+    , myArray(new double[myElements])
+    , myArraySize(myElements * sizeof(myArray))
     , isSquare(checkSquare(rows, cols))
-{
-    myArray = new double [myElements]();
-    myArraySize = myElements * sizeof(myArray);
-    printf("ctor!\n");
-}
+{ printf("ctor!\n"); }
 
 // Copy Constructor
 Array::Array(const Array& arr)
@@ -23,8 +21,9 @@ Array::Array(const Array& arr)
 
 // Move Contructor
 Array::Array (Array&& arr) noexcept
-: myArray(std::exchange(arr.myArray, nullptr))
+    : Array(arr.myRows, arr.myCols)
 {
+    swap(*this, arr);
     printf("move ctor!\n");
 }
 
@@ -55,21 +54,8 @@ bool compare(Array& arr1, Array& arr2, double tol)
     return true;
 }
 
-// Copy Assignment
-Array& Array::operator= (const Array& arr)
-{
-    if ( (arr.myRows == myRows) && (arr.myCols == myCols) )
-    {    
-        return *this = Array(arr);
-    }
-    else
-    {
-        throw std::length_error("ERROR: Array operation size mismatch.\n");   
-    }
-}
-
-// Move Assignment
-Array& Array::operator= (Array&& arr) noexcept
+// Copy & Move assignment
+Array& Array::operator= (Array arr) noexcept
 {
     swap(*this, arr);
     return *this;
@@ -106,9 +92,9 @@ Array Array::operator* (const Array& arr) const
     int m = myRows;
     int n = arr.myCols;
     int k = myCols;
-    Array tmp(m, n);
     if ( k == arr.myRows )
     {
+        Array tmp(m, n);
         // Utilize cblas matrix-matrix multiply
         cblas_dgemm(CblasRowMajor, CblasNoTrans, CblasNoTrans, 
                     m, n, k, 1.0, myArray, k, arr.myArray, n, 0.0, tmp.myArray, n); 
@@ -123,9 +109,9 @@ Array Array::operator* (const Array& arr) const
 // Overload "+" Operator (Array Addition)
 Array Array::operator+ (const Array& arr) const
 {
-    Array tmp(myRows, myCols);
     if ( (arr.myRows == myRows) && (arr.myCols == myCols) )
     {
+        Array tmp(myRows, myCols);
         for (int i = 0; i < myElements; i++)
         {
             tmp.myArray[i] = myArray[i] + arr.myArray[i];
@@ -141,9 +127,9 @@ Array Array::operator+ (const Array& arr) const
 // Overload "-" Operator (Array Subtraction)
 Array Array::operator- (const Array& arr) const
 {
-    Array tmp(myRows, myCols);
     if ( (arr.myRows == myRows) && (arr.myCols == myCols) )
     {
+        Array tmp(myRows, myCols);
         for (int i = 0; i < myElements; i++)
         {
             tmp.myArray[i] = myArray[i] - arr.myArray[i];
@@ -281,7 +267,10 @@ int Array::getMyElements(void)
 // Get myArray
 double* Array::getMyArray(void)
 {
-    return myArray;
+    double* tmp;
+    tmp = new double [myElements];
+    std::copy(myArray, myArray + myElements, tmp);
+    return tmp;
 }
 
 // Get myArraySize
