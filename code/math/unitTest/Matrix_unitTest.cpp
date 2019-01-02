@@ -1,5 +1,5 @@
 // Matrix_unitTest.cpp
-#include "../inc/mathUnitTest.h"
+#include "../inc/MathUnitTest.h"
 
 // Test: Matrix() - Make sure object got constructed correctly
 TEST_F(MatrixUnitTest, checkConstructor)

@@ -1,4 +1,8 @@
-// mathUnitTest.cpp
+// MathUnitTest.cpp
+
+#ifndef MATHUNITTEST_H
+#define MATHUNITTEST_H
+
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
 #include "../inc/Array.h"
@@ -52,3 +56,5 @@ class ArrayUnitTest : public ::testing::Test
     private:
     protected:
 };
+
+#endif

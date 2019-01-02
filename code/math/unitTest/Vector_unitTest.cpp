@@ -1,5 +1,5 @@
 // Vector_unitTest.cpp
-#include "../inc/mathUnitTest.h"
+#include "../inc/MathUnitTest.h"
 
 // Test: Vector() - Make sure object got constructed correctly
 TEST_F(VectorUnitTest, checkConstructor)

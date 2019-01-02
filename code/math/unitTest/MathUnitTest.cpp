@@ -1,5 +1,5 @@
-// mathUnitTest.cpp
-#include "../inc/mathUnitTest.h"
+// MathUnitTest.cpp
+#include "../inc/MathUnitTest.h"
 
 int main(int argc, char **argv) {
 

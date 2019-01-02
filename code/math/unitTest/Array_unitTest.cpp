@@ -1,4 +1,4 @@
-#include "../inc/mathUnitTest.h"
+#include "../inc/MathUnitTest.h"
 
 // Test Array() - Make sure object got constructed correctly with valid dimensions
 TEST_F(ArrayUnitTest, checkConstructor_validDimensions)
@@ -365,5 +365,17 @@ TEST_F(ArrayUnitTest, checkOperatorSubtract_validDimensions)
     for (int i = 0; i < myTestArray1.getMyElements(); i++)
     {
         EXPECT_EQ(myTestArray3[i], 2.0);
+    }
+}
+
+// Test Array::operator- (-1 * Array) - Make sure calculation is correct
+TEST_F(ArrayUnitTest, checkOperatorSubtract_negativeArray)
+{
+    Array myTestArray(3, 3);
+    myTestArray.setTo(2.0);
+    myTestArray = -myTestArray;
+    for (int i = 0; i < myTestArray.getMyElements(); i++)
+    {
+        EXPECT_EQ(myTestArray[i], -2.0);
     }
 }
