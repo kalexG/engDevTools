@@ -318,7 +318,7 @@ TEST_F(ArrayUnitTest, checkGetMyArraySize)
     EXPECT_EQ(myTestArray.getMyArraySize(), 72);
 }
 
-// Test Array::operator+ (Array + Array) - Catch invalid demnsions)
+// Test Array::operator+ (Array + Array) - Catch invalid demnsions
 TEST_F(ArrayUnitTest, checkOperatorAdd_invalidDimensions)
 {
     Array myTestArray1(3, 3);
@@ -340,5 +340,30 @@ TEST_F(ArrayUnitTest, checkOperatorAdd_validDimensions)
     for (int i = 0; i < myTestArray1.getMyElements(); i++)
     {
         EXPECT_EQ(myTestArray3[i], 3.0);
+    }
+}
+
+// Test Array::operator- (Array - Array) - Catch invalid demnsions
+TEST_F(ArrayUnitTest, checkOperatorSubtract_invalidDimensions)
+{
+    Array myTestArray1(3, 3);
+    Array myTestArray2(3, 4);
+    Array myTestArray3(3, 3);
+    EXPECT_THROW(myTestArray3 = myTestArray1 - myTestArray2, std::length_error);
+}
+
+// Test Array::operator- (Array - Array) - Make calculation is correct
+TEST_F(ArrayUnitTest, checkOperatorSubtract_validDimensions)
+{
+    Array myTestArray1(3, 3);
+    myTestArray1.setOnes();
+    Array myTestArray2(3, 3);
+    myTestArray2.setTo(3.0);
+    Array myTestArray3(3, 3);
+    myTestArray3.setZeros();
+    myTestArray3 = myTestArray2 - myTestArray1;
+    for (int i = 0; i < myTestArray1.getMyElements(); i++)
+    {
+        EXPECT_EQ(myTestArray3[i], 2.0);
     }
 }

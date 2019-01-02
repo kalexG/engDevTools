@@ -7,8 +7,7 @@
 #include <math.h>
 #include <string.h>
 #include "../inc/Array.h"
-#include "../../support/inc/prwOps.h"
-using namespace prwOps;
+//using namespace PrintOps;
 
 int main( int argc, char *argv[] ) {
 
@@ -115,7 +114,7 @@ int main( int argc, char *argv[] ) {
     {
         printf("Try accessing cols OOB: %f\n", arr1(0,3));
     }
-    catch(const length_error& error1)
+    catch(const std::length_error& error1)
     {
         printf("Caught runtime_error exception!\n");
     }

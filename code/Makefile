@@ -4,7 +4,7 @@ PROFILE = -pg
 CFLAGS = -Wall -c $(DEBUG) $(addprefix -I,$(INCLUDE))
 LFLAGS = -Wall $(DEBUG) $(PROFILE)
 
-MODULES = math astrodynamics support electronics
+MODULES = math
 SRC_DIR = $(addsuffix /src,$(MODULES))
 OBJ_DIR = $(addsuffix /obj,$(MODULES))
 INC_DIR = $(addsuffix /inc,$(MODULES))

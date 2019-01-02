@@ -79,9 +79,9 @@ class Array
         double &operator() (int row, int col);
         // Access Operator: [] [UT: Y]
         double &operator[] (int index);
-        // Arithmetic Operator: + [UT: TODO]
+        // Arithmetic Operator: + [UT: Y]
         Array operator+ (const Array& arr) const;
-        // Arithmetic Operator: - [UT: TODO]
+        // Arithmetic Operator: - [UT: Y]
         Array operator- (const Array& arr) const;
         // Artithmetic Operator: - [UT: TODO]
         Array operator- (void) const;
