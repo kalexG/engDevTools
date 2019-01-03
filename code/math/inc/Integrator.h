@@ -1,7 +1,12 @@
+//--------------------------
 // Filename: Integrator.h
-// Created: 12/27/2018
-// Last Modified: 12/27/2018
+// Created: 01/02/2018
+// Last Modified: 01/02/2018
 // Author: Kevin Gomez
+//--------------------------
+
+#ifndef INTEGRATOR_H
+#define INTEGRATOR_H
 
 #include <iostream>
 #include <math.h>
@@ -32,3 +37,4 @@ class Integrator
     protected:
 };
 
+#endif // INTEGRATOR_H

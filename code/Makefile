@@ -1,3 +1,10 @@
+##--------------------------
+## Filename: Makefile
+## Created: 01/02/2018
+## Last Modified: 01/02/2018
+## Author: Kevin Gomez
+##--------------------------
+
 CC = g++
 DEBUG = -g
 PROFILE = -pg
@@ -12,12 +19,12 @@ MK_FILES = $(addsuffix /*.mk,$(MODULES))
 
 .PHONY: all
 all:
-			@echo "Preparing to execute the following .mk files:"
-			@echo $(MK_FILES)
-			@$(foreach modDir,$(MODULES), $(MAKE) --no-print-directory -C $(modDir) $(modDir)-obj -f $(modDir).mk;)
-			@$(foreach modDir,$(MODULES), $(MAKE) --no-print-directory -C $(modDir) $(modDir)-bin -f $(modDir).mk;)
+	@echo "Preparing to execute the following .mk files:"
+	@echo $(MK_FILES)
+	@$(foreach modDir,$(MODULES), $(MAKE) --no-print-directory -C $(modDir) $(modDir)-obj -f $(modDir).mk;)
+	@$(foreach modDir,$(MODULES), $(MAKE) --no-print-directory -C $(modDir) $(modDir)-bin -f $(modDir).mk;)
 
 .PHONY: clean
 clean: 
-			rm -f */obj/*.o */bin/* */lib/*
-			rm -rf */obj */bin */lib
+	rm -f */obj/*.o */bin/* */lib/*
+	rm -rf */obj */bin */lib

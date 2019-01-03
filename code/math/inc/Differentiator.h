@@ -1,7 +1,12 @@
+//---------------------------
 // Filename: Differentiator.h
-// Created: 12/27/2018
-// Last Modified: 12/27/2018
+// Created: 01/02/2018
+// Last Modified: 01/02/2018
 // Author: Kevin Gomez
+//---------------------------
+
+#ifndef DIFFERENTIATOR_H
+#define DIFFERENTIATOR_H
 
 #include <iostream>
 #include <math.h>
@@ -32,3 +37,4 @@ class Differentiator
     protected:
 };
 
+#endif // DIFFERENTIATOR_H

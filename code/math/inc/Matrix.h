@@ -1,7 +1,9 @@
+//--------------------------
 // Filename: Matrix.h
-// Created: 12/22/2018
-// Last Modified: 12/22/2018
+// Created: 01/02/2018
+// Last Modified: 01/02/2018
 // Author: Kevin Gomez
+//--------------------------
 
 #ifndef MATRIX_H
 #define MATRIX_H

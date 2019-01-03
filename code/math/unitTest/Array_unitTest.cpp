@@ -1,3 +1,10 @@
+//-----------------------------
+// Filename: Array_unitTest.cpp
+// Created: 01/02/2018
+// Last Modified: 01/02/2018
+// Author: Kevin Gomez
+//-----------------------------
+
 #include "../inc/MathUnitTest.h"
 
 // Test Array() - Make sure object got constructed correctly with valid dimensions
@@ -378,4 +385,46 @@ TEST_F(ArrayUnitTest, checkOperatorSubtract_negativeArray)
     {
         EXPECT_EQ(myTestArray[i], -2.0);
     }
+}
+
+// Test Array::getStdVector1D() - Make sure getter works
+TEST_F(ArrayUnitTest, checkGetStdVector1D)
+{
+    Array myTestArray(3, 4);
+    myTestArray.setIncrement(2.0, 1.0);
+    std::vector<double> tmp = myTestArray.getStdVector1D();
+    for (int i = 0; i < myTestArray.getMyElements(); i++)
+    {
+        EXPECT_EQ(tmp.at(i), myTestArray[i]);
+    }
+}
+
+// Test Array::getStdVector2D() - Make sure getter works
+TEST_F(ArrayUnitTest, checkGetStdVector2D)
+{
+    Array myTestArray(3, 4);
+    myTestArray.setIncrement(2.0, 1.0);
+    std::vector<std::vector<double>> tmp = myTestArray.getStdVector2D();
+    for (int i = 0; i < myTestArray.getMyRows(); i++)
+    {
+        for(int j = 0; j < myTestArray.getMyCols(); j++)
+        {
+            EXPECT_EQ(tmp.at(i).at(j), myTestArray(i,j));
+        }
+    }
+}
+
+// Test Array::getTrace() - Make sure calculation is correct (invalid dimensions)
+TEST_F(ArrayUnitTest, checkGetTrace_invalidDimensions)
+{
+    Array myTestArray(3, 4);
+    EXPECT_THROW(myTestArray.getTrace(), std::length_error);
+}
+
+// Test Array::getTrace() - Make sure calculation is correct (valid dimensions)
+TEST_F(ArrayUnitTest, checkGetTrace_validDimensions)
+{
+    Array myTestArray(3, 3);
+    myTestArray.setIncrement(1.0, 1.0);
+    EXPECT_EQ(myTestArray.getTrace(), 15.0);
 }

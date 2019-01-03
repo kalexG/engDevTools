@@ -1,7 +1,9 @@
-// Filename: testArrays.cpp
-// Created: 12/22/2018
-// Last Modified: 12/22/2018
+//----------------------------
+// Filename: Array_devTest.cpp
+// Created: 01/02/2018
+// Last Modified: 01/02/2018
 // Author: Kevin Gomez
+//----------------------------
 
 #include <iostream>
 #include <math.h>

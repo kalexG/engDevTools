@@ -1,11 +1,10 @@
-//--------------------------
+//-----------------------------
 // Filename: Differentiator.cpp
-// Created: 12/27/2018
-// Last Modified: 12/27/2018
+// Created: 01/02/2018
+// Last Modified: 01/02/2018
 // Author: Kevin Gomez
-//--------------------------
+//-----------------------------
 
-// Need class definition
 #include "../inc/Differentiator.h"
 
 Differentiator::Differentiator(void)

@@ -1,4 +1,9 @@
-// MathUnitTest.cpp
+//--------------------------
+// Filename: MathUnitTest.h
+// Created: 01/02/2018
+// Last Modified: 01/02/2018
+// Author: Kevin Gomez
+//--------------------------
 
 #ifndef MATHUNITTEST_H
 #define MATHUNITTEST_H
