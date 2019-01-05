@@ -29,6 +29,7 @@ class Differentiator
         // Destructor
         virtual ~Differentiator(void);
     private:
+        bool DifferentiatorSet;
     protected:
 
     // Data

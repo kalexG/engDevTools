@@ -29,6 +29,7 @@ class Integrator
         // Destructor
         virtual ~Integrator(void);
     private:
+        bool IntegratorSet;
     protected:
 
     // Data

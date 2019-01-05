@@ -16,14 +16,13 @@ Array::Array(int rows, int cols)
     , myArray(new double[myElements])
     , myArraySize(myElements * sizeof(myArray))
     , isSquare(checkSquare(rows, cols))
-{ printf("ctor!\n"); }
+{}
 
 // Copy Constructor
 Array::Array(const Array& arr)
     : Array(arr.myRows, arr.myCols)
 {
     std::copy(arr.myArray, arr.myArray + arr.myElements, myArray );
-    printf("copy ctor!\n");
 }
 
 // Move Contructor
@@ -31,7 +30,6 @@ Array::Array (Array&& arr) noexcept
     : Array(arr.myRows, arr.myCols)
 {
     swap(*this, arr);
-    printf("move ctor!\n");
 }
 
 // Swaps Array class data members
@@ -73,7 +71,6 @@ Array::~Array(void)
 {
     delete[] myArray;
     myArray = NULL;
-    printf("dtor!\n");
 }
 
 // Overload "*" Operator (lhs: Array*Scalar)

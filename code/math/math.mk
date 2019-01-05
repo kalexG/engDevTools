@@ -11,13 +11,10 @@ PROFILE = -pg
 CFLAGS = -Wall -Wsign-compare -c $(DEBUG)
 LFLAGS = -Wall -Wsign-compare $(DEBUG) $(PROFILE)
 GTEST = -pthread -lgtest -lgmock
-LAPACK = -llapack -llapacke -lblas
+LAPACK = -llapacke -lblas
 
 # Build directories
-OBJ_DIR = obj/
-BIN_DIR = bin/
-LIB_DIR = lib/
-BUILD_DIRS = $(OBJ_DIR) $(BIN_DIR)
+MATH_DIRS = obj/ bin/
 
 # All objects
 MATH_OBJS = obj/Array.o obj/Matrix.o obj/Vector.o obj/Integrator.o obj/Differentiator.o
@@ -35,20 +32,20 @@ MATH_DEVTEST_BIN = bin/Array_devTest bin/Integrator_devTest bin/Differentiator_d
 MATH_UNITTEST_BIN = bin/MathUnitTest bin/Array_unitTest bin/Matrix_unitTest bin/Vector_unitTest
 
 .PHONY: math-obj math-bin
-math-obj: $(BUILD_DIRS) $(MATH_OBJS) $(MATH_DEVTEST_OBJS) $(MATH_UNITTEST_OBJS)
-math-bin: $(BUILD_DIRS) $(MATH_DEVTEST_BIN) $(MATH_UNITTEST_BIN)
+math-obj: $(MATH_OBJS) $(MATH_DEVTEST_OBJS) $(MATH_UNITTEST_OBJS)
+math-bin: $(MATH_DEVTEST_BIN) $(MATH_UNITTEST_BIN)
 
 # Development Testing
-bin/%_devTest: obj/%_devTest.o lib/libedtMath.a
-			$(CC) $^ $(LFLAGS) -Lobj -o $@ -Iinc $(LAPACK) -Llib/libedtMath.a
+bin/%_devTest: obj/%_devTest.o ../lib/libedt.a
+			$(CC) $^ $(LFLAGS) -Lobj -o $@ -Iinc $(LAPACK)
 
 # Unit Testing (Math Classes)
-bin/%_unitTest: obj/%_unitTest.o obj/MathUnitTest.o lib/libedtMath.a
-			$(CC) $^ $(LFLAGS) -Lobj -o $@ -Iinc $(LAPACK) $(GTEST) -Llib/libedtMath.a
+bin/%_unitTest: obj/%_unitTest.o obj/MathUnitTest.o ../lib/libedt.a
+			$(CC) $^ $(LFLAGS) -Lobj -o $@ -Iinc $(LAPACK) $(GTEST) 
 
 # Unit Testing (Math Component)
-bin/MathUnitTest: $(MATH_UNITTEST_OBJS) lib/libedtMath.a
-			$(CC) $^ $(LFLAGS) -Lobj -o $@ -Iinc $(LAPACK) $(GTEST) -Llib/libedtMath.a
+bin/MathUnitTest: $(MATH_UNITTEST_OBJS) ../lib/libedt.a
+			$(CC) $^ $(LFLAGS) -Lobj -o $@ -Iinc $(LAPACK) $(GTEST) 
 
 obj/%.o: src/%.cpp
 			$(CC) $(CFLAGS) -Iinc -o $@ $^
@@ -59,15 +56,9 @@ obj/%.o: devTest/%.cpp
 obj/%.o: unitTest/%.cpp
 			$(CC) $(CFLAGS) -Iinc -o $@ $^
 
-lib/libedtMath.a: $(MATH_OBJS)
-			ar rcs lib/libedtMath.a $(MATH_OBJS)
+.PHONY: math-clean
+math-clean: 
+			rm -f obj/*.o bin/*
+			rm -rf obj/ bin/
 
-$(BUILD_DIRS): 
-	mkdir -p $(OBJ_DIR)
-	mkdir -p $(BIN_DIR)
-	mkdir -p $(LIB_DIR)
-
-.PHONY: clean
-clean: 
-			rm -f obj/*.o bin/* lib/*
-			rm -rf obj/ bin/ lib/
+$(shell mkdir -p $(MATH_DIRS))

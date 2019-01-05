@@ -5,26 +5,26 @@
 ## Author: Kevin Gomez
 ##--------------------------
 
-CC = g++
-DEBUG = -g
-PROFILE = -pg
-CFLAGS = -Wall -c $(DEBUG) $(addprefix -I,$(INCLUDE))
-LFLAGS = -Wall $(DEBUG) $(PROFILE)
+MODULES = math support
 
-MODULES = math
-SRC_DIR = $(addsuffix /src,$(MODULES))
-OBJ_DIR = $(addsuffix /obj,$(MODULES))
-INC_DIR = $(addsuffix /inc,$(MODULES))
-MK_FILES = $(addsuffix /*.mk,$(MODULES))
+EDT_MATH_OBJS = math/obj/Array.o math/obj/Matrix.o math/obj/Vector.o math/obj/Integrator.o math/obj/Differentiator.o 
+EDT_SUPPORT_OBJS = support/obj/PrintOps.o support/obj/ReadOps.o support/obj/WriteOps.o
 
 .PHONY: all
-all:
-	@echo "Preparing to execute the following .mk files:"
-	@echo $(MK_FILES)
+all: edt-obj edt-bin
+
+lib/libedt.a: $(EDT_MATH_OBJS) $(EDT_SUPPORT_OBJS)
+	ar rcs $@ $(EDT_MATH_OBJS) $(EDT_SUPPORT_OBJS)	
+
+.PHONY: edt-obj edt-bin
+edt-obj:
 	@$(foreach modDir,$(MODULES), $(MAKE) --no-print-directory -C $(modDir) $(modDir)-obj -f $(modDir).mk;)
+edt-bin: lib/libedt.a
 	@$(foreach modDir,$(MODULES), $(MAKE) --no-print-directory -C $(modDir) $(modDir)-bin -f $(modDir).mk;)
 
 .PHONY: clean
 clean: 
-	rm -f */obj/*.o */bin/* */lib/*
-	rm -rf */obj */bin */lib
+	rm -f */obj/*.o */bin/* lib/*
+	rm -rf */obj */bin lib/
+
+$(shell mkdir -p lib)
