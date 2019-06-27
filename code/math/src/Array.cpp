@@ -40,6 +40,7 @@ void swap(Array& arr1, Array& arr2)
     std::swap(arr1.myElements, arr2.myElements);
     std::swap(arr1.myArray, arr2.myArray);
     std::swap(arr1.myArraySize, arr2.myArraySize);
+    std::swap(arr1.isSquare, arr2.isSquare);
 }
 
 // Compare Array class data members

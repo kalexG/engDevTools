@@ -13,6 +13,11 @@
 #include "../inc/Array.h"
 #include "../inc/Matrix.h"
 #include "../inc/Vector.h"
+#include "../inc/LongVector.h"
+#include "../inc/Integrator.h"
+#include "../inc/IntegratorMidpoint.h"
+#include "../inc/IntegratorSimps.h"
+#include "../inc/IntegratorTrapz.h"
 
 using ::testing::DoubleNear;
 using ::testing::ElementsAre;
@@ -56,6 +61,27 @@ class MockArray : public Array
 };
 
 class ArrayUnitTest : public ::testing::Test
+{
+    public:
+    private:
+    protected:
+};
+
+class IntegratorMidpointUnitTest : public ::testing::Test
+{
+    public:
+    private:
+    protected:
+};
+
+class IntegratorSimpsUnitTest : public ::testing::Test
+{
+    public:
+    private:
+    protected:
+};
+
+class IntegratorTrapzUnitTest : public ::testing::Test
 {
     public:
     private:

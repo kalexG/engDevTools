@@ -10,6 +10,8 @@
 
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
+#include "../../math/inc/Array.h"
+#include "../inc/PrintOps.h"
 
 using ::testing::DoubleNear;
 using ::testing::ElementsAre;

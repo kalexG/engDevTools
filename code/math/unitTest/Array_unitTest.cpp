@@ -428,3 +428,199 @@ TEST_F(ArrayUnitTest, checkGetTrace_validDimensions)
     myTestArray.setIncrement(1.0, 1.0);
     EXPECT_EQ(myTestArray.getTrace(), 15.0);
 }
+
+// Test Array::operator= - Make sure move assignment works
+TEST_F(ArrayUnitTest, checkMoveAssignment)
+{
+    Array myTestArray1(3, 3);
+    Array myTestArray2(3, 3);
+    myTestArray1.setIncrement(1.0, 1.0);
+    myTestArray2 = std::move(myTestArray1);
+    ASSERT_EQ(myTestArray2.getMyRows(), myTestArray1.getMyCols());
+    ASSERT_EQ(myTestArray2.getMyCols(), myTestArray1.getMyRows());
+    ASSERT_EQ(myTestArray2.getMyElements(), myTestArray1.getMyElements()); 
+    double j = 1.0;
+    for (int i = 0; i < myTestArray2.getMyElements(); i++ )
+    {
+        EXPECT_EQ(myTestArray2[i], j);
+        j += 1.0;
+    } 
+}
+
+// Test Array(&&Array) - Make sure Move construtor works
+TEST_F(ArrayUnitTest, checkMoveConstructor)
+{
+    Array myTestArray1(3, 3);
+    myTestArray1.setIncrement(1.0, 1.0);
+    Array myTestArray2 = std::move(myTestArray1);
+    ASSERT_EQ(myTestArray2.getMyRows(), myTestArray1.getMyCols());
+    ASSERT_EQ(myTestArray2.getMyCols(), myTestArray1.getMyRows());
+    ASSERT_EQ(myTestArray2.getMyElements(), myTestArray1.getMyElements()); 
+    double j = 1.0;
+    for (int i = 0; i < myTestArray2.getMyElements(); i++ )
+    {
+        EXPECT_EQ(myTestArray2[i], j);
+        j += 1.0;
+    } 
+}
+
+// Test Array::swap() - Make sure swap function works
+TEST_F(ArrayUnitTest, checkSwap)
+{
+    Array myTestArray1(3, 3);
+    Array myTestArray2(5, 3);
+    swap(myTestArray1, myTestArray2);
+    ASSERT_EQ(myTestArray2.getMyRows(), 3);
+    ASSERT_EQ(myTestArray1.getMyRows(), 5);
+    ASSERT_EQ(myTestArray2.getMyCols(), 3);
+    ASSERT_EQ(myTestArray1.getMyCols(), 3);
+    ASSERT_EQ(myTestArray2.getMyElements(), 9);
+    ASSERT_EQ(myTestArray1.getMyElements(), 15);
+    ASSERT_EQ(myTestArray2.getMyArraySize(), 72);
+    ASSERT_EQ(myTestArray1.getMyArraySize(), 120);
+    ASSERT_TRUE(myTestArray2.getIsSquare());
+    ASSERT_FALSE(myTestArray1.getIsSquare());
+}
+
+// Test Array::compare() - Make sure compare function works (false)
+TEST_F(ArrayUnitTest, checkCompare_differentSize)
+{
+    Array myTestArray1(3, 3);
+    myTestArray1.setOnes();
+    Array myTestArray2(4, 3);
+    myTestArray2.setOnes();
+    ASSERT_FALSE(compare(myTestArray1, myTestArray2));
+}
+
+// Test Array::compare() - Make sure compare function works (false)
+TEST_F(ArrayUnitTest, checkCompare_differentElements)
+{
+    Array myTestArray1(3, 3);
+    myTestArray1.setIncrement(1.0, 1.0);
+    Array myTestArray2(3, 3);
+    myTestArray2.setIncrement(2.0, 1.0);
+    ASSERT_FALSE(compare(myTestArray1, myTestArray2));
+}
+
+// Test Array::compare() - Make sure compare function works (false)
+TEST_F(ArrayUnitTest, checkCompare_outOfDefaultTolerance)
+{
+    Array myTestArray1(3, 3);
+    myTestArray1.setIncrement(1.0, 1.0);
+    myTestArray1(0, 0) = 1.000002;
+    Array myTestArray2(3, 3);
+    myTestArray2.setIncrement(1.0, 1.0);
+    ASSERT_FALSE(compare(myTestArray1, myTestArray2));
+}
+
+// Test Array::compare() - Make sure compare function works (false)
+TEST_F(ArrayUnitTest, checkCompare_outOfSpecifiedTolerance)
+{
+    Array myTestArray1(3, 3);
+    myTestArray1.setIncrement(1.0, 1.0);
+    myTestArray1(0, 0) = 1.0000002;
+    Array myTestArray2(3, 3);
+    myTestArray2.setIncrement(1.0, 1.0);
+    ASSERT_FALSE(compare(myTestArray1, myTestArray2, 1e-07));
+}
+
+// Test Array::compare() - Make sure compare function works (true)
+TEST_F(ArrayUnitTest, checkCompare_inDefaultTolerance)
+{
+    Array myTestArray1(3, 3);
+    myTestArray1.setIncrement(1.0, 1.0);
+    myTestArray1(0, 0) = 1.0000002;
+    Array myTestArray2(3, 3);
+    myTestArray2.setIncrement(1.0, 1.0);
+    ASSERT_TRUE(compare(myTestArray1, myTestArray2));
+}
+
+// Test Array::compare() - Make sure compare function works (true)
+TEST_F(ArrayUnitTest, checkCompare_inSpecifiedTolerance)
+{
+    Array myTestArray1(3, 3);
+    myTestArray1.setIncrement(1.0, 1.0);
+    myTestArray1(0, 0) = 1.00000002;
+    Array myTestArray2(3, 3);
+    myTestArray2.setIncrement(1.0, 1.0);
+    ASSERT_TRUE(compare(myTestArray1, myTestArray2, 1e-07));
+}
+
+// Test Array::compare() - Make sure compare function works (true)
+TEST_F(ArrayUnitTest, checkCompare_same)
+{
+    Array myTestArray1(3, 3);
+    myTestArray1.setIncrement(2.0, 2.0);
+    Array myTestArray2(3, 3);
+    myTestArray2.setIncrement(2.0, 2.0);
+    ASSERT_TRUE(compare(myTestArray1, myTestArray2));
+}
+
+// Test Array::operator* - Catch invalid dimensions
+TEST_F(ArrayUnitTest, checkOperatorMultiply_invalidDimensions)
+{
+    Array myTestArray1(3, 3);
+    myTestArray1.setOnes();
+    Array myTestArray2(4, 3);
+    myTestArray2.setOnes();
+    Array myTestArray3(3, 3);
+    myTestArray3.setZeros();
+    EXPECT_THROW(myTestArray3 = myTestArray1 * myTestArray2, std::length_error);
+}
+
+// Test Array::operator* - Mxn * n*K
+TEST_F(ArrayUnitTest, checkOperatorMultiply_Mn_nK)
+{
+    Array myTestArray1(3, 3);
+    myTestArray1.setOnes();
+    Array myTestArray2(3, 3);
+    myTestArray2.setIncrement(1.0, 1.0);
+    Array myTestArray3(3, 3);
+    myTestArray3.setZeros();
+    myTestArray3 = myTestArray1 * myTestArray2;
+    EXPECT_EQ(myTestArray3(0, 0), 12);
+    EXPECT_EQ(myTestArray3(0, 1), 15);
+    EXPECT_EQ(myTestArray3(0, 2), 18);
+    EXPECT_EQ(myTestArray3(1, 0), 12);
+    EXPECT_EQ(myTestArray3(1, 1), 15);
+    EXPECT_EQ(myTestArray3(1, 2), 18);
+    EXPECT_EQ(myTestArray3(2, 0), 12);
+    EXPECT_EQ(myTestArray3(2, 1), 15);
+    EXPECT_EQ(myTestArray3(2, 2), 18);
+}
+
+// Test Array::operator* - mxn * n*K
+TEST_F(ArrayUnitTest, checkOperatorMultiply_mn_nK)
+{
+    Array myTestArray1(2, 3);
+    myTestArray1.setOnes();
+    Array myTestArray2(3, 3);
+    myTestArray2.setIncrement(1.0, 1.0);
+    Array myTestArray3(2, 3);
+    myTestArray3.setZeros();
+    myTestArray3 = myTestArray1 * myTestArray2;
+    EXPECT_EQ(myTestArray3(0, 0), 12);
+    EXPECT_EQ(myTestArray3(0, 1), 15);
+    EXPECT_EQ(myTestArray3(0, 2), 18);
+    EXPECT_EQ(myTestArray3(1, 0), 12);
+    EXPECT_EQ(myTestArray3(1, 1), 15);
+    EXPECT_EQ(myTestArray3(1, 2), 18);
+}
+
+// Test Array::operator* - Mxn * n*k
+TEST_F(ArrayUnitTest, checkOperatorMultiply_Mn_nk)
+{
+    Array myTestArray1(3, 3);
+    myTestArray1.setOnes();
+    Array myTestArray2(3, 2);
+    myTestArray2.setIncrement(1.0, 1.0);
+    Array myTestArray3(3, 2);
+    myTestArray3.setZeros();
+    myTestArray3 = myTestArray1 * myTestArray2;
+    EXPECT_EQ(myTestArray3(0, 0), 9);
+    EXPECT_EQ(myTestArray3(0, 1), 12);
+    EXPECT_EQ(myTestArray3(1, 0), 9);
+    EXPECT_EQ(myTestArray3(1, 1), 12);
+    EXPECT_EQ(myTestArray3(2, 0), 9);
+    EXPECT_EQ(myTestArray3(2, 1), 12);
+}

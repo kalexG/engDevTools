@@ -17,7 +17,9 @@ LAPACK = -llapacke -lblas
 MATH_DIRS = obj/ bin/
 
 # All objects
-MATH_OBJS = obj/Array.o obj/Matrix.o obj/Vector.o obj/Integrator.o obj/Differentiator.o
+MATH_OBJS = obj/Array.o obj/Matrix.o obj/Vector.o obj/LongVector.o \
+			obj/IntegratorTrapz.o obj/IntegratorSimps.o obj/IntegratorMidpoint.o \
+			obj/Differentiator.o
 
 # All development tests
 MATH_DEVTEST_OBJS = obj/Array_devTest.o obj/Integrator_devTest.o obj/Differentiator_devTest.o
@@ -29,7 +31,9 @@ MATH_UNITTEST_OBJS = obj/MathUnitTest.o obj/Array_unitTest.o obj/Matrix_unitTest
 MATH_DEVTEST_BIN = bin/Array_devTest bin/Integrator_devTest bin/Differentiator_devTest
 
 # All unit test exectables
-MATH_UNITTEST_BIN = bin/MathUnitTest bin/Array_unitTest bin/Matrix_unitTest bin/Vector_unitTest
+MATH_UNITTEST_BIN = bin/MathUnitTest \
+					bin/Array_unitTest bin/Matrix_unitTest bin/Vector_unitTest \
+					bin/IntegratorTrapz_unitTest 
 
 .PHONY: math-obj math-bin
 math-obj: $(MATH_OBJS) $(MATH_DEVTEST_OBJS) $(MATH_UNITTEST_OBJS)

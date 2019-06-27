@@ -11,29 +11,23 @@
 #include <iostream>
 #include <math.h>
 #include <utility>
+#include "../inc/Vector.h"
+#include "../inc/LongVector.h"
 
 class Integrator
 {
     // Functions
     public:
         // Constructor
-        Integrator();
-        // Copy Constructor (Blocked)
-        Integrator(const Integrator& integ) = delete;
-        // Move Constructor (Blocked)
-        Integrator(Integrator&& integ) noexcept = delete;
-        // Copy Assignment (Blocked)
-        Integrator& operator=(const Integrator& integ) = delete;
-        // Move Assignment (Blocked)
-        Integrator& operator=(Integrator&& integ) noexcept = delete;
+        Integrator() {};
         // Destructor
-        virtual ~Integrator(void);
-    private:
-        bool IntegratorSet;
-    protected:
-
-    // Data
-    public:
+        virtual ~Integrator() {};
+        // Virtual Function: integrate (scalar)
+        virtual double integrate(const LongVector &dx) = 0;
+        // Virtual Function: integrate (LongVector)
+        virtual LongVector integrateComposite(const LongVector &dx, const LongVector &t, const double = 0.0) = 0;
+        // Virtual Function: integrate
+        virtual Vector integrate(const Vector &vec) = 0;
     private:
     protected:
 };

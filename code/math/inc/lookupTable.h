@@ -1,12 +1,12 @@
 //--------------------------
-// Filename: Array.h
+// Filename: LookupTable.h
 // Created: 01/02/2018
 // Last Modified: 01/02/2018
 // Author: Kevin Gomez
 //--------------------------
 
-#ifndef ARRAY_H
-#define ARRAY_H
+#ifndef LOOKUP_TABLE_H
+#define LOOKUP_TABLE_H
 
 #include <iostream>
 #include <math.h>
