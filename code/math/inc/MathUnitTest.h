@@ -48,6 +48,24 @@ class MockMatrix : public Matrix
 class MatrixUnitTest : public ::testing::Test
 {
     public:
+        Matrix myMatrix1;
+        Matrix myMatrix1Minor;
+        Matrix myMatrix1Cofactor;
+        MatrixUnitTest()
+        {
+            // Matrix for Testing: myMatrix1
+            myMatrix1(0,0) = 3; myMatrix1(0,1) = 0; myMatrix1(0,2) = 2;
+            myMatrix1(1,0) = 2; myMatrix1(1,1) = 0; myMatrix1(1,2) = -2;
+            myMatrix1(2,0) = 0; myMatrix1(2,1) = 1; myMatrix1(2,2) = 1;
+            // Minor of myMatrix1: myMatrix1Minor
+            myMatrix1Minor(0,0) = 2; myMatrix1Minor(0,1) = 2; myMatrix1Minor(0,2) = 2;
+            myMatrix1Minor(1,0) = -2; myMatrix1Minor(1,1) = 3; myMatrix1Minor(1,2) = 3;
+            myMatrix1Minor(2,0) = 0; myMatrix1Minor(2,1) = -10; myMatrix1Minor(2,2) = 0;
+            // Cofactor of myMatrix1: myMatrix1Cofactor
+            myMatrix1Cofactor(0,0) = 2; myMatrix1Cofactor(0,1) = -2; myMatrix1Cofactor(0,2) = 2;
+            myMatrix1Cofactor(1,0) = 2; myMatrix1Cofactor(1,1) = 3; myMatrix1Cofactor(1,2) = -3;
+            myMatrix1Cofactor(2,0) = 0; myMatrix1Cofactor(2,1) = 10; myMatrix1Cofactor(2,2) = 0;
+        }
     private:
     protected:
 };
