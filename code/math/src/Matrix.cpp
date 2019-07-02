@@ -13,7 +13,6 @@ Matrix Matrix::getMinor(void)
     double mDet22[4];
     double detMin;
     Matrix tmp;
-
     for(int i=0;i<3;i++)
     {
         for (int j=0;j<3;j++)
@@ -55,7 +54,7 @@ Matrix Matrix::getCofactor(void)
     return tmp;
 }
 
-// Get Matrix Adjoint
+// Get Matrix Adjugate
 Matrix Matrix::getAdjugate(void)
 {
     Matrix tmp;
@@ -64,3 +63,12 @@ Matrix Matrix::getAdjugate(void)
     return tmp;
 }
 
+// Get Determinant of 3x3 matrix
+double Matrix::getDeterminant33(void)
+{
+    double tmp;
+    tmp=myArray[0]*(myArray[4]*myArray[8]-myArray[7]*myArray[5]);
+    tmp=tmp+myArray[1]*(myArray[5]*myArray[6]-myArray[8]*myArray[3]);
+    tmp=tmp+myArray[2]*(myArray[3]*myArray[7]-myArray[6]*myArray[4]);
+    return tmp;
+}

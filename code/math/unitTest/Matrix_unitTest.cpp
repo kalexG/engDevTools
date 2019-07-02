@@ -42,3 +42,23 @@ TEST_F(MatrixUnitTest, checkGetCofactor)
         }
     }
 }
+
+// Test: Matrix::getAdjugate() - Make sure getter works
+TEST_F(MatrixUnitTest, checkGetAdjugate)
+{
+    Matrix myTestMatrix(myMatrix1.getAdjugate());
+    for (int i = 0; i < 3; i++)
+    {
+        for (int j = 0; j < 3; j++)
+        {
+            EXPECT_EQ(myTestMatrix(i,j), myMatrix1Adjugate(i,j));
+        }
+    }
+}
+
+// Test: Matrix::getDeterminant33() - Make sure getter works
+TEST_F(MatrixUnitTest, checkGetDeterminant33)
+{
+    double det = myMatrix1.getDeterminant33();
+    EXPECT_EQ(det, myMatrix1Determinant);
+}

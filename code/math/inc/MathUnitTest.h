@@ -51,6 +51,8 @@ class MatrixUnitTest : public ::testing::Test
         Matrix myMatrix1;
         Matrix myMatrix1Minor;
         Matrix myMatrix1Cofactor;
+        Matrix myMatrix1Adjugate;
+        double myMatrix1Determinant;
         MatrixUnitTest()
         {
             // Matrix for Testing: myMatrix1
@@ -65,6 +67,12 @@ class MatrixUnitTest : public ::testing::Test
             myMatrix1Cofactor(0,0) = 2; myMatrix1Cofactor(0,1) = -2; myMatrix1Cofactor(0,2) = 2;
             myMatrix1Cofactor(1,0) = 2; myMatrix1Cofactor(1,1) = 3; myMatrix1Cofactor(1,2) = -3;
             myMatrix1Cofactor(2,0) = 0; myMatrix1Cofactor(2,1) = 10; myMatrix1Cofactor(2,2) = 0;
+            // Adjugate of myMatrix1: myMatrix1Adjugate
+            myMatrix1Adjugate(0,0) = 2; myMatrix1Adjugate(0,1) = 2; myMatrix1Adjugate(0,2) = 0;
+            myMatrix1Adjugate(1,0) = -2; myMatrix1Adjugate(1,1) = 3; myMatrix1Adjugate(1,2) = 10;
+            myMatrix1Adjugate(2,0) = 2; myMatrix1Adjugate(2,1) = -3; myMatrix1Adjugate(2,2) = 0;
+            // Determinant of myMatrix1: myMatrix1Determinant
+            myMatrix1Determinant = 10;
         }
     private:
     protected:

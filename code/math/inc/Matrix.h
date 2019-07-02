@@ -19,12 +19,14 @@ class Matrix : public Array
     public:
         // Constructor
         Matrix() : Array(3, 3) {}
-        // Getter Function: getMinor [UT: N]
+        // Getter Function: getMinor [UT: Y]
         Matrix getMinor(void);
-        // Getter Function: getCofactor [UT: N]
+        // Getter Function: getCofactor [UT: Y]
         Matrix getCofactor(void);
-        // Getter Function: getAdjugate [UT: N]
+        // Getter Function: getAdjugate [UT: Y]
         Matrix getAdjugate(void);
+        // Getter Function: getDeterminant33 [UT: N]
+        double getDeterminant33(void);
     private:
     protected:
 
