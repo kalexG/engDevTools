@@ -12,6 +12,7 @@ CFLAGS = -Wall -Wsign-compare -c $(DEBUG)
 LFLAGS = -Wall -Wsign-compare $(DEBUG) $(PROFILE)
 GTEST = -pthread -lgtest -lgmock
 LAPACK = -llapacke -lcblas
+GCOV = -fprofile-arcs -ftest-coverage
 
 # Build directories
 SUPPORT_DIRS = obj/ bin/
@@ -41,11 +42,11 @@ bin/%_devTest: obj/%_devTest.o ../lib/libedt.a
 
 # Unit Testing (Support Classes)
 bin/%_unitTest: obj/%_unitTest.o obj/SupportUnitTest.o ../lib/libedt.a
-			$(CC) $^ $(LFLAGS) -Lobj -o $@ -Iinc $(LAPACK) $(GTEST)
+			$(CC) $^ $(LFLAGS) -Lobj -o $@ -Iinc $(LAPACK) $(GTEST) $(GCOV)
 
 # Unit Testing (Support Component)
 bin/SupportUnitTest: $(SUPPORT_UNITTEST_OBJS) ../lib/libedt.a
-			$(CC) $^ $(LFLAGS) -Lobj -o $@ -Iinc $(LAPACK) $(GTEST)
+			$(CC) $^ $(LFLAGS) -Lobj -o $@ -Iinc $(LAPACK) $(GTEST) $(GCOV)
 
 obj/%.o: src/%.cpp
 			$(CC) $(CFLAGS) -Iinc -o $@ $^
@@ -54,7 +55,7 @@ obj/%.o: devTest/%.cpp
 			$(CC) $(CFLAGS) -Iinc -o $@ $^
 
 obj/%.o: unitTest/%.cpp
-			$(CC) $(CFLAGS) -Iinc -o $@ $^
+			$(CC) $(CFLAGS) -Iinc -o $@ $^ $(GCOV)
 
 .PHONY: clean
 clean: 

@@ -12,6 +12,7 @@ CFLAGS = -Wall -Wsign-compare -c $(DEBUG)
 LFLAGS = -Wall -Wsign-compare $(DEBUG) $(PROFILE)
 GTEST = -pthread -lgtest -lgmock
 LAPACK = -llapacke -lcblas
+GCOV = -fprofile-arcs -ftest-coverage
 
 # Build directories
 MATH_DIRS = obj/ bin/
@@ -45,11 +46,11 @@ bin/%_devTest: obj/%_devTest.o ../lib/libedt.a
 
 # Unit Testing (Math Classes)
 bin/%_unitTest: obj/%_unitTest.o obj/MathUnitTest.o ../lib/libedt.a
-			$(CC) $^ $(LFLAGS) -Lobj -o $@ -Iinc $(LAPACK) $(GTEST)  -fprofile-arcs -ftest-coverage
+			$(CC) $^ $(LFLAGS) -Lobj -o $@ -Iinc $(LAPACK) $(GTEST) $(GCOV)
 
 # Unit Testing (Math Component)
 bin/MathUnitTest: $(MATH_UNITTEST_OBJS) ../lib/libedt.a
-			$(CC) $^ $(LFLAGS) -Lobj -o $@ -Iinc $(LAPACK) $(GTEST)  -fprofile-arcs -ftest-coverage
+			$(CC) $^ $(LFLAGS) -Lobj -o $@ -Iinc $(LAPACK) $(GTEST) $(GCOV)
 
 obj/%.o: src/%.cpp
 			$(CC) $(CFLAGS) -Iinc -o $@ $^
@@ -58,7 +59,7 @@ obj/%.o: devTest/%.cpp
 			$(CC) $(CFLAGS) -Iinc -o $@ $^
 
 obj/%.o: unitTest/%.cpp
-			$(CC) $(CFLAGS) -Iinc -o $@ $^ -fprofile-arcs -ftest-coverage
+			$(CC) $(CFLAGS) -Iinc -o $@ $^ $(GCOV)
 
 .PHONY: clean
 clean: 
