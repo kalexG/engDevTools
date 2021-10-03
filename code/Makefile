@@ -20,9 +20,9 @@ lib/libedt.a: $(EDT_MATH_OBJS) $(EDT_SUPPORT_OBJS)
 
 .PHONY: edt-obj edt-bin
 edt-obj:
-	@$(foreach modDir,$(MODULES), $(MAKE) --no-print-directory -C $(modDir) $(modDir)-obj -f $(modDir).mk;)
+	@$(foreach modDir,$(MODULES), $(MAKE) --no-print-directory -C $(modDir) obj -f $(modDir).mk;)
 edt-bin: lib/libedt.a
-	@$(foreach modDir,$(MODULES), $(MAKE) --no-print-directory -C $(modDir) $(modDir)-bin -f $(modDir).mk;)
+	@$(foreach modDir,$(MODULES), $(MAKE) --no-print-directory -C $(modDir) bin -f $(modDir).mk;)
 
 .PHONY: clean
 clean: 

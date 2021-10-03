@@ -28,6 +28,9 @@ extern "C"
                     const double*, int, double, double*, int);
 }
 
+class Array;
+bool compare(Array& arr1, Array& arr2, double tol = 1.0e-06);
+
 class Array
 {
     // Class for unit testing
@@ -96,7 +99,7 @@ class Array
         // Function: swap [UT: Y]
         friend void swap(Array& arr1, Array& arr2);
         // Function: compare [UT: Y]
-        friend bool compare(Array& arr1, Array& arr2, const double tol = 1.0e-06);
+        friend bool compare(Array& arr1, Array& arr2, double tol);
     private:
         // Function: checkValidDims [UT: Y]
         bool checkValidDims(int rows, int cols);

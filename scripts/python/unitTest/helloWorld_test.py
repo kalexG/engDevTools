@@ -5,8 +5,8 @@
 ## Author: Kevin Gomez
 ##-----------------------------
 
-#!/usr/bin/python3.6
-
+import sys
+sys.path.append("scripts/python")
 import unittest
 import helloWorld
 
@@ -17,4 +17,3 @@ class TestStringMethods(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
-

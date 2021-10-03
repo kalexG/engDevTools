@@ -5,8 +5,6 @@
 ## Author: Kevin Gomez
 ##--------------------------
 
-#!/usr/bin/python3.6
-
 import sys, struct
 
 def hexToDouble(hexString):

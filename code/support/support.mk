@@ -11,7 +11,7 @@ PROFILE = -pg
 CFLAGS = -Wall -Wsign-compare -c $(DEBUG)
 LFLAGS = -Wall -Wsign-compare $(DEBUG) $(PROFILE)
 GTEST = -pthread -lgtest -lgmock
-LAPACK = -llapacke -lblas
+LAPACK = -llapacke -lcblas
 
 # Build directories
 SUPPORT_DIRS = obj/ bin/
@@ -31,9 +31,9 @@ SUPPORT_DEVTEST_BIN = bin/PrintOps_devTest bin/ReadOps_devTest bin/WriteOps_devT
 # All unit test exectables
 SUPPORT_UNITTEST_BIN = bin/SupportUnitTest bin/PrintOps_unitTest bin/ReadOps_unitTest bin/WriteOps_unitTest
 
-.PHONY: support-obj support-bin
-support-obj: $(SUPPORT_OBJS) $(SUPPORT_DEVTEST_OBJS) $(SUPPORT_UNITTEST_OBJS)
-support-bin: $(SUPPORT_DEVTEST_BIN) $(SUPPORT_UNITTEST_BIN)
+.PHONY: obj bin
+obj: $(SUPPORT_OBJS) $(SUPPORT_DEVTEST_OBJS) $(SUPPORT_UNITTEST_OBJS)
+bin: $(SUPPORT_DEVTEST_BIN) $(SUPPORT_UNITTEST_BIN)
 
 # Development Testing
 bin/%_devTest: obj/%_devTest.o ../lib/libedt.a
@@ -56,8 +56,8 @@ obj/%.o: devTest/%.cpp
 obj/%.o: unitTest/%.cpp
 			$(CC) $(CFLAGS) -Iinc -o $@ $^
 
-.PHONY: support-clean
-support-clean: 
+.PHONY: clean
+clean: 
 			rm -f obj/*.o bin/*
 			rm -rf obj/ bin/
 

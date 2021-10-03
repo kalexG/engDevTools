@@ -11,7 +11,7 @@ PROFILE = -pg
 CFLAGS = -Wall -Wsign-compare -c $(DEBUG)
 LFLAGS = -Wall -Wsign-compare $(DEBUG) $(PROFILE)
 GTEST = -pthread -lgtest -lgmock
-LAPACK = -llapacke -lblas
+LAPACK = -llapacke -lcblas
 
 # Build directories
 MATH_DIRS = obj/ bin/
@@ -35,9 +35,9 @@ MATH_UNITTEST_BIN = bin/MathUnitTest \
 					bin/Array_unitTest bin/Matrix_unitTest bin/Vector_unitTest \
 					bin/IntegratorTrapz_unitTest 
 
-.PHONY: math-obj math-bin
-math-obj: $(MATH_OBJS) $(MATH_DEVTEST_OBJS) $(MATH_UNITTEST_OBJS)
-math-bin: $(MATH_DEVTEST_BIN) $(MATH_UNITTEST_BIN)
+.PHONY: obj bin
+obj: $(MATH_OBJS) $(MATH_DEVTEST_OBJS) $(MATH_UNITTEST_OBJS)
+bin: $(MATH_DEVTEST_BIN) $(MATH_UNITTEST_BIN)
 
 # Development Testing
 bin/%_devTest: obj/%_devTest.o ../lib/libedt.a
@@ -45,11 +45,11 @@ bin/%_devTest: obj/%_devTest.o ../lib/libedt.a
 
 # Unit Testing (Math Classes)
 bin/%_unitTest: obj/%_unitTest.o obj/MathUnitTest.o ../lib/libedt.a
-			$(CC) $^ $(LFLAGS) -Lobj -o $@ -Iinc $(LAPACK) $(GTEST) 
+			$(CC) $^ $(LFLAGS) -Lobj -o $@ -Iinc $(LAPACK) $(GTEST)  -fprofile-arcs -ftest-coverage
 
 # Unit Testing (Math Component)
 bin/MathUnitTest: $(MATH_UNITTEST_OBJS) ../lib/libedt.a
-			$(CC) $^ $(LFLAGS) -Lobj -o $@ -Iinc $(LAPACK) $(GTEST) 
+			$(CC) $^ $(LFLAGS) -Lobj -o $@ -Iinc $(LAPACK) $(GTEST)  -fprofile-arcs -ftest-coverage
 
 obj/%.o: src/%.cpp
 			$(CC) $(CFLAGS) -Iinc -o $@ $^
@@ -58,10 +58,10 @@ obj/%.o: devTest/%.cpp
 			$(CC) $(CFLAGS) -Iinc -o $@ $^
 
 obj/%.o: unitTest/%.cpp
-			$(CC) $(CFLAGS) -Iinc -o $@ $^
+			$(CC) $(CFLAGS) -Iinc -o $@ $^ -fprofile-arcs -ftest-coverage
 
-.PHONY: math-clean
-math-clean: 
+.PHONY: clean
+clean: 
 			rm -f obj/*.o bin/*
 			rm -rf obj/ bin/
 

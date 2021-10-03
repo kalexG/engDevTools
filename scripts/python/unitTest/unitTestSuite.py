@@ -5,8 +5,6 @@
 ## Author: Kevin Gomez
 ##---------------------------
 
-#!/usr/bin/python3.6
-
 # Import unittest
 import unittest
 

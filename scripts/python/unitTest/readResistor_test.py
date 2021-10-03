@@ -5,8 +5,8 @@
 ## Author: Kevin Gomez
 ##-------------------------------
 
-#!/usr/bin/python3.6
-
+import sys
+sys.path.append("scripts/python")
 import unittest
 import readResistor
 import argparse
