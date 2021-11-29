@@ -6,12 +6,13 @@
 ##--------------------------
 
 CC = g++
-DEBUG = -g
+DEBUG = -O0 -D _DEBUG -g
 PROFILE = -pg
-CFLAGS = -Wall -Wsign-compare -c $(DEBUG)
-LFLAGS = -Wall -Wsign-compare $(DEBUG) $(PROFILE)
+OPTIM = -O3 -DNDEBUG -DBOOST_UBLAS_NDEBUG
+CFLAGS = -Wall -Wsign-compare -c
+LFLAGS = -Wall -Wsign-compare
 GTEST = -pthread -lgtest -lgmock
-LAPACK = -llapacke -lcblas
+LAPACK = -llapacke -lcblas -latlas
 GCOV = -fprofile-arcs -ftest-coverage
 
 # Build directories
@@ -23,13 +24,13 @@ MATH_OBJS = obj/Array.o obj/Matrix.o obj/Vector.o obj/LongVector.o \
 			obj/Differentiator.o
 
 # All development tests
-MATH_DEVTEST_OBJS = obj/Array_devTest.o obj/Integrator_devTest.o obj/Differentiator_devTest.o
+MATH_DEVTEST_OBJS = obj/Array_devTest.o obj/Integrator_devTest.o obj/Differentiator_devTest.o obj/BoostCompare_devTest.o
 
 # All unit tests
 MATH_UNITTEST_OBJS = obj/MathUnitTest.o obj/Array_unitTest.o obj/Matrix_unitTest.o obj/Vector_unitTest.o
 
 # All development test exectables
-MATH_DEVTEST_BIN = bin/Array_devTest bin/Integrator_devTest bin/Differentiator_devTest
+MATH_DEVTEST_BIN = bin/Array_devTest bin/Integrator_devTest bin/Differentiator_devTest bin/BoostCompare_devTest
 
 # All unit test exectables
 MATH_UNITTEST_BIN = bin/MathUnitTest \
@@ -56,7 +57,7 @@ obj/%.o: src/%.cpp
 			$(CC) $(CFLAGS) -Iinc -o $@ $^
 
 obj/%.o: devTest/%.cpp
-			$(CC) $(CFLAGS) -Iinc -o $@ $^
+			$(CC) $(CFLAGS) $(OPTIM) -Iinc -o $@ $^
 
 obj/%.o: unitTest/%.cpp
 			$(CC) $(CFLAGS) -Iinc -o $@ $^ $(GCOV)
