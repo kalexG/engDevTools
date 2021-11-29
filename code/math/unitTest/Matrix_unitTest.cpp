@@ -57,8 +57,8 @@ TEST_F(MatrixUnitTest, checkGetAdjugate)
 }
 
 // Test: Matrix::getDeterminant33() - Make sure getter works
-TEST_F(MatrixUnitTest, checkGetDeterminant33)
+TEST_F(MatrixUnitTest, checkGetDeterminant)
 {
-    double det = myMatrix1.getDeterminant33();
+    double det = myMatrix1.getDeterminant();
     EXPECT_EQ(det, myMatrix1Determinant);
 }

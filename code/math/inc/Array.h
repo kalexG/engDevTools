@@ -22,6 +22,9 @@ extern "C"
     void LAPACKE_dge_trans( int, lapack_int, lapack_int,
                             const double*, lapack_int,
                             double*, lapack_int );
+    
+    lapack_int LAPACKE_dgetrf( int, lapack_int, lapack_int,
+                               double*, lapack_int, lapack_int* );
 
     void cblas_dgemm(CBLAS_LAYOUT, CBLAS_TRANSPOSE, CBLAS_TRANSPOSE, 
                     int, int, int, double, const double*, int, 
@@ -62,6 +65,8 @@ class Array
         void setTranspose(void);
         // Setter Function: getTranspose [UT: Y]
         Array getTranspose(void);
+        // Setter Function: getDeterminant [UT: N]
+        double getDeterminant(void);
         // Getter Function: getMyRows [UT: Y]
         int getMyRows(void);
         // Getter Function: getMyCols [UT: Y]

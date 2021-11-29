@@ -251,6 +251,50 @@ Array Array::getTranspose(void)
     return tmp;
 }
 
+// Get Determinant
+double Array::getDeterminant(void)
+{
+    if (isSquare)
+    {
+        Array tmp(*this);
+        int mn = tmp.myRows;
+        int* ipiv = new int [mn];
+        // Utilize LAPACKE LU Factorization
+        int info = LAPACKE_dgetrf( LAPACK_ROW_MAJOR, mn, mn, tmp.myArray, mn, ipiv );
+        // INFO < 0: if INFO = -i, the i-th argument had an illegal value
+        // INFO > 0: if INFO = i, U(i,i) is exactly zero. The factorization 
+        //           has been completed, but the factor U is exactly
+        //           singular, and division by zero will occur if it is used
+        //           to solve a system of equations.
+        if ( info < 0 )
+        {
+            throw std::invalid_argument("ERROR: INFO < 0 in getDeterminant: if INFO = -i, the i-th argument had an illegal value: " +
+                                         std::to_string(info) + "\n");
+        }
+        else
+        {
+            // Calculate Determinant
+            double det = 1;
+            for( int i = 0; i < mn; i++ )
+            {
+                if ( i != ipiv[ i ] - 1 )
+                {
+                    det *= -tmp(i,i);
+                }
+                else
+                {
+                    det *= tmp(i,i);
+                }
+            }
+            return det;
+        }
+    }
+    else
+    {
+        throw std::length_error("ERROR: Matrix needs to be SQUARE to have a determinant\n");
+    } 
+}
+
 // Get myRows
 int Array::getMyRows(void)
 {
