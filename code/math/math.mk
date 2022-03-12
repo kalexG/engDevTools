@@ -21,16 +21,18 @@ MATH_DIRS = obj/ bin/
 # All objects
 MATH_OBJS = obj/Array.o obj/Matrix.o obj/Vector.o obj/LongVector.o \
 			obj/IntegratorTrapz.o obj/IntegratorSimps.o obj/IntegratorMidpoint.o \
-			obj/Differentiator.o
+			obj/Differentiator.o obj/NumericalMethods.o
 
 # All development tests
-MATH_DEVTEST_OBJS = obj/Array_devTest.o obj/Integrator_devTest.o obj/Differentiator_devTest.o obj/BoostCompare_devTest.o
+MATH_DEVTEST_OBJS = obj/Array_devTest.o obj/Integrator_devTest.o obj/Differentiator_devTest.o obj/BoostCompare_devTest.o \
+					obj/NumericalMethods_devTest.o
 
 # All unit tests
 MATH_UNITTEST_OBJS = obj/MathUnitTest.o obj/Array_unitTest.o obj/Matrix_unitTest.o obj/Vector_unitTest.o
 
 # All development test exectables
-MATH_DEVTEST_BIN = bin/Array_devTest bin/Integrator_devTest bin/Differentiator_devTest bin/BoostCompare_devTest
+MATH_DEVTEST_BIN =  bin/Array_devTest bin/Integrator_devTest bin/Differentiator_devTest bin/BoostCompare_devTest \
+					bin/NumericalMethods_devTest
 
 # All unit test exectables
 MATH_UNITTEST_BIN = bin/MathUnitTest \

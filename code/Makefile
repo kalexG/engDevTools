@@ -9,7 +9,7 @@ MODULES = math support
 
 EDT_MATH_OBJS = math/obj/Array.o math/obj/Matrix.o math/obj/Vector.o math/obj/LongVector.o \
 				math/obj/IntegratorTrapz.o math/obj/IntegratorSimps.o math/obj/IntegratorMidpoint.o\
-				math/obj/Differentiator.o 
+				math/obj/Differentiator.o math/obj/NumericalMethods.o 
 EDT_SUPPORT_OBJS = support/obj/PrintOps.o support/obj/ReadOps.o support/obj/WriteOps.o
 
 .PHONY: all
