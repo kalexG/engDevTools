@@ -9,31 +9,59 @@
 
 using namespace NumericalMethods;
 
-double NumericalMethods::bisection_method(std::function<double(double)> f_x, double ep_a, double ep_b, double tol, uint32_t max_it)
+std::vector<bisection_ret> NumericalMethods::bisection_method(std::function<double(double)> f_x, 
+                                                              double a, 
+                                                              double b, 
+                                                              double tol, 
+                                                              uint32_t max_it )
 {
-    uint32_t i = 1;
-    double f_a, f_p, p, a, b;
-    a = ep_a;
-    b = ep_b;
-    f_a = f_x(a);
-    while (i <= max_it)
+    std::vector<bisection_ret> ret;
+    struct bisection_ret entry;    
+    double f_a = f_x(a);
+    double a_l = a; 
+    double b_l = b;
+    uint32_t n = 0;
+    while ( n <= max_it )
     {
-        p = a + (b - a) / 2;
-        f_p = f_x(p);
-        if (f_p == 0 || (b - a) / 2 < tol)
+        // Store metadata
+        entry.n = n;
+        entry.a_n = a_l;
+        entry.b_n = b_l;
+        entry.p_n = entry.a_n + ( entry.b_n - entry.a_n ) / 2;
+        entry.f_p_n = f_x(entry.p_n);
+        ret.push_back(entry);
+
+        if ( entry.f_p_n == 0 || ( entry.b_n - entry.a_n ) / 2 < tol )
         {
-            return p;
+            return ret;
         }
-        i++;
-        if (f_a * f_p > 0)
+
+        if ( f_a * entry.f_p_n > 0 )
         {
-            a = p;
-            f_a = f_p;
+            a_l = entry.p_n;
+            f_a = entry.f_p_n;
         }
         else
         {
-            b = p;
+            b_l = entry.p_n;
         }
+        
+        n++;
     }
-    return p;   
+    return ret;   
+}
+    
+std::string NumericalMethods::bisection_results(std::vector<bisection_ret> ans)
+{
+    std::ostringstream tmpStream;
+    for ( uint32_t i = 0; i < ans.size(); i++)
+    {
+        tmpStream << "n = "     << ans[ i ].n     << " | " <<
+                     "a_n = "   << ans[ i ].a_n   << " | " <<
+                     "b_n = "   << ans[ i ].b_n   << " | " <<
+                     "p_n = "   << ans[ i ].p_n   << " | " <<
+                     "f_p_n = " << ans[ i ].f_p_n << " |\n";
+    }
+    std::string tmpString = tmpStream.str();
+    return tmpString;
 }

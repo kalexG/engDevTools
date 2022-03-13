@@ -9,11 +9,30 @@
 #define NUMERICALMETHODS_H
 
 #include <functional>
+#include <vector>
+#include <limits>
+#include <string.h>
+#include <sstream>
 
-#pragma once
-namespace NumericalMethods {
-    //struct bisection_ret;
-    double bisection_method(std::function<double(double)> f_x, double ep_a, double ep_b, double tol, uint32_t max_it);
+namespace NumericalMethods
+{
+    struct bisection_ret
+    {
+        uint32_t n;
+        double a_n;
+        double b_n;
+        double p_n;
+        double f_p_n;
+    };
+
+    std::vector<bisection_ret> bisection_method(std::function<double(double)> f_x, 
+                                                double ep_a, 
+                                                double ep_b, 
+                                                double tol = 1e-05, 
+                                                uint32_t max_it = std::numeric_limits<uint32_t>::max() );
+
+    std::string bisection_results(std::vector<bisection_ret> ans);
+
 }
 
 #endif
