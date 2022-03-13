@@ -1,7 +1,8 @@
 {
     "python.pythonPath": "/usr/bin/python",
     "files.associations": {
-        "utility": "cpp"
+        "utility": "cpp",
+        "vector": "cpp"
     },
     "C_Cpp.intelliSenseEngineFallback": "Enabled"
 }
