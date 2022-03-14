@@ -18,15 +18,13 @@ std::vector<bisection_ret> NumericalMethods::bisection_method(std::function<doub
     std::vector<bisection_ret> ret;
     struct bisection_ret entry;    
     double f_a = f_x(a);
-    double a_l = a; 
-    double b_l = b;
     uint32_t n = 0;
     while ( n <= max_it )
     {
         // Store metadata
         entry.n = n;
-        entry.a_n = a_l;
-        entry.b_n = b_l;
+        entry.a_n = a;
+        entry.b_n = b;
         entry.p_n = entry.a_n + ( entry.b_n - entry.a_n ) / 2;
         entry.f_p_n = f_x(entry.p_n);
         ret.push_back(entry);
@@ -38,12 +36,12 @@ std::vector<bisection_ret> NumericalMethods::bisection_method(std::function<doub
 
         if ( f_a * entry.f_p_n > 0 )
         {
-            a_l = entry.p_n;
+            a = entry.p_n;
             f_a = entry.f_p_n;
         }
         else
         {
-            b_l = entry.p_n;
+            b = entry.p_n;
         }
         
         n++;

@@ -28,7 +28,8 @@ MATH_DEVTEST_OBJS = obj/Array_devTest.o obj/Integrator_devTest.o obj/Differentia
 					obj/NumericalMethods_devTest.o
 
 # All unit tests
-MATH_UNITTEST_OBJS = obj/MathUnitTest.o obj/Array_unitTest.o obj/Matrix_unitTest.o obj/Vector_unitTest.o
+MATH_UNITTEST_OBJS =    obj/MathUnitTest.o obj/Array_unitTest.o obj/Matrix_unitTest.o obj/Vector_unitTest.o \
+						obj/NumericalMethods_unitTest.o
 
 # All development test exectables
 MATH_DEVTEST_BIN =  bin/Array_devTest bin/Integrator_devTest bin/Differentiator_devTest bin/BoostCompare_devTest \
@@ -37,7 +38,7 @@ MATH_DEVTEST_BIN =  bin/Array_devTest bin/Integrator_devTest bin/Differentiator_
 # All unit test exectables
 MATH_UNITTEST_BIN = bin/MathUnitTest \
 					bin/Array_unitTest bin/Matrix_unitTest bin/Vector_unitTest \
-					bin/IntegratorTrapz_unitTest 
+					bin/IntegratorTrapz_unitTest bin/NumericalMethods_unitTest 
 
 .PHONY: obj bin
 obj: $(MATH_OBJS) $(MATH_DEVTEST_OBJS) $(MATH_UNITTEST_OBJS)

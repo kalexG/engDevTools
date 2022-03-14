@@ -18,9 +18,12 @@
 #include "../inc/IntegratorMidpoint.h"
 #include "../inc/IntegratorSimps.h"
 #include "../inc/IntegratorTrapz.h"
+#include "../inc/NumericalMethods.h"
 
 using ::testing::DoubleNear;
 using ::testing::ElementsAre;
+
+using namespace NumericalMethods;
 
 class MockVector : public Vector
 {
@@ -108,6 +111,13 @@ class IntegratorSimpsUnitTest : public ::testing::Test
 };
 
 class IntegratorTrapzUnitTest : public ::testing::Test
+{
+    public:
+    private:
+    protected:
+};
+
+class NumericalMethodsUnitTest : public ::testing::Test
 {
     public:
     private:
