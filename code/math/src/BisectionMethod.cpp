@@ -1,9 +1,9 @@
-//-------------------------------
-// Filename: NumericalMethods.cpp
+//------------------------------
+// Filename: BisectionMethod.cpp
 // Created: 03/12/2022
 // Last Modified: 03/12/2022
 // Author: Kevin Gomez
-//-------------------------------
+//------------------------------
 
 #include "../inc/NumericalMethods.h"
 

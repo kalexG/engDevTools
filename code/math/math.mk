@@ -21,7 +21,7 @@ MATH_DIRS = obj/ bin/
 # All objects
 MATH_OBJS = obj/Array.o obj/Matrix.o obj/Vector.o obj/LongVector.o \
 			obj/IntegratorTrapz.o obj/IntegratorSimps.o obj/IntegratorMidpoint.o \
-			obj/Differentiator.o obj/BisectionMethod.o
+			obj/Differentiator.o obj/BisectionMethod.o obj/FixedPointIteration.o
 
 # All development tests
 MATH_DEVTEST_OBJS = obj/Array_devTest.o obj/Integrator_devTest.o obj/Differentiator_devTest.o obj/BoostCompare_devTest.o \

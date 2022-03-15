@@ -13,9 +13,11 @@
 #include <limits>
 #include <string.h>
 #include <sstream>
+#include <cmath>
 
 namespace NumericalMethods
 {
+    // Bisection Method Definitions
     struct bisection_ret
     {
         uint32_t n;
@@ -33,6 +35,20 @@ namespace NumericalMethods
 
     std::string bisection_results(std::vector<bisection_ret> ans);
 
+    // Fixed-Point Iteration Method Definitions
+    struct fixedPointIteration_ret
+    {
+        uint32_t n;
+        double p_n;
+        double p_0;
+    };
+
+    std::vector<fixedPointIteration_ret> fixedPointIteration_method(std::function<double(double)> f_x, 
+                                                                    double p_0, 
+                                                                    double tol = 1e-05, 
+                                                                    uint32_t max_it = std::numeric_limits<uint32_t>::max() );
+
+    std::string fixedPointIteration_results(std::vector<fixedPointIteration_ret> ans);
 }
 
 #endif
