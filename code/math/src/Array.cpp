@@ -10,13 +10,15 @@
 // Constructor
 Array::Array(int rows, int cols)
     : validDims(checkValidDims(rows, cols))
+    , myProperties(MAX_PROPERTIES, false)
     , myRows(rows)
     , myCols(cols)
     , myElements(rows*cols)
     , myArray(new double[myElements])
     , myArraySize(myElements * sizeof(myArray))
-    , isSquare(checkSquare(rows, cols))
-{}
+{
+    myProperties[SQUARE] = checkSquare(rows, cols); 
+}
 
 // Copy Constructor
 Array::Array(const Array& arr)
@@ -40,7 +42,7 @@ void swap(Array& arr1, Array& arr2)
     std::swap(arr1.myElements, arr2.myElements);
     std::swap(arr1.myArray, arr2.myArray);
     std::swap(arr1.myArraySize, arr2.myArraySize);
-    std::swap(arr1.isSquare, arr2.isSquare);
+    std::swap(arr1.myProperties, arr2.myProperties);
 }
 
 // Compare Array class data members
@@ -219,7 +221,7 @@ void Array::setIncrement(const double start, const double increment)
 // Set Identity
 void Array::setIdentity(void)
 {
-    if (isSquare)
+    if (myProperties[SQUARE])
     {
         setZeros();
         for (int i = 0; i < myElements; i += (myCols + 1))
@@ -254,7 +256,7 @@ Array Array::getTranspose(void)
 // Get Determinant
 double Array::getDeterminant(void)
 {
-    if (isSquare)
+    if (myProperties[SQUARE])
     {
         Array tmp(*this);
         int mn = tmp.myRows;
@@ -331,13 +333,13 @@ std::size_t Array::getMyArraySize(void)
 // Get isSquare
 bool Array::getIsSquare(void)
 {
-    return isSquare;
+    return myProperties[SQUARE];
 }
 
 // Get Trace
 double Array::getTrace(void)
 {
-    if (isSquare)
+    if (myProperties[SQUARE])
     {
         double tmp = 0.0;
         for (int i = 0; i < myElements; i += (myCols + 1))
@@ -432,7 +434,7 @@ std::string Array::printArrayInfo()
     tmpStream << "Dimensions - " << myRows << "x" << myCols << "\n";
     tmpStream << "Elements - " << myElements << "\n";
     tmpStream << "Size - " << myArraySize << " Bytes\n";
-    tmpStream << "Square Array - " << std::boolalpha << isSquare;
+    tmpStream << "Square Array - " << std::boolalpha << myProperties[SQUARE];
     std::string tmpString = tmpStream.str();
     return tmpString;
 }

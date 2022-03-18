@@ -122,6 +122,15 @@ class Array
         // Data: validDims
         bool validDims;
     protected:
+        // Data: enum for property identification
+        enum Properties
+        {
+            IDENTITY,
+            SQUARE,
+            MAX_PROPERTIES
+        };
+        // Array myProperties
+        std::vector<bool> myProperties;
         // Data: myRows
         int myRows;
         // Data: myCols
@@ -132,8 +141,6 @@ class Array
         double* myArray;
         // Data: myArraySize
         std::size_t myArraySize;
-        // Data: isSquare
-        bool isSquare;
 };
 
 #endif
