@@ -5,7 +5,7 @@
 ## Author: Kevin Gomez
 ##--------------------------
 
-MODULES = math support
+MODULES = math
 
 EDT_MATH_OBJS = math/obj/Array.o \
 				math/obj/Matrix.o \
@@ -16,19 +16,16 @@ EDT_MATH_OBJS = math/obj/Array.o \
 				math/obj/IntegratorMidpoint.o\
 				math/obj/Differentiator.o
 
-EDT_SUPPORT_OBJS =  support/obj/PrintOps.o \
-					support/obj/ReadOps.o \
-					support/obj/WriteOps.o
-
 .PHONY: all
-all: edt-obj edt-bin
+all: edt-bin
 
-lib/libedt.a: $(EDT_MATH_OBJS) $(EDT_SUPPORT_OBJS)
+lib/libedt.a:
+    # Build all required objects
+	@$(foreach modDir,$(MODULES), $(MAKE) --no-print-directory -C $(modDir) obj -f $(modDir).mk;)
+    # Build library 
 	ar rcs $@ $(EDT_MATH_OBJS) $(EDT_SUPPORT_OBJS)	
 
-.PHONY: edt-obj edt-bin
-edt-obj:
-	@$(foreach modDir,$(MODULES), $(MAKE) --no-print-directory -C $(modDir) obj -f $(modDir).mk;)
+.PHONY: edt-bin
 edt-bin: lib/libedt.a
 	@$(foreach modDir,$(MODULES), $(MAKE) --no-print-directory -C $(modDir) bin -f $(modDir).mk;)
 

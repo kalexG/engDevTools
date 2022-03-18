@@ -105,6 +105,10 @@ class Array
         friend void swap(Array& arr1, Array& arr2);
         // Function: compare [UT: Y]
         friend bool compare(Array& arr1, Array& arr2, double tol);
+        // Function: Print Array Contents [UT: Y]
+        std::string printArray(void);
+        // Function: Print Array Info [UT: Y]
+        std::string printArrayInfo(void);
     private:
         // Function: checkValidDims [UT: Y]
         bool checkValidDims(int rows, int cols);

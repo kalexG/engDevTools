@@ -399,3 +399,40 @@ bool Array::checkValidDims(int rows, int cols)
         return false;
     }
 }
+
+// Print array contents
+std::string Array::printArray(void)
+{
+    std::ostringstream tmpStream;
+    tmpStream << "| ";
+    int j = myCols - 1;
+    for (int i = 0; i < myElements; i++)
+    {
+        tmpStream << myArray[i];
+        if ( j == 0 )
+        {
+            tmpStream << " |\n| ";
+            j = myCols - 1;
+        }
+        else
+        {
+            tmpStream << " | ";
+            j--;
+        }
+    }
+    std::string tmpString = tmpStream.str();
+    tmpString.erase(tmpString.length() - 3);
+    return tmpString;
+}
+
+// Print array information
+std::string Array::printArrayInfo()
+{
+    std::ostringstream tmpStream;
+    tmpStream << "Dimensions - " << myRows << "x" << myCols << "\n";
+    tmpStream << "Elements - " << myElements << "\n";
+    tmpStream << "Size - " << myArraySize << " Bytes\n";
+    tmpStream << "Square Array - " << std::boolalpha << isSquare;
+    std::string tmpString = tmpStream.str();
+    return tmpString;
+}

@@ -15,8 +15,7 @@
 #include <string.h>
 #include <chrono>
 #include "../inc/Array.h"
-#include "../../support/inc/PrintOps.h"
-using namespace PrintOps;
+
 using std::vector;
 
 int main( int argc, char *argv[] ) {

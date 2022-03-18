@@ -624,3 +624,54 @@ TEST_F(ArrayUnitTest, checkOperatorMultiply_Mn_nk)
     EXPECT_EQ(myTestArray3(2, 0), 9);
     EXPECT_EQ(myTestArray3(2, 1), 12);
 }
+
+TEST_F(ArrayUnitTest, checkPrintArray_squareArray)
+{
+    Array arr(4, 4);
+    arr.setIncrement(1, 1);
+    std::string arr_p = arr.printArray();
+    std::string expectedString = "| 1 | 2 | 3 | 4 |\n| 5 | 6 | 7 | 8 |\n| 9 | 10 | 11 | 12 |\n| 13 | 14 | 15 | 16 |"; 
+    EXPECT_EQ(arr_p, expectedString); 
+}
+
+TEST_F(ArrayUnitTest, checkPrintArray_moreRows)
+{
+    Array arr(4, 3);
+    arr.setIncrement(1, 1);
+    std::string arr_p = arr.printArray();
+    std::string expectedString = "| 1 | 2 | 3 |\n| 4 | 5 | 6 |\n| 7 | 8 | 9 |\n| 10 | 11 | 12 |"; 
+    EXPECT_EQ(arr_p, expectedString); 
+}
+
+TEST_F(ArrayUnitTest, checkPrintArray_moreCols)
+{
+    Array arr(3, 4);
+    arr.setIncrement(1, 1);
+    std::string arr_p = arr.printArray();
+    std::string expectedString = "| 1 | 2 | 3 | 4 |\n| 5 | 6 | 7 | 8 |\n| 9 | 10 | 11 | 12 |"; 
+    EXPECT_EQ(arr_p, expectedString); 
+}
+
+TEST_F(ArrayUnitTest, checkPrintArrayInfo_squareArray)
+{
+    Array arr(3, 3);
+    std::string arr_i = arr.printArrayInfo();
+    std::string expectedString = "Dimensions - 3x3\nElements - 9\nSize - 72 Bytes\nSquare Array - true"; 
+    EXPECT_EQ(arr_i, expectedString); 
+}
+
+TEST_F(ArrayUnitTest, checkPrintArrayInfo_moreRows)
+{
+    Array arr(4, 3);
+    std::string arr_i = arr.printArrayInfo();
+    std::string expectedString = "Dimensions - 4x3\nElements - 12\nSize - 96 Bytes\nSquare Array - false"; 
+    EXPECT_EQ(arr_i, expectedString); 
+}
+
+TEST_F(ArrayUnitTest, checkPrintArrayInfo_moreCols)
+{
+    Array arr(3, 5);
+    std::string arr_i = arr.printArrayInfo();
+    std::string expectedString = "Dimensions - 3x5\nElements - 15\nSize - 120 Bytes\nSquare Array - false"; 
+    EXPECT_EQ(arr_i, expectedString); 
+}

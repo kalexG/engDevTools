@@ -9,8 +9,6 @@
 #include <math.h>
 #include <string.h>
 #include "../inc/Array.h"
-#include "../../support/inc/PrintOps.h"
-using namespace PrintOps;
 
 int main( int argc, char *argv[] ) {
 
@@ -31,15 +29,15 @@ int main( int argc, char *argv[] ) {
     arr5.setZeros();
 	
     // Test function: setOnes
-    printf("arr1 set to Ones:\n%s", PrintOps::printArray( arr1 ).c_str());
+    printf("arr1 set to Ones:\n%s", arr1.printArray().c_str());
     printf("\n");
 	
     // Test function: setIncrement
-    printf("arr2 incremented from 1.0 by 1.0:\n%s", PrintOps::printArray( arr2 ).c_str());
+    printf("arr2 incremented from 1.0 by 1.0:\n%s", arr2.printArray().c_str());
     printf("\n");
     
     // Test function: setZeros
-    printf("arr3 set to Zeros:\n%s", PrintOps::printArray( arr3 ).c_str());
+    printf("arr3 set to Zeros:\n%s", arr3.printArray().c_str());
     printf("\n");
     
     arr3 = (arr2 * 2.0) - arr1;
@@ -151,7 +149,7 @@ int main( int argc, char *argv[] ) {
     arr9(2,0) = 2;
     arr9(2,1) = 8;
     arr9(2,2) = 7;
-    printf("arr9 initialized!:\n%s\n", PrintOps::printArray( arr9 ).c_str());
+    printf("arr9 initialized!:\n%s\n", arr9.printArray().c_str());
     double det9 = arr9.getDeterminant();
     printf("Determinant of arr9 is: %f\n",det9);
     
@@ -173,7 +171,7 @@ int main( int argc, char *argv[] ) {
     arr10(3,1) = 3;
     arr10(3,2) = 1;
     arr10(3,3) = 1;
-    printf("arr10 initialized!:\n%s\n", PrintOps::printArray( arr10 ).c_str());
+    printf("arr10 initialized!:\n%s\n", arr10.printArray().c_str());
     double det10 = arr10.getDeterminant();
     printf("Determinant of arr10 is: %f\n",det10);
     
@@ -194,7 +192,7 @@ int main( int argc, char *argv[] ) {
     arr11(3,1) = 3;
     arr11(3,2) = 1;
     arr11(3,3) = 1;
-    printf("arr11 initialized!:\n%s\n", PrintOps::printArray( arr11 ).c_str());
+    printf("arr11 initialized!:\n%s\n", arr11.printArray().c_str());
     double det11 = arr11.getDeterminant();
     printf("Determinant of arr11 is: %f\n",det11);
     
@@ -225,7 +223,7 @@ int main( int argc, char *argv[] ) {
     arr12(4,2) = 3;
     arr12(4,3) = 0;
     arr12(4,4) = -2;
-    printf("arr12 initialized!:\n%s\n", PrintOps::printArray( arr12 ).c_str());
+    printf("arr12 initialized!:\n%s\n", arr12.printArray().c_str());
     double det12 = arr12.getDeterminant();
     printf("Determinant of arr12 is: %f\n",det12);
 
