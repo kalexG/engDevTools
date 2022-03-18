@@ -26,9 +26,7 @@ MATH_OBJS = obj/Array.o \
 			obj/IntegratorTrapz.o \
 			obj/IntegratorSimps.o \
 			obj/IntegratorMidpoint.o \
-			obj/Differentiator.o \
-			obj/BisectionMethod.o \
-			obj/FixedPointIteration.o
+			obj/Differentiator.o
 
 # All development tests
 MATH_DEVTEST_OBJS = obj/Array_devTest.o \
@@ -42,8 +40,7 @@ MATH_UNITTEST_OBJS =    obj/MathUnitTest.o \
 						obj/Array_unitTest.o \
 						obj/Matrix_unitTest.o \
 						obj/Vector_unitTest.o \
-						obj/BisectionMethod_unitTest.o \
-						obj/FixedPointIteration_unitTest.o
+						obj/NumericalMethods_unitTest.o \
 
 # All development test exectables
 MATH_DEVTEST_BIN =  bin/Array_devTest \
@@ -58,8 +55,7 @@ MATH_UNITTEST_BIN = bin/MathUnitTest \
 					bin/Matrix_unitTest \
 					bin/Vector_unitTest \
 					bin/IntegratorTrapz_unitTest \
-					bin/BisectionMethod_unitTest \
-					bin/FixedPointIteration_unitTest 
+					bin/NumericalMethods_unitTest \
 
 .PHONY: obj bin
 obj: $(MATH_OBJS) $(MATH_DEVTEST_OBJS) $(MATH_UNITTEST_OBJS)
