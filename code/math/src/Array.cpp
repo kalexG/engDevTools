@@ -253,6 +253,46 @@ Array Array::getTranspose(void)
     return tmp;
 }
 
+// Set Inverse
+void Array::setInverse(void)
+{
+    int mn = myRows;
+    int* ipiv = new int [mn];
+    // Utilize LAPACKE LU Factorization
+    int info = LAPACKE_dgetrf( LAPACK_ROW_MAJOR, mn, mn, myArray, mn, ipiv );
+    // INFO < 0: if INFO = -i, the i-th argument had an illegal value
+    // INFO > 0: if INFO = i, U(i,i) is exactly zero. The factorization 
+    //           has been completed, but the factor U is exactly
+    //           singular, and division by zero will occur if it is used
+    //           to solve a system of equations.
+    if ( info < 0 )
+    {
+        throw std::invalid_argument("ERROR: INFO < 0 in getDeterminant: if INFO = -i, the i-th argument had an illegal value: " +
+                                        std::to_string(info) + "\n");
+    }
+}
+
+// Get Inverse
+Array Array::getInverse(void)
+{
+    Array tmp(*this);
+    int mn = tmp.myRows;
+    int* ipiv = new int [mn];
+    // Utilize LAPACKE LU Factorization
+    int info = LAPACKE_dgetrf( LAPACK_ROW_MAJOR, mn, mn, tmp.myArray, mn, ipiv );
+    // INFO < 0: if INFO = -i, the i-th argument had an illegal value
+    // INFO > 0: if INFO = i, U(i,i) is exactly zero. The factorization 
+    //           has been completed, but the factor U is exactly
+    //           singular, and division by zero will occur if it is used
+    //           to solve a system of equations.
+    if ( info < 0 )
+    {
+        throw std::invalid_argument("ERROR: INFO < 0 in getDeterminant: if INFO = -i, the i-th argument had an illegal value: " +
+                                        std::to_string(info) + "\n");
+    }
+    return tmp;
+}
+
 // Get Determinant
 double Array::getDeterminant(void)
 {

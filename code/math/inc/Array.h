@@ -65,6 +65,10 @@ class Array
         void setTranspose(void);
         // Setter Function: getTranspose [UT: Y]
         Array getTranspose(void);
+        // Setter Function: setInverse [UT: N]
+        void setInverse(void);
+        // Setter Function: getInverse [UT: N]
+        Array getInverse(void);
         // Setter Function: getDeterminant [UT: N]
         double getDeterminant(void);
         // Getter Function: getMyRows [UT: Y]
