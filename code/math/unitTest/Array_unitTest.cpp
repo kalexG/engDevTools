@@ -8,32 +8,35 @@
 #include "../inc/MathUnitTest.h"
 
 // Test Array() - Make sure object got constructed correctly with valid dimensions
-TEST_F(ArrayUnitTest, checkConstructor_validDimensions)
+TEST_F(ArrayUnitTest, checkConstructor_validConstructionNonSquare)
 {
     Array myTestArray(4, 7);
+    std::vector<bool> exp_prop{false, false, true};
+    EXPECT_EQ(myTestArray.getArrayProperties(), exp_prop);
     EXPECT_EQ(myTestArray.getMyRows(), 4);
     EXPECT_EQ(myTestArray.getMyCols(), 7);
     EXPECT_EQ(myTestArray.getMyElements(), 28);
+    EXPECT_TRUE(myTestArray.getMyArray() != nullptr);
+    ASSERT_EQ(myTestArray.getMyArraySize(), 224);
+}
+
+// Test Array() - Make sure object got constructed correctly with valid dimensions
+TEST_F(ArrayUnitTest, checkConstructor_validConstructionSquare)
+{
+    Array myTestArray(4, 4);
+    std::vector<bool> exp_prop{false, true, true};
+    EXPECT_EQ(myTestArray.getArrayProperties(), exp_prop);
+    EXPECT_EQ(myTestArray.getMyRows(), 4);
+    EXPECT_EQ(myTestArray.getMyCols(), 4);
+    EXPECT_EQ(myTestArray.getMyElements(), 16);
+    EXPECT_TRUE(myTestArray.getMyArray() != nullptr);
+    ASSERT_EQ(myTestArray.getMyArraySize(), 128);
 }
 
 // Test Array() - Catch constructor throw for invalid dimensions
 TEST_F(ArrayUnitTest, checkConstructor_invalidDimensions)
 {
     EXPECT_THROW(Array myTestArray(3, -1), std::invalid_argument);
-}
-
-// Test Array() - Make sure object identifies square array during construction
-TEST_F(ArrayUnitTest, checkConstructor_squareArray)
-{
-    Array myTestArray(4, 4);
-    EXPECT_TRUE(myTestArray.getIsSquare());    
-}
-
-// Test Array() - Make sure object identifies non-square array during construction
-TEST_F(ArrayUnitTest, checkConstructor_nonSquareArray)
-{
-    Array myTestArray(4, 3);
-    EXPECT_FALSE(myTestArray.getIsSquare());    
 }
 
 // Test Array::setZeros() - Make sure setter works
@@ -125,6 +128,26 @@ TEST_F(ArrayUnitTest, checkSetIdentity_squareArray)
     }
 }
 
+// Test Array::getInverse() - Make sure getter works
+TEST_F(ArrayUnitTest, checkGetInverse_6_3_5_b)
+{
+    Array myTestArray(myArray2->getInverse());
+    ASSERT_EQ(myTestArray.getMyRows(), myArray2_inv->getMyCols());
+    ASSERT_EQ(myTestArray.getMyCols(), myArray2_inv->getMyRows());
+    ASSERT_EQ(myTestArray.getMyElements(), myArray2_inv->getMyElements());
+    ASSERT_TRUE(compare(myTestArray, *myArray2_inv));
+}
+
+// Test Array::getInverse() - Make sure getter works
+TEST_F(ArrayUnitTest, checkGetInverse_6_3_5_d)
+{
+    Array myTestArray(myArray4->getInverse());
+    ASSERT_EQ(myTestArray.getMyRows(), myArray4_inv->getMyCols());
+    ASSERT_EQ(myTestArray.getMyCols(), myArray4_inv->getMyRows());
+    ASSERT_EQ(myTestArray.getMyElements(), myArray4_inv->getMyElements());
+    ASSERT_TRUE(compare(myTestArray, *myArray4_inv));
+}
+
 // Test Array::getTranspose() - Make sure getter works
 TEST_F(ArrayUnitTest, checkGetTranspose)
 {
@@ -141,7 +164,6 @@ TEST_F(ArrayUnitTest, checkGetTranspose)
             EXPECT_EQ(myTestArray2(i,j), myTestArray1(j,i));
         }
     }
-    
 }
 
 // Test Array::setTranspose() - Make sure setter works (M=N)
@@ -303,6 +325,27 @@ TEST_F(ArrayUnitTest, checkOperatorMultiply_ScalarArray)
     }
 }
 
+// Test Array::getMyRows() - Make sure getter works
+TEST_F(ArrayUnitTest, checkGetMyRows)
+{
+    Array myTestArray(3, 6);
+    EXPECT_EQ(myTestArray.getMyRows(), 3);
+}
+
+// Test Array::getMyColumnss() - Make sure getter works
+TEST_F(ArrayUnitTest, checkGetMyColumns)
+{
+    Array myTestArray(3, 6);
+    EXPECT_EQ(myTestArray.getMyCols(), 6);
+}
+
+// Test Array::getMyElements() - Make sure getter works
+TEST_F(ArrayUnitTest, checkGetMyElements)
+{
+    Array myTestArray(3, 6);
+    EXPECT_EQ(myTestArray.getMyElements(), 18);
+}
+
 // Test Array::getMyArray() - Make sure getter works
 TEST_F(ArrayUnitTest, checkGetMyArray)
 {
@@ -323,6 +366,45 @@ TEST_F(ArrayUnitTest, checkGetMyArraySize)
 {
     Array myTestArray(3, 3);
     EXPECT_EQ(myTestArray.getMyArraySize(), 72);
+}
+
+// Test Array::getArrayProperties() - Make sure getter works
+TEST_F(ArrayUnitTest, checkGetArrayProperties_none)
+{
+    Array myTestArray(4, 3);
+    std::vector<bool> exp_prop{false, false, true};
+    EXPECT_EQ(myTestArray.getArrayProperties(), exp_prop);
+}
+
+// Test Array::getArrayProperties() - Make sure getter works
+TEST_F(ArrayUnitTest, checkGetArrayProperties_sq)
+{
+    Array myTestArray(3, 3);
+    std::vector<bool> exp_prop{false, true, true};
+    EXPECT_EQ(myTestArray.getArrayProperties(), exp_prop);
+}
+
+// Test Array::getArrayProperties() - Make sure getter works
+TEST_F(ArrayUnitTest, checkGetArrayProperties_sq_id)
+{
+    Array myTestArray(3, 3);
+    myTestArray.setIdentity();
+    std::vector<bool> exp_prop{true, true, false};
+    EXPECT_EQ(myTestArray.getArrayProperties(), exp_prop);
+}
+
+// Test Array::getArrayProperties() - Make sure getter works
+TEST_F(ArrayUnitTest, checkGetArrayProperties_sq_sin_6_3_5_a)
+{
+    std::vector<bool> exp_prop{false, true, true};
+    EXPECT_EQ(myArray1->getArrayProperties(), exp_prop);
+}
+
+// Test Array::getArrayProperties() - Make sure getter works
+TEST_F(ArrayUnitTest, checkGetArrayProperties_sq_sin_6_3_5_c)
+{
+    std::vector<bool> exp_prop{false, true, true};
+    EXPECT_EQ(myArray3->getArrayProperties(), exp_prop);
 }
 
 // Test Array::operator+ (Array + Array) - Catch invalid demnsions
@@ -478,8 +560,10 @@ TEST_F(ArrayUnitTest, checkSwap)
     ASSERT_EQ(myTestArray1.getMyElements(), 15);
     ASSERT_EQ(myTestArray2.getMyArraySize(), 72);
     ASSERT_EQ(myTestArray1.getMyArraySize(), 120);
-    ASSERT_TRUE(myTestArray2.getIsSquare());
-    ASSERT_FALSE(myTestArray1.getIsSquare());
+    std::vector<bool> exp_prop2{false, true, true};
+    std::vector<bool> exp_prop1{false, false, true};
+    ASSERT_EQ(myTestArray2.getArrayProperties(), exp_prop2);
+    ASSERT_EQ(myTestArray1.getArrayProperties(), exp_prop1);
 }
 
 // Test Array::compare() - Make sure compare function works (false)

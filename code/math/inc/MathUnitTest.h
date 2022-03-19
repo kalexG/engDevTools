@@ -92,6 +92,48 @@ class MockArray : public Array
 class ArrayUnitTest : public ::testing::Test
 {
     public:
+        Array* myArray1;
+        Array* myArray2;
+        Array* myArray2_inv;
+        Array* myArray3;
+        Array* myArray4;
+        Array* myArray4_inv;
+        ArrayUnitTest()
+        {
+            myArray1 = new Array(3,3);
+            myArray2 = new Array(3,3);
+            myArray2_inv = new Array(3,3);
+            myArray3 = new Array(4,4);
+            myArray4 = new Array(4,4);
+            myArray4_inv = new Array(4,4);
+            // Array for Testing: myArray1 (singular)
+            myArray1->operator()(0,0) = 4;  myArray1->operator()(0,1) = 2;  myArray1->operator()(0,2) = 6;
+            myArray1->operator()(1,0) = 3;  myArray1->operator()(1,1) = 0;  myArray1->operator()(1,2) = 7;
+            myArray1->operator()(2,0) = -2; myArray1->operator()(2,1) = -1; myArray1->operator()(2,2) = -3;
+            // Array for Testing: myArray2
+            myArray2->operator()(0,0) = 1; myArray2->operator()(0,1) = 2; myArray2->operator()(0,2) = 0;
+            myArray2->operator()(1,0) = 2; myArray2->operator()(1,1) = 1; myArray2->operator()(1,2) = -1;
+            myArray2->operator()(2,0) = 3; myArray2->operator()(2,1) = 1; myArray2->operator()(2,2) = 1;
+            // Array for Testing: myArray2_inv
+            myArray2_inv->operator()(0,0) = -1.0/4.0; myArray2_inv->operator()(0,1) = 1.0/4.0;   myArray2_inv->operator()(0,2) = 1.0/4.0;
+            myArray2_inv->operator()(1,0) = 5.0/8.0; myArray2_inv->operator()(1,1) = -1.0/8.0; myArray2_inv->operator()(1,2) = -1.0/8.0;
+            myArray2_inv->operator()(2,0) = 1.0/8.0; myArray2_inv->operator()(2,1) = -5.0/8.0; myArray2_inv->operator()(2,2) = 3.0/8.0;
+            // Array for Testing: myArray3 (singular)
+            myArray3->operator()(0,0) = 1;  myArray3->operator()(0,1) = 1; myArray3->operator()(0,2) = -1; myArray3->operator()(0,3) = 1;
+            myArray3->operator()(1,0) = 1;  myArray3->operator()(1,1) = 2; myArray3->operator()(1,2) = -4; myArray3->operator()(1,3) = -2;
+            myArray3->operator()(2,0) = 2;  myArray3->operator()(2,1) = 1; myArray3->operator()(2,2) = 1;  myArray3->operator()(2,3) = 5;
+            myArray3->operator()(3,0) = -1; myArray3->operator()(3,1) = 0; myArray3->operator()(3,2) = -2; myArray3->operator()(3,3) = -4;
+            // Array for Testing: myArray4
+            myArray4->operator()(0,0) = 4; myArray4->operator()(0,1) = 0;  myArray4->operator()(0,2) = 0; myArray4->operator()(0,3) = 0;
+            myArray4->operator()(1,0) = 6; myArray4->operator()(1,1) = 7;  myArray4->operator()(1,2) = 0; myArray4->operator()(1,3) = 0;
+            myArray4->operator()(2,0) = 9; myArray4->operator()(2,1) = 11; myArray4->operator()(2,2) = 1; myArray4->operator()(2,3) = 0;
+            myArray4->operator()(3,0) = 5; myArray4->operator()(3,1) = 4;  myArray4->operator()(3,2) = 1; myArray4->operator()(3,3) = 1;
+            // Array for Testing: myArray4_inv
+            myArray4_inv->operator()(0,0) = 1.0/4.0; myArray4_inv->operator()(0,1) = 0;  myArray4_inv->operator()(0,2) = 0; myArray4_inv->operator()(0,3) = 0;
+            myArray4_inv->operator()(1,0) = -3.0/14.0; myArray4_inv->operator()(1,1) = 1.0/7.0;  myArray4_inv->operator()(1,2) = 0; myArray4_inv->operator()(1,3) = 0;
+            myArray4_inv->operator()(2,0) = 3.0/28.0; myArray4_inv->operator()(2,1) = -11.0/7.0; myArray4_inv->operator()(2,2) = 1; myArray4_inv->operator()(2,3) = 0;
+            myArray4_inv->operator()(3,0) = -1.0/2.0; myArray4_inv->operator()(3,1) = 1;  myArray4_inv->operator()(3,2) = -1; myArray4_inv->operator()(3,3) = 1;
+        }
     private:
     protected:
 };

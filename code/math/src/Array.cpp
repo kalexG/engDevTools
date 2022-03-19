@@ -17,7 +17,8 @@ Array::Array(int rows, int cols)
     , myArray(new double[myElements])
     , myArraySize(myElements * sizeof(myArray))
 {
-    myProperties[SQUARE] = checkSquare(rows, cols); 
+    setZeros();
+    myProperties[SQUARE] = checkSquare();
 }
 
 // Copy Constructor
@@ -265,11 +266,29 @@ void Array::setInverse(void)
     //           has been completed, but the factor U is exactly
     //           singular, and division by zero will occur if it is used
     //           to solve a system of equations.
-    if ( info < 0 )
+    if ( info != 0 )
     {
-        throw std::invalid_argument("ERROR: INFO < 0 in getDeterminant: if INFO = -i, the i-th argument had an illegal value: " +
-                                        std::to_string(info) + "\n");
+        myProperties[SINGULAR] = true;
+        throw std::invalid_argument("ERROR:\n"
+                                    "INFO < 0 in setInverse: if INFO = -i, the i-th argument had an illegal value.\n"
+                                    "INFO > 0 in setInverse: if INFO = i, U(i,i) is exactly zero. The factorization " 
+                                    "has been completed, but the factor U is exactly singular, and division by zero will "
+                                    "occur if it is used to solve a system of equations.\nINFO = " + 
+                                    std::to_string(info) + "\n");
     }
+    
+    info = LAPACKE_dgetri( LAPACK_ROW_MAJOR, mn, myArray, mn, ipiv );
+    
+    if ( info != 0 )
+    {
+        myProperties[SINGULAR] = true;
+        throw std::invalid_argument("ERROR:\n"
+                                    "INFO < 0 in getInverse: if INFO = -i, the i-th argument had an illegal value.\n"
+                                    "INFO > 0 in getInverse: if INFO = i, U(i,i) is exactly zero; the matrix is " 
+                                    "singular and its inverse could not be computed.\nINFO = " + 
+                                    std::to_string(info) + "\n");
+    }
+    myProperties[SINGULAR] = false;
 }
 
 // Get Inverse
@@ -285,11 +304,29 @@ Array Array::getInverse(void)
     //           has been completed, but the factor U is exactly
     //           singular, and division by zero will occur if it is used
     //           to solve a system of equations.
-    if ( info < 0 )
+    if ( info != 0 )
     {
-        throw std::invalid_argument("ERROR: INFO < 0 in getDeterminant: if INFO = -i, the i-th argument had an illegal value: " +
-                                        std::to_string(info) + "\n");
+        myProperties[SINGULAR] = true;
+        throw std::invalid_argument("ERROR:\n"
+                                    "INFO < 0 in getInverse: if INFO = -i, the i-th argument had an illegal value.\n"
+                                    "INFO > 0 in getInverse: if INFO = i, U(i,i) is exactly zero. The factorization " 
+                                    "has been completed, but the factor U is exactly singular, and division by zero will "
+                                    "occur if it is used to solve a system of equations.\nINFO = " + 
+                                    std::to_string(info) + "\n");
     }
+    
+    info = LAPACKE_dgetri( LAPACK_ROW_MAJOR, mn, tmp.myArray, mn, ipiv );
+    
+    if ( info != 0 )
+    {
+        myProperties[SINGULAR] = true;
+        throw std::invalid_argument("ERROR:\n"
+                                    "INFO < 0 in getInverse: if INFO = -i, the i-th argument had an illegal value.\n"
+                                    "INFO > 0 in getInverse: if INFO = i, U(i,i) is exactly zero; the matrix is " 
+                                    "singular and its inverse could not be computed.\nINFO = " + 
+                                    std::to_string(info) + "\n");
+    }
+    myProperties[SINGULAR] = false;
     return tmp;
 }
 
@@ -308,13 +345,19 @@ double Array::getDeterminant(void)
         //           has been completed, but the factor U is exactly
         //           singular, and division by zero will occur if it is used
         //           to solve a system of equations.
-        if ( info < 0 )
+        if ( info != 0 )
         {
-            throw std::invalid_argument("ERROR: INFO < 0 in getDeterminant: if INFO = -i, the i-th argument had an illegal value: " +
+            myProperties[SINGULAR] = true;
+            throw std::invalid_argument("ERROR:\n" 
+                                        "INFO < 0 in getDeterminant: if INFO = -i, the i-th argument had an illegal value.\n"
+                                        "INFO > 0 in getDeterminant: if INFO = i, U(i,i) is exactly zero. The factorization " 
+                                        "has been completed, but the factor U is exactly singular, and division by zero will "
+                                        "occur if it is used to solve a system of equations.\nINFO = " + 
                                          std::to_string(info) + "\n");
         }
         else
         {
+            myProperties[SINGULAR] = false;
             // Calculate Determinant
             double det = 1;
             for( int i = 0; i < mn; i++ )
@@ -370,10 +413,14 @@ std::size_t Array::getMyArraySize(void)
     return myArraySize;
 }
 
-// Get isSquare
-bool Array::getIsSquare(void)
+// Get array properties
+std::vector<bool> Array::getArrayProperties(void)
 {
-    return myProperties[SQUARE];
+    // Reevaluate properties
+    myProperties[SQUARE] = checkSquare();
+    myProperties[IDENTITY] = checkIdentity();
+    myProperties[SINGULAR] = checkSingular();
+    return myProperties;
 }
 
 // Get Trace
@@ -417,13 +464,60 @@ std::vector<std::vector<double>> Array::getStdVector2D(void)
 }
 
 // Check if Array is Square
-bool Array::checkSquare(int rows, int cols)
+bool Array::checkSquare()
 {
-    if (rows == cols)
+    if (myRows == myCols)
     {
         return true;
     }
     else 
+    {
+        return false;
+    }
+}
+
+// Check if Array is Identity
+bool Array::checkIdentity()
+{
+    if ( !myProperties[SQUARE] )
+    {
+        return false;
+    }
+    
+    for (int i = 0; i < myElements; i += (myCols + 1))
+    {
+        if ( myArray[i] != 1.0 )
+        {
+            return false;
+        }
+    }
+
+    return true;
+}
+
+// Check if Array is Singular
+bool Array::checkSingular()
+{
+    if ( !myProperties[SQUARE] || myElements == 0 )
+    {
+        return true;
+    }
+    
+    if ( myProperties[IDENTITY] )
+    {
+        return false;
+    }
+    
+    int mn = myRows;
+    int* ipiv = new int [mn];
+    // Utilize LAPACKE LU Factorization
+    int info = LAPACKE_dgetrf( LAPACK_ROW_MAJOR, mn, mn, myArray, mn, ipiv );
+    
+    if ( info != 0 )
+    {
+        return true;
+    }
+    else
     {
         return false;
     }

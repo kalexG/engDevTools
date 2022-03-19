@@ -25,6 +25,9 @@ extern "C"
     
     lapack_int LAPACKE_dgetrf( int, lapack_int, lapack_int,
                                double*, lapack_int, lapack_int* );
+    
+    lapack_int LAPACKE_dgetri( int, lapack_int, double*,
+                               lapack_int, const lapack_int* );
 
     void cblas_dgemm(CBLAS_LAYOUT, CBLAS_TRANSPOSE, CBLAS_TRANSPOSE, 
                     int, int, int, double, const double*, int, 
@@ -49,7 +52,7 @@ class Array
         Array(Array&& arr) noexcept;
         // Assignment Operator: [UT: Y]
         Array& operator= (Array arr) noexcept;
-        // Destructor [UT: Y]
+        // Destructor [UT: N]
         virtual ~Array(void);
         // Setter Function: setZeros [UT: Y]
         void setZeros(void);
@@ -81,8 +84,8 @@ class Array
         double* getMyArray(void);
         // Getter Function: getMyArraySize [UT: Y]
         std::size_t getMyArraySize(void);
-        // Getter Function: getIsSquare [UT: Y]
-        bool getIsSquare(void);
+        // Getter Function: getArrayProperties [UT: Y]
+        std::vector<bool> getArrayProperties(void);
         // Getter Function: getTrace [UT: Y]
         double getTrace(void);
         // Getter Function: getStdVector1D [UT: Y]
@@ -114,10 +117,14 @@ class Array
         // Function: Print Array Info [UT: Y]
         std::string printArrayInfo(void);
     private:
-        // Function: checkValidDims [UT: Y]
+        // Function: checkValidDims [UT: N]
         bool checkValidDims(int rows, int cols);
-        // Function: checkSquare [UT: Y]
-        bool checkSquare(int rows, int cols);
+        // Function: checkSquare [UT: N]
+        bool checkSquare();
+        // Function: checkSingular [UT: N]
+        bool checkSingular();
+        // Function: checkIdentity [UT: N]
+        bool checkIdentity();
     protected:
 
     // Member Data
@@ -131,6 +138,7 @@ class Array
         {
             IDENTITY,
             SQUARE,
+            SINGULAR,
             MAX_PROPERTIES
         };
         // Array myProperties
