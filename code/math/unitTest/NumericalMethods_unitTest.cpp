@@ -183,3 +183,120 @@ TEST_F(NumericalMethodsUnitTest, FixedIterationMethod_2_2_11)
     EXPECT_EQ(ans.back().n, 5);
     ans.clear();
 }
+
+double function_23_1(double x)
+{
+    double f_x = pow(x,3) - 2 * pow(x,2) - 5;
+    return f_x;
+}
+
+double function_23_1p(double x)
+{
+    double fp_x = 3 * pow(x,2) - 4 * x;
+    return fp_x;
+}
+
+double function_23_2(double x)
+{
+    double f_x = pow(x,3) + 3 * pow(x,2) - 1;
+    return f_x;
+}
+
+double function_23_2p(double x)
+{
+    double fp_x = 3 * pow(x,2) + 6 * x;
+    return fp_x;
+}
+
+double function_23_3(double x)
+{
+    double f_x = x - cos(x);
+    return f_x;
+}
+double function_23_3p(double x)
+{
+    double fp_x = 1 + sin(x);
+    return fp_x;
+}
+double function_23_4(double x)
+{
+    double f_x = x - 0.8 - 0.2 * sin(x);
+    return f_x;
+}
+double function_23_4p(double x)
+{
+    double fp_x = 1 - 0.2 * cos(x);
+    return fp_x;
+}
+
+TEST_F(NumericalMethodsUnitTest, NewtonsMethod_2_3_5)
+{
+    // a
+    std::vector<NumericalMethods::rootSolver_ret> ans = NumericalMethods::newtons_method(&function_23_1, &function_23_1p, 2.0, 1e-04);
+    EXPECT_NEAR(ans.back().p_n, 2.69065, 1e-05);
+    EXPECT_EQ(ans.back().n, 5);
+    ans.clear();
+    // b
+    ans = NumericalMethods::newtons_method(&function_23_2, &function_23_2p, -3.0, 1e-04);
+    EXPECT_NEAR(ans.back().p_n, -2.87939, 1e-05);
+    EXPECT_EQ(ans.back().n, 3);
+    ans.clear();
+    // c
+    ans = NumericalMethods::newtons_method(&function_23_3, &function_23_3p, 0.0, 1e-04);
+    EXPECT_NEAR(ans.back().p_n, 0.73909, 1e-05);
+    EXPECT_EQ(ans.back().n, 4);
+    ans.clear();
+    // d (For some reason, the answer for part d only went to p3. Here it went to p4. Other cases worked fine)
+    ans = NumericalMethods::newtons_method(&function_23_4, &function_23_4p, 0.0, 1e-04);
+    EXPECT_NEAR(ans.back().p_n, 0.96434, 1e-05);
+    EXPECT_EQ(ans.back().n, 4);
+    ans.clear();
+}
+
+TEST_F(NumericalMethodsUnitTest, SecantMethod_2_3_7)
+{
+    // a
+    std::vector<NumericalMethods::rootSolver_ret> ans = NumericalMethods::secant_method(&function_23_1, 1.0, 4.0, 1e-04);
+    EXPECT_NEAR(ans.back().p_n, 2.69065, 1e-05);
+    EXPECT_EQ(ans.back().n, 11);
+    ans.clear();
+    // b
+    ans = NumericalMethods::secant_method(&function_23_2, -3.0, -2.0,  1e-04);
+    EXPECT_NEAR(ans.back().p_n, -2.87939, 1e-05);
+    EXPECT_EQ(ans.back().n, 7);
+    ans.clear();
+    // c
+    ans = NumericalMethods::secant_method(&function_23_3, 0.0, M_PI/2.0, 1e-04);
+    EXPECT_NEAR(ans.back().p_n, 0.73909, 1e-05);
+    EXPECT_EQ(ans.back().n, 6);
+    ans.clear();
+    // d
+    ans = NumericalMethods::secant_method(&function_23_4, 0.0, M_PI/2.0, 1e-04);
+    EXPECT_NEAR(ans.back().p_n, 0.96433, 1e-05);
+    EXPECT_EQ(ans.back().n, 5);
+    ans.clear();
+}
+
+TEST_F(NumericalMethodsUnitTest, MethodOfFalsePosition_2_3_9)
+{
+    // a
+    std::vector<NumericalMethods::rootSolver_ret> ans = NumericalMethods::falsePosition_method(&function_23_1, 1.0, 4.0, 1e-04);
+    EXPECT_NEAR(ans.back().p_n, 2.69060, 1e-05);
+    EXPECT_EQ(ans.back().n, 16);
+    ans.clear();
+    // b
+    ans = NumericalMethods::falsePosition_method(&function_23_2, -3.0, -2.0,  1e-04);
+    EXPECT_NEAR(ans.back().p_n, -2.87938, 1e-05);
+    EXPECT_EQ(ans.back().n, 6);
+    ans.clear();
+    // c
+    ans = NumericalMethods::falsePosition_method(&function_23_3, 0.0, M_PI/2.0, 1e-04);
+    EXPECT_NEAR(ans.back().p_n, 0.73908, 1e-05);
+    EXPECT_EQ(ans.back().n, 7);
+    ans.clear();
+    // d
+    ans = NumericalMethods::falsePosition_method(&function_23_4, 0.0, M_PI/2.0, 1e-04);
+    EXPECT_NEAR(ans.back().p_n, 0.96433, 1e-05);
+    EXPECT_EQ(ans.back().n, 6);
+    ans.clear();
+}
