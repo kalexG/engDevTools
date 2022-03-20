@@ -220,6 +220,37 @@ namespace NumericalMethods
         return tmpString;
     };
 
+    // Modified Netwon's Method
+    inline std::vector<rootSolver_ret> ModifiedNewtons_method(std::function<double(double)> f_x, 
+                                                              std::function<double(double)> fp_x,
+                                                              std::function<double(double)> fpp_x,
+                                                              double p_0, 
+                                                              double tol = 1e-05, 
+                                                              uint32_t max_it = std::numeric_limits<uint32_t>::max() )
+    {
+        std::vector<rootSolver_ret> ret;
+        rootSolver_ret entry;    
+        uint32_t n = 1;
+        // First entry 
+        entry.n = 0;
+        entry.p_n = p_0;
+        ret.push_back(entry);
+        while ( n <= max_it )
+        {
+            // Store metadata
+            entry.n = n;
+            entry.p_n = p_0 - (f_x(p_0) * fp_x(p_0)) / (pow(fp_x(p_0),2) - f_x(p_0) * fpp_x(p_0));
+            ret.push_back(entry);
+
+            if ( fabs( entry.p_n - p_0) < tol )
+            {
+                return ret;
+            }
+            p_0 = entry.p_n;
+            n++;
+        }
+        return ret;   
+    };
 }
 
 #endif

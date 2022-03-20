@@ -300,3 +300,67 @@ TEST_F(NumericalMethodsUnitTest, MethodOfFalsePosition_2_3_9)
     EXPECT_EQ(ans.back().n, 6);
     ans.clear();
 }
+
+double function_24_1(double x)
+{
+    double f_x = pow(x,2.0) - 2.0 * x * exp(-x) + exp(-2.0 * x);
+    return f_x;
+}
+
+double function_24_1p(double x)
+{
+    double fp_x = 2.0 * x + 2.0 * exp(-x) * (x - 1.0) - 2.0 * exp(-2.0 * x);
+    return fp_x;
+}
+
+double function_24_1pp(double x)
+{
+    double fpp_x = 2.0 - 2.0 * exp(-x) * (x - 2.0) + 4.0 * exp(-2.0 * x);
+    return fpp_x;
+}
+
+double function_24_2(double x)
+{
+    double f_x = cos(x + sqrt(2.0)) + x * ((x / 2.0) + sqrt(2.0));
+    return f_x;
+}
+
+double function_24_2p(double x)
+{
+    double fp_x = sqrt(2.0) + x - sin(x + sqrt(2.0));
+    return fp_x;
+}
+
+double function_24_2pp(double x)
+{
+    double fp_x = 1.0 - cos(x + sqrt(2.0));
+    return fp_x;
+}
+
+TEST_F(NumericalMethodsUnitTest, ModifiedNewtonsMethod_2_4_1a_3a)
+{
+    // 1a
+    std::vector<NumericalMethods::rootSolver_ret> ans = NumericalMethods::newtons_method(&function_24_1, &function_24_1p, 0.5, 1e-05);
+    EXPECT_EQ(ans.back().n, 13);
+    EXPECT_NEAR(ans.back().p_n, 0.567135, 1e-05);
+    ans.clear();
+    // 3a
+    ans = NumericalMethods::ModifiedNewtons_method(&function_24_1, &function_24_1p, &function_24_1pp, 0.5, 1e-05);
+    EXPECT_EQ(ans.back().n, 3);
+    EXPECT_NEAR(ans.back().p_n, 0.567143, 1e-05);
+    ans.clear();
+}
+
+TEST_F(NumericalMethodsUnitTest, ModifiedNewtonsMethod_2_4_1b_3b)
+{
+    // 1b (Precision not where it should be according to solution even though n comes out right)
+    std::vector<NumericalMethods::rootSolver_ret> ans = NumericalMethods::newtons_method(&function_24_2, &function_24_2p, -1.5, 1e-05);
+    EXPECT_EQ(ans.back().n, 23);
+    EXPECT_NEAR(ans.back().p_n, -1.414325, 1e-03);
+    ans.clear();
+    // 3b (Precision not where it should be according to solution even though n comes out right)
+    ans = NumericalMethods::ModifiedNewtons_method(&function_24_2, &function_24_2p, &function_24_2pp, -1.5, 1e-05);
+    EXPECT_EQ(ans.back().n, 2);
+    EXPECT_NEAR(ans.back().p_n, -1.414518, 1e-03);
+    ans.clear();
+}

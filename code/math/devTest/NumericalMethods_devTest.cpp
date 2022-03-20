@@ -17,6 +17,18 @@ double function_1(double x)
     return f_x;
 }
 
+double function_1p(double x)
+{
+    double f_x = 3 * pow(x,2) + 8 * x;
+    return f_x;
+}
+
+double function_1pp(double x)
+{
+    double f_x = 6 * x + 8;
+    return f_x;
+}
+
 double function_2(double x)
 {
     //double f_x = sqrt(2/(pow(x,2)-3));  
@@ -41,33 +53,38 @@ int main( int argc, char *argv[] ) {
 
     using namespace NumericalMethods;
     // Inputs
-    printf("You made it to test function for NumericalMethods!\n\n");
-    std::vector<NumericalMethods::rootSolver_ret> ans1, ans2, ans3, ans4, ans5;
+    printf("You made it to test function for NumericalMethods!\n");
+    std::vector<NumericalMethods::rootSolver_ret> ans1, ans2, ans3, ans4, ans5, ans6;
 
-    printf("NM Bisection Method Test\n\n");
+    printf("NM Bisection Method Test\n");
     ans1 = NumericalMethods::bisection_method(&function_1, 1, 2, 1e-04);
     std::string res1 = NumericalMethods::rootSolver_results(ans1);
     printf("%s\n", res1.c_str());
     
-    printf("NM Fixed-Point Iteration Method Test\n\n");
+    printf("NM Fixed-Point Iteration Method Test\n");
     ans2 = NumericalMethods::fixedPointIteration_method(&function_2, 1, 1e-02);
     std::string res2 = NumericalMethods::rootSolver_results(ans2);
     printf("%s\n", res2.c_str());
     
-    printf("NM Newton's Method Test\n\n");
+    printf("NM Newton's Method Test\n");
     ans3 = NumericalMethods::newtons_method(&function_3, &function_3p, M_PI/4.0, 1e-08, 20);
     std::string res3 = NumericalMethods::rootSolver_results(ans3);
-    printf("%s", res3.c_str());
+    printf("%s\n", res3.c_str());
     
-    printf("NM Secant Method Test\n\n");
+    printf("NM Secant Method Test\n");
     ans4 = NumericalMethods::secant_method(&function_3, 0.5, M_PI/4.0, 1e-08, 20);
     std::string res4 = NumericalMethods::rootSolver_results(ans4);
-    printf("%s", res4.c_str());
+    printf("%s\n", res4.c_str());
     
-    printf("NM Method of False Position Test\n\n");
+    printf("NM Method of False Position Test\n");
     ans5 = NumericalMethods::falsePosition_method(&function_3, 0.5, M_PI/4.0, 1e-08, 20);
     std::string res5 = NumericalMethods::rootSolver_results(ans5);
-    printf("%s", res5.c_str());
+    printf("%s\n", res5.c_str());
+    
+    printf("NM Modified Newton's Method Test\n");
+    ans6 = NumericalMethods::ModifiedNewtons_method(&function_1, &function_1p, &function_1pp, 1.5, 1e-10, 20);
+    std::string res6 = NumericalMethods::rootSolver_results(ans6);
+    printf("%s\n", res6.c_str());
 
     return 0;
 }
