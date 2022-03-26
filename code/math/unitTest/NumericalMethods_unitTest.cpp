@@ -46,8 +46,8 @@ double function_21_6(double x)
 TEST_F(NumericalMethodsUnitTest, BisectionMethod_2_1_1)
 {
     std::vector<NumericalMethods::rootSolver_ret> ans = NumericalMethods::bisection_method(&function_21_1, 0, 1);
-    EXPECT_NEAR(ans[2].p_n, 0.625, 1e-03);
-    EXPECT_EQ(ans[2].n, 2);
+    EXPECT_NEAR(ans[3].p_n, 0.625, 1e-03);
+    EXPECT_EQ(ans[3].n, 3);
 }
 
 TEST_F(NumericalMethodsUnitTest, BisectionMethod_2_1_3)
@@ -55,17 +55,17 @@ TEST_F(NumericalMethodsUnitTest, BisectionMethod_2_1_3)
     // a
     std::vector<NumericalMethods::rootSolver_ret> ans = NumericalMethods::bisection_method(&function_21_2, 0, 1, 1e-02);
     EXPECT_NEAR(ans.back().p_n, 0.5859, 1e-04);
-    EXPECT_EQ(ans.back().n, 6);
+    EXPECT_EQ(ans.back().n, 7);
     ans.clear();
     // b
     ans = NumericalMethods::bisection_method(&function_21_2, 1, 3.2, 1e-02);
     EXPECT_NEAR(ans.back().p_n, 3.002, 1e-03);
-    EXPECT_EQ(ans.back().n, 7);
+    EXPECT_EQ(ans.back().n, 8);
     ans.clear();
     // c
     ans = NumericalMethods::bisection_method(&function_21_2, 3.2, 4, 1e-02);
     EXPECT_NEAR(ans.back().p_n, 3.419, 1e-03);
-    EXPECT_EQ(ans.back().n, 6);
+    EXPECT_EQ(ans.back().n, 7);
 }
 
 TEST_F(NumericalMethodsUnitTest, BisectionMethod_2_1_5)
@@ -73,32 +73,32 @@ TEST_F(NumericalMethodsUnitTest, BisectionMethod_2_1_5)
     // a
     std::vector<NumericalMethods::rootSolver_ret> ans = NumericalMethods::bisection_method(&function_21_3, 0, 1, 1e-05);
     EXPECT_NEAR(ans.back().p_n, 0.641182, 1e-06);
-    EXPECT_EQ(ans.back().n, 16);
+    EXPECT_EQ(ans.back().n, 17);
     ans.clear();
     // b
     ans = NumericalMethods::bisection_method(&function_21_4, 0, 1, 1e-05);
     EXPECT_NEAR(ans.back().p_n, 0.257530, 1e-06);
-    EXPECT_EQ(ans.back().n, 16);
+    EXPECT_EQ(ans.back().n, 17);
     ans.clear();
     // c1
     ans = NumericalMethods::bisection_method(&function_21_5, -3, -2, 1e-05);
     EXPECT_NEAR(ans.back().p_n, -2.191307, 1e-06);
-    EXPECT_EQ(ans.back().n, 16);
+    EXPECT_EQ(ans.back().n, 17);
     ans.clear();
     // c2
     ans = NumericalMethods::bisection_method(&function_21_5, -1, 0, 1e-05);
     EXPECT_NEAR(ans.back().p_n, -0.798164, 1e-06);
-    EXPECT_EQ(ans.back().n, 16);
+    EXPECT_EQ(ans.back().n, 17);
     ans.clear();
     // d1
     ans = NumericalMethods::bisection_method(&function_21_6, 0.2, 0.3, 1e-05);
     EXPECT_NEAR(ans.back().p_n, 0.297528, 1e-06);
-    EXPECT_EQ(ans.back().n, 13);
+    EXPECT_EQ(ans.back().n, 14);
     ans.clear();
     // d2
     ans = NumericalMethods::bisection_method(&function_21_6, 1.2, 1.3, 1e-05);
     EXPECT_NEAR(ans.back().p_n, 1.256622, 1e-06);
-    EXPECT_EQ(ans.back().n, 13);
+    EXPECT_EQ(ans.back().n, 14);
 }
 
 double function_22_1(double x)
@@ -147,7 +147,7 @@ TEST_F(NumericalMethodsUnitTest, FixedIterationMethod_2_2_5)
 {
     std::vector<NumericalMethods::rootSolver_ret> ans = NumericalMethods::fixedPointIteration_method(&function_22_1, 1, 1e-02);
     EXPECT_NEAR(ans.back().p_n, 1.94332, 1e-05);
-    EXPECT_EQ(ans.back().n, 5);
+    EXPECT_EQ(ans.back().n, 6);
 }
 
 TEST_F(NumericalMethodsUnitTest, FixedIterationMethod_2_2_11)
@@ -155,32 +155,32 @@ TEST_F(NumericalMethodsUnitTest, FixedIterationMethod_2_2_11)
     // a
     std::vector<NumericalMethods::rootSolver_ret> ans = NumericalMethods::fixedPointIteration_method(&function_22_2, 0, 1e-05);
     EXPECT_NEAR(ans.back().p_n, 0.257531, 1e-06);
-    EXPECT_EQ(ans.back().n, 8);
+    EXPECT_EQ(ans.back().n, 9);
     ans.clear();
     // b
     ans = NumericalMethods::fixedPointIteration_method(&function_22_3, 2.5, 1e-05);
     EXPECT_NEAR(ans.back().p_n, 2.690650, 1e-06);
-    EXPECT_EQ(ans.back().n, 16);
+    EXPECT_EQ(ans.back().n, 17);
     ans.clear();
     // c
     ans = NumericalMethods::fixedPointIteration_method(&function_22_4, 0.25, 1e-05);
     EXPECT_NEAR(ans.back().p_n, 0.909999, 1e-06);
-    EXPECT_EQ(ans.back().n, 13);
+    EXPECT_EQ(ans.back().n, 14);
     ans.clear();
     // d
     ans = NumericalMethods::fixedPointIteration_method(&function_22_5, 0.3, 1e-05);
     EXPECT_NEAR(ans.back().p_n, 0.469625, 1e-06);
-    EXPECT_EQ(ans.back().n, 38);
+    EXPECT_EQ(ans.back().n, 39);
     ans.clear();
     // e
     ans = NumericalMethods::fixedPointIteration_method(&function_22_6, 0.3, 1e-05);
     EXPECT_NEAR(ans.back().p_n, 0.448059, 1e-06);
-    EXPECT_EQ(ans.back().n, 47);
+    EXPECT_EQ(ans.back().n, 48);
     ans.clear();
     // f
     ans = NumericalMethods::fixedPointIteration_method(&function_22_7, 0, 1e-05);
     EXPECT_NEAR(ans.back().p_n, 0.704812, 1e-06);
-    EXPECT_EQ(ans.back().n, 5);
+    EXPECT_EQ(ans.back().n, 6);
     ans.clear();
 }
 
@@ -362,5 +362,29 @@ TEST_F(NumericalMethodsUnitTest, ModifiedNewtonsMethod_2_4_1b_3b)
     ans = NumericalMethods::ModifiedNewtons_method(&function_24_2, &function_24_2p, &function_24_2pp, -1.5, 1e-05);
     EXPECT_EQ(ans.back().n, 2);
     EXPECT_NEAR(ans.back().p_n, -1.414518, 1e-03);
+    ans.clear();
+}
+
+TEST_F(NumericalMethodsUnitTest, SteffensensMethod_2_5_11)
+{
+    // a
+    std::vector<NumericalMethods::rootSolver_ret> ans = NumericalMethods::steffensens_method(&function_22_2, 0, 1e-05);
+    EXPECT_NEAR(ans.back().p_n, 0.257530, 1e-06);
+    EXPECT_EQ(ans.back().n, 3);
+    ans.clear();
+    // b
+    ans = NumericalMethods::steffensens_method(&function_22_7, 0, 1e-05);
+    EXPECT_NEAR(ans.back().p_n, 0.704812, 1e-06);
+    EXPECT_EQ(ans.back().n, 4);
+    ans.clear();
+    // c
+    ans = NumericalMethods::steffensens_method(&function_22_4, 0.25, 1e-05);
+    EXPECT_NEAR(ans.back().p_n, 0.910007572, 1e-09);
+    EXPECT_EQ(ans.back().n, 4);
+    ans.clear();
+    // d
+    ans = NumericalMethods::steffensens_method(&function_22_5, 0.3, 1e-05);
+    EXPECT_NEAR(ans.back().p_n, 0.469621923, 1e-09);
+    EXPECT_EQ(ans.back().n, 4);
     ans.clear();
 }

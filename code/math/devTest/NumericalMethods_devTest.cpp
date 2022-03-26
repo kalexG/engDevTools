@@ -49,12 +49,18 @@ double function_3p(double x)
     return fp_x;
 }
 
+double function_4(double x)
+{
+    double f_x = 0.5 * (x + (3/x));
+    return f_x;
+}
+
 int main( int argc, char *argv[] ) {
 
     using namespace NumericalMethods;
     // Inputs
     printf("You made it to test function for NumericalMethods!\n");
-    std::vector<NumericalMethods::rootSolver_ret> ans1, ans2, ans3, ans4, ans5, ans6;
+    std::vector<NumericalMethods::rootSolver_ret> ans1, ans2, ans3, ans4, ans5, ans6, ans7;
 
     printf("NM Bisection Method Test\n");
     ans1 = NumericalMethods::bisection_method(&function_1, 1, 2, 1e-04);
@@ -85,6 +91,11 @@ int main( int argc, char *argv[] ) {
     ans6 = NumericalMethods::ModifiedNewtons_method(&function_1, &function_1p, &function_1pp, 1.5, 1e-10, 20);
     std::string res6 = NumericalMethods::rootSolver_results(ans6);
     printf("%s\n", res6.c_str());
+    
+    printf("NM Steffenson's Method Test\n");
+    ans7 = NumericalMethods::steffensens_method(&function_4, 0.5, 1e-04);
+    std::string res7 = NumericalMethods::rootSolver_results(ans7);
+    printf("%s\n", res7.c_str());
 
     return 0;
 }
