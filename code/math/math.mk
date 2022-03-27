@@ -30,6 +30,7 @@ MATH_OBJS = obj/Array.o \
 
 # All development tests
 MATH_DEVTEST_OBJS = obj/Array_devTest.o \
+					obj/Array_Setters_devTest.o \
 					obj/Integrator_devTest.o \
 					obj/Differentiator_devTest.o \
 					obj/BoostCompare_devTest.o \
@@ -44,6 +45,7 @@ MATH_UNITTEST_OBJS =    obj/MathUnitTest.o \
 
 # All development test exectables
 MATH_DEVTEST_BIN =  bin/Array_devTest \
+					bin/Array_Setters_devTest \
 					bin/Integrator_devTest \
 					bin/Differentiator_devTest \
 					bin/BoostCompare_devTest \

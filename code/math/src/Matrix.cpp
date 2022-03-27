@@ -62,13 +62,3 @@ Matrix Matrix::getAdjugate(void)
     tmp.setTranspose();
     return tmp;
 }
-
-// Get Determinant of 3x3 matrix
-double Matrix::getDeterminant33(void)
-{
-    double tmp;
-    tmp=myArray[0]*(myArray[4]*myArray[8]-myArray[7]*myArray[5]);
-    tmp=tmp+myArray[1]*(myArray[5]*myArray[6]-myArray[8]*myArray[3]);
-    tmp=tmp+myArray[2]*(myArray[3]*myArray[7]-myArray[6]*myArray[4]);
-    return tmp;
-}

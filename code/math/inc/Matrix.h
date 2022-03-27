@@ -25,8 +25,6 @@ class Matrix : public Array
         Matrix getCofactor(void);
         // Getter Function: getAdjugate [UT: Y]
         Matrix getAdjugate(void);
-        // Getter Function: getDeterminant33 [UT: N]
-        double getDeterminant33(void);
     private:
     protected:
 
