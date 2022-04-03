@@ -4,6 +4,7 @@
 #include <functional>
 #include <vector>
 #include <sstream>
+#include <limits>
 
 namespace NumericalMethods
 {
@@ -16,18 +17,6 @@ namespace NumericalMethods
             double   p_n;
         };
         
-        inline std::string rootSolver_results(std::vector<rootSolver_ret> ans)
-        {
-            std::ostringstream tmpStream;
-            for ( uint32_t i = 0; i < ans.size(); i++)
-            {
-                tmpStream << "n = "     << ans[ i ].n     << " | " <<
-                            "p_n = "   << ans[ i ].p_n << " |\n";
-            }
-            std::string tmpString = tmpStream.str();
-            return tmpString;
-        };
-
         // Bisection Method
         inline std::vector<rootSolver_ret> bisection_method(std::function<double(double)> f_x, 
                                                             double a, 

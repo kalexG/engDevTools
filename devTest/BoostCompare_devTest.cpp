@@ -1,7 +1,7 @@
 #include <boost/numeric/ublas/matrix.hpp>
 #include <boost/numeric/ublas/operation.hpp>
 #include <chrono>
-#include "../inc/Array.h"
+#include "Array.h"
 
 int main( int argc, char *argv[] ) {
 

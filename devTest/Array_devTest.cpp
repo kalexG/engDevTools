@@ -1,5 +1,5 @@
-#include "../inc/Array.h"
-#include "../inc/Support.h"
+#include "Array.h"
+#include "Support.h"
 
 int main( int argc, char *argv[] ) {
 
