@@ -1,5 +1,5 @@
 #include "Array.h"
-#include "Support.h"
+#include "ArrayUtilities.h"
 
 int main( int argc, char *argv[] ) {
 
@@ -74,7 +74,7 @@ int main( int argc, char *argv[] ) {
     arr9(2,0) = 2;
     arr9(2,1) = 8;
     arr9(2,2) = 7;
-    printf("arr9 initialized!:\n%s\n", Support::ArraySupport::printArray(arr9).c_str());
+    printf("arr9 initialized!:\n%s\n", Utilities::printArray(arr9).c_str());
     double det9 = arr9.determinant();
     printf("Determinant of arr9 is: %f\n",det9);
     
@@ -96,7 +96,7 @@ int main( int argc, char *argv[] ) {
     arr10(3,1) = 3;
     arr10(3,2) = 1;
     arr10(3,3) = 1;
-    printf("arr10 initialized!:\n%s\n", Support::ArraySupport::printArray(arr10).c_str());
+    printf("arr10 initialized!:\n%s\n", Utilities::printArray(arr10).c_str());
     double det10 = arr10.determinant();
     printf("Determinant of arr10 is: %f\n",det10);
     
@@ -117,7 +117,7 @@ int main( int argc, char *argv[] ) {
     arr11(3,1) = 3;
     arr11(3,2) = 1;
     arr11(3,3) = 1;
-    printf("arr11 initialized!:\n%s\n", Support::ArraySupport::printArray(arr11).c_str());
+    printf("arr11 initialized!:\n%s\n", Utilities::printArray(arr11).c_str());
     double det11 = arr11.determinant();
     printf("Determinant of arr11 is: %f\n",det11);
     
@@ -148,7 +148,7 @@ int main( int argc, char *argv[] ) {
     arr12(4,2) = 3;
     arr12(4,3) = 0;
     arr12(4,4) = -2;
-    printf("arr12 initialized!:\n%s\n", Support::ArraySupport::printArray(arr12).c_str());
+    printf("arr12 initialized!:\n%s\n", Utilities::printArray(arr12).c_str());
     double det12 = arr12.determinant();
     printf("Determinant of arr12 is: %f\n",det12);
 

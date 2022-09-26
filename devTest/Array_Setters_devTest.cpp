@@ -1,5 +1,5 @@
 #include "Array.h"
-#include "Support.h"
+#include "ArrayUtilities.h"
 
 int main( int argc, char *argv[] ) {
 
@@ -20,35 +20,35 @@ int main( int argc, char *argv[] ) {
     arr5.zeros();
 	
     // Test function: setOnes
-    printf("arr1 set to Ones:\n%s", Support::ArraySupport::printArray(arr1).c_str());
+    printf("arr1 set to Ones:\n%s", Utilities::printArray(arr1).c_str());
     printf("\n\n");
 	
     // Test function: setIncrement
-    printf("arr2 incremented from 1.0 by 1.0:\n%s", Support::ArraySupport::printArray(arr2).c_str());
+    printf("arr2 incremented from 1.0 by 1.0:\n%s", Utilities::printArray(arr2).c_str());
     printf("\n\n");
     
     // Test function: setZeros
-    printf("arr3 set to Zeros:\n%s", Support::ArraySupport::printArray(arr3).c_str());
+    printf("arr3 set to Zeros:\n%s", Utilities::printArray(arr3).c_str());
     printf("\n\n");
 
     // Test function: setTranspose
     arr3.set(0.0, 1.0);
     printf("Try transpose: square matrix nxn\n");
-    printf("arr3 before:\n%s\n", Support::ArraySupport::printArray(arr3).c_str());
+    printf("arr3 before:\n%s\n", Utilities::printArray(arr3).c_str());
     arr3.s_transpose();
-    printf("arr3 after:\n%s\n", Support::ArraySupport::printArray(arr3).c_str());
+    printf("arr3 after:\n%s\n", Utilities::printArray(arr3).c_str());
     
     arr4.set(0.0, 1.0);
     printf("\nTry transpose: matrix mxn, m>n\n");
-    printf("arr4 before:\n%s\n", Support::ArraySupport::printArray(arr4).c_str());
+    printf("arr4 before:\n%s\n", Utilities::printArray(arr4).c_str());
     arr4.s_transpose();
-    printf("arr4 after:\n%s\n", Support::ArraySupport::printArray(arr4).c_str());
+    printf("arr4 after:\n%s\n", Utilities::printArray(arr4).c_str());
     
     arr5.set(0.0, 1.0);
     printf("\nTry transpose: matrix mxn,n>m\n");
-    printf("arr5 before:\n%s\n", Support::ArraySupport::printArray(arr5).c_str());
+    printf("arr5 before:\n%s\n", Utilities::printArray(arr5).c_str());
     arr5.s_transpose();
-    printf("arr5 after:\n%s\n", Support::ArraySupport::printArray(arr5).c_str());
+    printf("arr5 after:\n%s\n", Utilities::printArray(arr5).c_str());
    
 	return 0;
 }

@@ -43,7 +43,7 @@ TEST_F(VectorUnitTest, checkCrossProduct)
     Vector<double> myTestVector;
     vec1.set(1.0, 1.0);
     vec2.ones();
-    myTestVector = Support::ArraySupport::crossProduct(vec1, vec2);
+    myTestVector = Utilities::crossProduct(vec1, vec2);
     EXPECT_EQ(myTestVector(0), -1.0);
     EXPECT_EQ(myTestVector(1), 2.0);
     EXPECT_EQ(myTestVector(2), -1.0);
@@ -56,7 +56,7 @@ TEST_F(VectorUnitTest, checkDotProduct)
     Vector<double> vec2;
     vec1.set(1.0, 1.0);
     vec2.ones();
-    ASSERT_EQ(Support::ArraySupport::dotProduct(vec1, vec2), 6.0);
+    ASSERT_EQ(Utilities::dotProduct(vec1, vec2), 6.0);
 }
 
 // Test: Vector::getUnitVector() - Make sure calculation is correct

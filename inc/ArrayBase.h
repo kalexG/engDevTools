@@ -12,12 +12,18 @@ class ArrayBase
     public:
         // Constructor (rows, cols)
         ArrayBase(int rows, int cols);
+        // Constructor (rows, cols, arr)
+        ArrayBase(int rows, int cols, std::vector<T> arr);
         // Destructor
         virtual ~ArrayBase(void);
         // Copy Constructor
         ArrayBase(const ArrayBase<T, Derived>& arr);
         // Move Constructor
         ArrayBase(ArrayBase<T, Derived>&& arr) noexcept;
+        // Copy Assignment Operator:
+        ArrayBase& operator= (ArrayBase<T, Derived>& arr);
+        // Move Assignment Operator:
+        ArrayBase& operator= (ArrayBase<T, Derived>&& arr) noexcept;
         // Getter Function: dims
         std::vector<int> dims(void);
         // Getter Function: size
@@ -30,8 +36,6 @@ class ArrayBase
         std::vector<T> data(void);
         // Setter Function: set
         void set(const double val, const double = 0.0);
-        // Assignment Operator:
-        ArrayBase& operator= (ArrayBase<T, Derived> arr) noexcept;
         // Arithmetic Operator: +
         Derived operator+ (const Derived& arr) const;
         // Arithmetic Operator: -
@@ -47,10 +51,11 @@ class ArrayBase
         // Function: swap
         friend void swap(ArrayBase<T, Derived>& arr1, ArrayBase<T, Derived>& arr2)
         {
+            std::swap(arr1.validDims, arr2.validDims);
             std::swap(arr1.myRows, arr2.myRows);
             std::swap(arr1.myCols, arr2.myCols);
             std::swap(arr1.myElements, arr2.myElements);
-            std::swap(arr1.myArray, arr2.myArray);
+            std::swap(arr1.myData, arr2.myData);
         }
     private:
         // Function: checkValidDims
@@ -68,18 +73,28 @@ class ArrayBase
         int myCols;
         // Data: myElements
         int myElements;
-        // Data: myArray
-        std::vector<T> myArray;
+        // Data: myData
+        std::vector<T> myData;
 };
 
-// Constructor
+// Constructor (rows, cols)
 template <typename T, class Derived>
 ArrayBase<T, Derived>::ArrayBase(int rows, int cols)
     : validDims(checkValidDims(rows, cols))
     , myRows(rows)
     , myCols(cols)
     , myElements(rows*cols)
-    , myArray(myElements)
+    , myData(myElements)
+{}
+
+// Constructor (rows, cols, arr)
+template <typename T, class Derived>
+ArrayBase<T, Derived>::ArrayBase(int rows, int cols, std::vector<T> arr)
+    : validDims(checkValidDims(rows, cols))
+    , myRows(rows)
+    , myCols(cols)
+    , myElements(rows*cols)
+    , myData(arr)
 {}
 
 // Destructor
@@ -104,22 +119,29 @@ bool ArrayBase<T, Derived>::checkValidDims(int rows, int cols)
 // Copy Constructor
 template <typename T, class Derived>
 ArrayBase<T, Derived>::ArrayBase(const ArrayBase<T, Derived>& arr)
-    : ArrayBase(arr.myRows, arr.myCols)
-{
-    myArray = arr.myArray;
-}
+    : ArrayBase(arr.myRows, arr.myCols, arr.myData)
+{}
 
 // Move Contructor
 template <typename T, class Derived>
 ArrayBase<T, Derived>::ArrayBase(ArrayBase<T, Derived>&& arr) noexcept
-    : ArrayBase(arr.myRows, arr.myCols)
+    : validDims(std::move(arr.validDims))
+    , myRows(std::move(arr.myRows))
+    , myCols(std::move(arr.myCols))
+    , myElements(std::move(arr.myElements))
+    , myData(std::move(arr.myData))
+{}
+
+// Copy Assignment Operator
+template <typename T, class Derived>
+ArrayBase<T, Derived>& ArrayBase<T, Derived>::operator= (ArrayBase<T, Derived>& arr)
 {
-    swap(*this, arr);
+    return *this = ArrayBase(arr.myRows, arr.myCols, arr.myData);
 }
 
-// Copy & Move assignment
+// Move Assignment Operator
 template <typename T, class Derived>
-ArrayBase<T, Derived>& ArrayBase<T, Derived>::operator= (ArrayBase<T, Derived> arr) noexcept
+ArrayBase<T, Derived>& ArrayBase<T, Derived>::operator= (ArrayBase<T, Derived>&& arr) noexcept
 {
     swap(*this, arr);
     return *this;
@@ -160,19 +182,19 @@ template <typename T, class Derived>
 // Get dimensions
 std::vector<T> ArrayBase<T, Derived>::data(void)
 {
-    return myArray;
+    return myData;
 }
 
 template <typename T, class Derived>
 // Set 
 void ArrayBase<T, Derived>::set(const double val, const double inc)
 {
-    std::fill(myArray.begin(), myArray.end(), val);
+    std::fill(myData.begin(), myData.end(), val);
     if (inc != 0.0)
     {
         for (int i = 1; i < myElements; i++)
         {
-            myArray.at(i) = myArray.at(i-1) + inc;
+            myData.at(i) = myData.at(i-1) + inc;
         }
     }
 }
@@ -186,7 +208,7 @@ Derived ArrayBase<T, Derived>::operator+ (const Derived& arr) const
         Derived tmp(myRows, myCols);
         for (int i = 0; i < myElements; i++)
         {
-            tmp.myArray.at(i) = myArray.at(i) + arr.myArray.at(i);
+            tmp.myData.at(i) = myData.at(i) + arr.myData.at(i);
         }
         return tmp;
     }
@@ -205,7 +227,7 @@ Derived ArrayBase<T, Derived>::operator- (const Derived& arr) const
         Derived tmp(myRows, myCols);
         for (int i = 0; i < myElements; i++)
         {
-            tmp.myArray.at(i) = myArray.at(i) - arr.myArray.at(i);
+            tmp.myData.at(i) = myData.at(i) - arr.myData.at(i);
         }
         return tmp;
     }
@@ -222,7 +244,7 @@ Derived ArrayBase<T, Derived>::operator- (void) const
     Derived tmp(myRows, myCols);
     for (int i = 0; i < myElements; i++)
     {
-        tmp.myArray.at(i) = -myArray.at(i);
+        tmp.myData.at(i) = -myData.at(i);
     }
     return tmp;
 }
@@ -237,7 +259,7 @@ T &ArrayBase<T, Derived>::operator[] (int index)
     }
     else
     {
-        return myArray.at(index);
+        return myData.at(index);
     }
 }
 
@@ -255,7 +277,7 @@ T &ArrayBase<T, Derived>::operator() (int row, int col)
     }
     else
     {
-        return myArray.at(myCols * row + col);
+        return myData.at(myCols * row + col);
     }
 }
 
@@ -269,7 +291,7 @@ T &ArrayBase<T, Derived>::operator() (int index)
     }
     else
     {
-        return myArray[ index ];
+        return myData[ index ];
     }
 }
 

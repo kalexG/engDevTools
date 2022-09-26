@@ -107,7 +107,7 @@ TEST_F(ArrayUnitTest, checkGetInverse_6_3_5_b)
     ASSERT_EQ(myTestArray.rows(), myArray2_inv->cols());
     ASSERT_EQ(myTestArray.cols(), myArray2_inv->rows());
     ASSERT_EQ(myTestArray.size(), myArray2_inv->size());
-    ASSERT_TRUE(Support::ArraySupport::compare(myTestArray, *myArray2_inv));
+    ASSERT_TRUE(Utilities::compare(myTestArray, *myArray2_inv));
 }
 
 // Test Array::g_inverse() - Make sure getter works
@@ -117,7 +117,7 @@ TEST_F(ArrayUnitTest, checkGetInverse_6_3_5_d)
     ASSERT_EQ(myTestArray.rows(), myArray4_inv->cols());
     ASSERT_EQ(myTestArray.cols(), myArray4_inv->rows());
     ASSERT_EQ(myTestArray.size(), myArray4_inv->size());
-    ASSERT_TRUE(Support::ArraySupport::compare(myTestArray, *myArray4_inv));
+    ASSERT_TRUE(Utilities::compare(myTestArray, *myArray4_inv));
 }
 
 // Test Array::g_transpose() - Make sure getter works
@@ -336,7 +336,7 @@ TEST_F(ArrayUnitTest, checkGetArrayProperties_none)
 {
     Array<double> myTestArray(4, 3);
     std::vector<bool> exp_prop{false, false, true};
-    EXPECT_EQ(Support::ArraySupport::getArrayProperties(myTestArray), exp_prop);
+    EXPECT_EQ(Utilities::getArrayProperties(myTestArray), exp_prop);
 }
 
 // Test Array::getArrayProperties() - Make sure getter works
@@ -344,7 +344,7 @@ TEST_F(ArrayUnitTest, checkGetArrayProperties_sq)
 {
     Array<double> myTestArray(3, 3);
     std::vector<bool> exp_prop{false, true, true};
-    EXPECT_EQ(Support::ArraySupport::getArrayProperties(myTestArray), exp_prop);
+    EXPECT_EQ(Utilities::getArrayProperties(myTestArray), exp_prop);
 }
 
 // Test Array::getArrayProperties() - Make sure getter works
@@ -353,21 +353,21 @@ TEST_F(ArrayUnitTest, checkGetArrayProperties_sq_id)
     Array<double> myTestArray(3, 3);
     myTestArray.identity();
     std::vector<bool> exp_prop{true, true, false};
-    EXPECT_EQ(Support::ArraySupport::getArrayProperties(myTestArray), exp_prop);
+    EXPECT_EQ(Utilities::getArrayProperties(myTestArray), exp_prop);
 }
 
 // Test Array::getArrayProperties() - Make sure getter works
 TEST_F(ArrayUnitTest, checkGetArrayProperties_sq_sin_6_3_5_a)
 {
     std::vector<bool> exp_prop{false, true, true};
-    EXPECT_EQ(Support::ArraySupport::getArrayProperties(*myArray1), exp_prop);
+    EXPECT_EQ(Utilities::getArrayProperties(*myArray1), exp_prop);
 }
 
 // Test Array::getArrayProperties() - Make sure getter works
 TEST_F(ArrayUnitTest, checkGetArrayProperties_sq_sin_6_3_5_c)
 {
     std::vector<bool> exp_prop{false, true, true};
-    EXPECT_EQ(Support::ArraySupport::getArrayProperties(*myArray3), exp_prop);
+    EXPECT_EQ(Utilities::getArrayProperties(*myArray3), exp_prop);
 }
 
 // Test Array::operator+ (Array + Array) - Catch invalid demnsions
@@ -515,7 +515,7 @@ TEST_F(ArrayUnitTest, checkCompare_differentSize)
     myTestArray1.ones();
     Array<double> myTestArray2(4, 3);
     myTestArray2.ones();
-    ASSERT_FALSE(Support::ArraySupport::compare(myTestArray1, myTestArray2));
+    ASSERT_FALSE(Utilities::compare(myTestArray1, myTestArray2));
 }
 
 // Test Array::compare() - Make sure compare function works (false)
@@ -525,7 +525,7 @@ TEST_F(ArrayUnitTest, checkCompare_differentElements)
     myTestArray1.set(1.0, 1.0);
     Array<double> myTestArray2(3, 3);
     myTestArray2.set(2.0, 1.0);
-    ASSERT_FALSE(Support::ArraySupport::compare(myTestArray1, myTestArray2));
+    ASSERT_FALSE(Utilities::compare(myTestArray1, myTestArray2));
 }
 
 // Test Array::compare() - Make sure compare function works (false)
@@ -536,7 +536,7 @@ TEST_F(ArrayUnitTest, checkCompare_outOfDefaultTolerance)
     myTestArray1(0, 0) = 1.002;
     Array<double> myTestArray2(3, 3);
     myTestArray2.set(1.0, 1.0);
-    ASSERT_FALSE(Support::ArraySupport::compare(myTestArray1, myTestArray2));
+    ASSERT_FALSE(Utilities::compare(myTestArray1, myTestArray2));
 }
 
 // Test Array::compare() - Make sure compare function works (false)
@@ -547,7 +547,7 @@ TEST_F(ArrayUnitTest, checkCompare_outOfSpecifiedTolerance)
     myTestArray1(0, 0) = 1.0000002;
     Array<double> myTestArray2(3, 3);
     myTestArray2.set(1.0, 1.0);
-    ASSERT_FALSE(Support::ArraySupport::compare(myTestArray1, myTestArray2, 1e-07));
+    ASSERT_FALSE(Utilities::compare(myTestArray1, myTestArray2, 1e-07));
 }
 
 // Test Array::compare() - Make sure compare function works (true)
@@ -558,7 +558,7 @@ TEST_F(ArrayUnitTest, checkCompare_inDefaultTolerance)
     myTestArray1(0, 0) = 1.0000002;
     Array<double> myTestArray2(3, 3);
     myTestArray2.set(1.0, 1.0);
-    ASSERT_TRUE(Support::ArraySupport::compare(myTestArray1, myTestArray2));
+    ASSERT_TRUE(Utilities::compare(myTestArray1, myTestArray2));
 }
 
 // Test Array::compare() - Make sure compare function works (true)
@@ -569,7 +569,7 @@ TEST_F(ArrayUnitTest, checkCompare_inSpecifiedTolerance)
     myTestArray1(0, 0) = 1.00000002;
     Array<double> myTestArray2(3, 3);
     myTestArray2.set(1.0, 1.0);
-    ASSERT_TRUE(Support::ArraySupport::compare(myTestArray1, myTestArray2, 1e-07));
+    ASSERT_TRUE(Utilities::compare(myTestArray1, myTestArray2, 1e-07));
 }
 
 // Test Array::compare() - Make sure compare function works (true)
@@ -579,7 +579,7 @@ TEST_F(ArrayUnitTest, checkCompare_same)
     myTestArray1.set(2.0, 2.0);
     Array<double> myTestArray2(3, 3);
     myTestArray2.set(2.0, 2.0);
-    ASSERT_TRUE(Support::ArraySupport::compare(myTestArray1, myTestArray2));
+    ASSERT_TRUE(Utilities::compare(myTestArray1, myTestArray2));
 }
 
 // Test Array::operator* - Catch invalid dimensions
@@ -655,7 +655,7 @@ TEST_F(ArrayUnitTest, checkPrintArray_squareArray)
 {
     Array<double> arr(4, 4);
     arr.set(1, 1);
-    std::string arr_p = Support::ArraySupport::printArray(arr);
+    std::string arr_p = Utilities::printArray(arr);
     std::string expectedString = "| 1 | 2 | 3 | 4 |\n| 5 | 6 | 7 | 8 |\n| 9 | 10 | 11 | 12 |\n| 13 | 14 | 15 | 16 |"; 
     EXPECT_EQ(arr_p, expectedString); 
 }
@@ -664,7 +664,7 @@ TEST_F(ArrayUnitTest, checkPrintArray_moreRows)
 {
     Array<double> arr(4, 3);
     arr.set(1, 1);
-    std::string arr_p = Support::ArraySupport::printArray(arr);
+    std::string arr_p = Utilities::printArray(arr);
     std::string expectedString = "| 1 | 2 | 3 |\n| 4 | 5 | 6 |\n| 7 | 8 | 9 |\n| 10 | 11 | 12 |"; 
     EXPECT_EQ(arr_p, expectedString); 
 }
@@ -673,7 +673,7 @@ TEST_F(ArrayUnitTest, checkPrintArray_moreCols)
 {
     Array<double> arr(3, 4);
     arr.set(1, 1);
-    std::string arr_p = Support::ArraySupport::printArray(arr);
+    std::string arr_p = Utilities::printArray(arr);
     std::string expectedString = "| 1 | 2 | 3 | 4 |\n| 5 | 6 | 7 | 8 |\n| 9 | 10 | 11 | 12 |"; 
     EXPECT_EQ(arr_p, expectedString); 
 }
@@ -681,7 +681,7 @@ TEST_F(ArrayUnitTest, checkPrintArray_moreCols)
 TEST_F(ArrayUnitTest, checkPrintArrayInfo_squareArray)
 {
     Array<double> arr(3, 3);
-    std::string arr_i = Support::ArraySupport::printArrayInfo(arr);
+    std::string arr_i = Utilities::printArrayInfo(arr);
     std::string expectedString = "Dimensions - 3x3\nElements - 9"; 
     EXPECT_EQ(arr_i, expectedString); 
 }
@@ -689,7 +689,7 @@ TEST_F(ArrayUnitTest, checkPrintArrayInfo_squareArray)
 TEST_F(ArrayUnitTest, checkPrintArrayInfo_moreRows)
 {
     Array<double> arr(4, 3);
-    std::string arr_i = Support::ArraySupport::printArrayInfo(arr);
+    std::string arr_i = Utilities::printArrayInfo(arr);
     std::string expectedString = "Dimensions - 4x3\nElements - 12"; 
     EXPECT_EQ(arr_i, expectedString); 
 }
@@ -697,7 +697,7 @@ TEST_F(ArrayUnitTest, checkPrintArrayInfo_moreRows)
 TEST_F(ArrayUnitTest, checkPrintArrayInfo_moreCols)
 {
     Array<double> arr(3, 5);
-    std::string arr_i = Support::ArraySupport::printArrayInfo(arr);
+    std::string arr_i = Utilities::printArrayInfo(arr);
     std::string expectedString = "Dimensions - 3x5\nElements - 15"; 
     EXPECT_EQ(arr_i, expectedString); 
 }
@@ -706,19 +706,19 @@ TEST_F(ArrayUnitTest, checkPrintArrayInfo_moreCols)
 TEST_F(ArrayUnitTest, checkGetMinor)
 {
     Array<double> myTestArray(myArray5->g_minor());
-    ASSERT_TRUE(Support::ArraySupport::compare(myTestArray, *myArray5Minor));
+    ASSERT_TRUE(Utilities::compare(myTestArray, *myArray5Minor));
 }
 
 // Test: Array::getCofactor() - Make sure getter works
 TEST_F(ArrayUnitTest, checkGetCofactor)
 {
     Array<double> myTestArray(myArray5->g_cofactor());
-    ASSERT_TRUE(Support::ArraySupport::compare(myTestArray, *myArray5Cofactor));
+    ASSERT_TRUE(Utilities::compare(myTestArray, *myArray5Cofactor));
 }
 
 // Test: Array::getAdjugate() - Make sure getter works
 TEST_F(ArrayUnitTest, checkGetAdjugate)
 {
     Array<double> myTestArray(myArray5->g_adjugate());
-    ASSERT_TRUE(Support::ArraySupport::compare(myTestArray, *myArray5Adjugate));
+    ASSERT_TRUE(Utilities::compare(myTestArray, *myArray5Adjugate));
 }

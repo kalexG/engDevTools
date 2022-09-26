@@ -44,7 +44,7 @@ class Vector<double> : public Array<double>
 // Get Magnitude
 inline double Vector<double>::magnitude(void)
 {
-    return sqrt(myArray.at(0)*myArray.at(0) + myArray.at(1)*myArray.at(1) + myArray.at(2)*myArray.at(2));
+    return sqrt(myData.at(0)*myData.at(0) + myData.at(1)*myData.at(1) + myData.at(2)*myData.at(2));
 }
 
 // Get Unit Vector
@@ -52,9 +52,9 @@ inline Vector<double> Vector<double>::unit(void)
 {
     Vector<double> tmp;
     double mag = magnitude();
-    tmp[0] = myArray.at(0)/mag;
-    tmp[1] = myArray.at(1)/mag;
-    tmp[2] = myArray.at(2)/mag;
+    tmp[0] = myData.at(0)/mag;
+    tmp[1] = myData.at(1)/mag;
+    tmp[2] = myData.at(2)/mag;
     return tmp;
 }
 

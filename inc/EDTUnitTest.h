@@ -1,13 +1,14 @@
 #ifndef EDT_UNITTEST_H
 #define EDT_UNITTEST_H
 
-#include <gtest/gtest.h>
-#include <gmock/gmock.h>
-#include "../inc/Array.h"
-#include "../inc/Matrix.h"
-#include "../inc/Vector.h"
-#include "../inc/NumericalMethods.h"
-#include "../inc/Support.h"
+#include <gtest.h>
+#include <gmock.h>
+#include "Array.h"
+#include "Matrix.h"
+#include "Vector.h"
+#include "NumericalMethods.h"
+#include "NumericalMethodsUtilities.h"
+#include "ArrayUtilities.h"
 
 using ::testing::DoubleNear;
 using ::testing::ElementsAre;

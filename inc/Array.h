@@ -85,7 +85,7 @@ inline void Array<double>::identity(void)
         zeros();
         for (int i = 0; i < myElements; i += (myCols + 1))
         {
-            myArray.at(i) = 1.0;
+            myData.at(i) = 1.0;
         }
     }
     else
@@ -99,7 +99,7 @@ inline void Array<double>::s_transpose(void)
 {
     Array<double> tmp(myCols, myRows);
     // Utilize LAPACKE out-of-place transpose
-    LAPACKE_dge_trans( LAPACK_ROW_MAJOR, myRows, myCols, myArray.data(), myCols, tmp.myArray.data(), myRows );
+    LAPACKE_dge_trans( LAPACK_ROW_MAJOR, myRows, myCols, myData.data(), myCols, tmp.myData.data(), myRows );
     swap(*this, tmp);
 }
 
@@ -117,7 +117,7 @@ inline void Array<double>::s_inverse(void)
     int mn = myRows;
     std::vector<int> ipiv(mn);
     // Utilize LAPACKE LU Factorization
-    int info = LAPACKE_dgetrf( LAPACK_ROW_MAJOR, mn, mn, myArray.data(), mn, ipiv.data() );
+    int info = LAPACKE_dgetrf( LAPACK_ROW_MAJOR, mn, mn, myData.data(), mn, ipiv.data() );
     // INFO < 0: if INFO = -i, the i-th argument had an illegal value
     // INFO > 0: if INFO = i, U(i,i) is exactly zero. The factorization 
     //           has been completed, but the factor U is exactly
@@ -133,7 +133,7 @@ inline void Array<double>::s_inverse(void)
                                     std::to_string(info) + "\n");
     }
     
-    info = LAPACKE_dgetri( LAPACK_ROW_MAJOR, mn, myArray.data(), mn, ipiv.data() );
+    info = LAPACKE_dgetri( LAPACK_ROW_MAJOR, mn, myData.data(), mn, ipiv.data() );
     
     if ( info != 0 )
     {
@@ -149,35 +149,7 @@ inline void Array<double>::s_inverse(void)
 inline Array<double> Array<double>::g_inverse(void)
 {
     Array<double> tmp(*this);
-    int mn = tmp.myRows;
-    std::vector<int> ipiv(mn);
-    // Utilize LAPACKE LU Factorization
-    int info = LAPACKE_dgetrf( LAPACK_ROW_MAJOR, mn, mn, tmp.myArray.data(), mn, ipiv.data() );
-    // INFO < 0: if INFO = -i, the i-th argument had an illegal value
-    // INFO > 0: if INFO = i, U(i,i) is exactly zero. The factorization 
-    //           has been completed, but the factor U is exactly
-    //           singular, and division by zero will occur if it is used
-    //           to solve a system of equations.
-    if ( info != 0 )
-    {
-        throw std::invalid_argument("ERROR:\n"
-                                    "INFO < 0 in getInverse: if INFO = -i, the i-th argument had an illegal value.\n"
-                                    "INFO > 0 in getInverse: if INFO = i, U(i,i) is exactly zero. The factorization " 
-                                    "has been completed, but the factor U is exactly singular, and division by zero will "
-                                    "occur if it is used to solve a system of equations.\nINFO = " + 
-                                    std::to_string(info) + "\n");
-    }
-    
-    info = LAPACKE_dgetri( LAPACK_ROW_MAJOR, mn, tmp.myArray.data(), mn, ipiv.data() );
-    
-    if ( info != 0 )
-    {
-        throw std::invalid_argument("ERROR:\n"
-                                    "INFO < 0 in getInverse: if INFO = -i, the i-th argument had an illegal value.\n"
-                                    "INFO > 0 in getInverse: if INFO = i, U(i,i) is exactly zero; the matrix is " 
-                                    "singular and its inverse could not be computed.\nINFO = " + 
-                                    std::to_string(info) + "\n");
-    }
+    tmp.s_inverse();
     return tmp;
 }
 
@@ -220,7 +192,7 @@ inline void Array<double>::s_minor(void)
     {
         if (i % 2 != 0)
         {
-            myArray.at(i) *= -1;
+            myData.at(i) *= -1;
         }
     }
 }
@@ -242,7 +214,7 @@ inline double Array<double>::determinant(void)
         int mn = tmp.myRows;
         std::vector<int> ipiv(mn);
         // Utilize LAPACKE LU Factorization
-        int info = LAPACKE_dgetrf( LAPACK_ROW_MAJOR, mn, mn, tmp.myArray.data(), mn, ipiv.data() );
+        int info = LAPACKE_dgetrf( LAPACK_ROW_MAJOR, mn, mn, tmp.myData.data(), mn, ipiv.data() );
         // INFO < 0: if INFO = -i, the i-th argument had an illegal value
         // INFO > 0: if INFO = i, U(i,i) is exactly zero. The factorization 
         //           has been completed, but the factor U is exactly
@@ -289,7 +261,7 @@ inline double Array<double>::trace(void)
         double tmp = 0.0;
         for (int i = 0; i < myElements; i += (myCols + 1))
         {
-            tmp += myArray.at(i);
+            tmp += myData.at(i);
         }
         return tmp;
     }
@@ -310,7 +282,7 @@ inline Array<double> Array<double>::operator* (const Array<double>& arr) const
         Array<double> tmp(m, n);
         // Utilize cblas matrix-matrix multiply
         cblas_dgemm(CblasRowMajor, CblasNoTrans, CblasNoTrans, 
-                    m, n, k, 1.0, myArray.data(), k, arr.myArray.data(), n, 0.0, tmp.myArray.data(), n); 
+                    m, n, k, 1.0, myData.data(), k, arr.myData.data(), n, 0.0, tmp.myData.data(), n); 
         return tmp;
     }
     else
@@ -325,7 +297,7 @@ inline Array<double> Array<double>::operator* (const double scalar) const
     Array<double> tmp(myRows, myCols);
     for (int i = 0; i < myElements; i++)
     {
-        tmp.myArray.at(i) = myArray.at(i) * scalar;
+        tmp.myData.at(i) = myData.at(i) * scalar;
     }
     return tmp;
 }

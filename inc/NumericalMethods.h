@@ -5,6 +5,7 @@
 #include <vector>
 #include <sstream>
 #include <limits>
+#include <cmath>
 
 namespace NumericalMethods
 {
@@ -63,9 +64,9 @@ namespace NumericalMethods
 
         // Fixed-Point Iteration Method
         inline std::vector<rootSolver_ret> fixedPointIteration_method(std::function<double(double)> f_x, 
-                                                                    double p_0, 
-                                                                    double tol = 1e-05, 
-                                                                    uint32_t max_it = std::numeric_limits<uint32_t>::max() )
+                                                                      double p_0, 
+                                                                      double tol = 1e-05, 
+                                                                      uint32_t max_it = std::numeric_limits<uint32_t>::max() )
         {
             std::vector<rootSolver_ret> ret;
             rootSolver_ret entry;    
@@ -94,10 +95,10 @@ namespace NumericalMethods
 
         // Netwon's Method
         inline std::vector<rootSolver_ret> newtons_method(std::function<double(double)> f_x, 
-                                                        std::function<double(double)> fp_x,
-                                                        double p_0, 
-                                                        double tol = 1e-05, 
-                                                        uint32_t max_it = std::numeric_limits<uint32_t>::max() )
+                                                          std::function<double(double)> fp_x,
+                                                          double p_0, 
+                                                          double tol = 1e-05, 
+                                                          uint32_t max_it = std::numeric_limits<uint32_t>::max() )
         {
             std::vector<rootSolver_ret> ret;
             rootSolver_ret entry;    
@@ -211,11 +212,11 @@ namespace NumericalMethods
         
         // Modified Netwon's Method
         inline std::vector<rootSolver_ret> ModifiedNewtons_method(std::function<double(double)> f_x, 
-                                                                std::function<double(double)> fp_x,
-                                                                std::function<double(double)> fpp_x,
-                                                                double p_0, 
-                                                                double tol = 1e-05, 
-                                                                uint32_t max_it = std::numeric_limits<uint32_t>::max() )
+                                                                  std::function<double(double)> fp_x,
+                                                                  std::function<double(double)> fpp_x,
+                                                                  double p_0, 
+                                                                  double tol = 1e-05, 
+                                                                  uint32_t max_it = std::numeric_limits<uint32_t>::max() )
         {
             std::vector<rootSolver_ret> ret;
             rootSolver_ret entry;    
@@ -243,9 +244,9 @@ namespace NumericalMethods
         
         // Steffensen's Method
         inline std::vector<rootSolver_ret> steffensens_method(std::function<double(double)> f_x, 
-                                                            double p_0, 
-                                                            double tol = 1e-05, 
-                                                            uint32_t max_it = std::numeric_limits<uint32_t>::max() )
+                                                              double p_0, 
+                                                              double tol = 1e-05, 
+                                                              uint32_t max_it = std::numeric_limits<uint32_t>::max() )
         {
             std::vector<rootSolver_ret> ret;
             rootSolver_ret entry;    
